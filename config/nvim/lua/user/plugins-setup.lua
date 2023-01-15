@@ -70,5 +70,8 @@ return packer.startup(function(use)
 
   -- Git
   use { "lewis6991/gitsigns.nvim", commit = "f98c85e7c3d65a51f45863a34feb4849c82f240f" }
+
+  -- LSP
+  use { "RRethy/vim-illuminate", commit = "a2e8476af3f3e993bb0d6477438aad3096512e42" }
 end)
 
