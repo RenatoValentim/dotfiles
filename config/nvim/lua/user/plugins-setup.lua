@@ -78,5 +78,11 @@ return packer.startup(function(use)
   use { "williamboman/mason.nvim", commit = "bfc5997e52fe9e20642704da050c415ea1d4775f" }
   use { "williamboman/mason-lspconfig.nvim", commit = "0eb7cfefbd3a87308c1875c05c3f3abac22d367c" }
   use { "jose-elias-alvarez/null-ls.nvim", commit = "c0c19f32b614b3921e17886c541c13a72748d450" } -- for formatters and linters
+
+  -- Treesitter
+  use {
+    "nvim-treesitter/nvim-treesitter",
+    commit = "8e763332b7bf7b3a426fd8707b7f5aa85823a5ac",
+  }
 end)
 
