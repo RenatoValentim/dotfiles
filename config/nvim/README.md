@@ -3,5 +3,6 @@
 - [x] Check colors working in lualine
 - [ ] Add all line quantity in lualine
 - [ ] Add formatters
-- [ ] add lints
-- [x] add virtual text
+- [ ] Add lints
+- [x] Add virtual text
+- [ ] Add colors to telescope file browser
