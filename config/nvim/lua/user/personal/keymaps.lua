@@ -63,8 +63,11 @@ keymap.set("i", "jk", "<ESC>", opts)
 
 -- Telescope
 keymap.set("n", "<leader>ff", ":Telescope find_files<CR>", opts)
-keymap.set("n", "<leader>ft", ":Telescope live_grep<CR>", opts)
+keymap.set("n", "<leader>fg", ":Telescope live_grep<CR>", opts)
 keymap.set("n", "<leader>fb", ":Telescope buffers<CR>", opts)
+keymap.set("n", "<leader>fr", ":Telescope resume<CR>", opts)
+keymap.set("n", "<leader>fd", ":Telescope diagnostics<CR>", opts)
+keymap.set("n", "<leader>fd", ":Telescope keymaps<CR>", opts)
 
 -- Trouble
 keymap.set("n", "<leader>tr", ":Trouble lsp_references<Return>")
