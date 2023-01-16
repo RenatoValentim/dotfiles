@@ -4,4 +4,4 @@
 - [ ] Add all line quantity in lualine
 - [ ] Add formatters
 - [ ] add lints
-- [ ] add virtual text
+- [x] add virtual text
