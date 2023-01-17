@@ -25,7 +25,7 @@ local diff = {
 
 local filetype = {
   "filetype",
-  icons_enabled = false,
+  icons_enabled = true,
 }
 
 local location = {
@@ -34,12 +34,48 @@ local location = {
 }
 
 local progress = {
-  "progress", "%P/%L"
+  "progress",
+  fmt = function()
+    return "%P/%L"
+  end,
+  color = {},
 }
 
 local spaces = function()
   return " " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
 end
+
+local function env_cleanup(venv)
+  if string.find(venv, "/") then
+    local final_venv = venv
+    for w in venv:gmatch "([^/]+)" do
+      final_venv = w
+    end
+    venv = final_venv
+  end
+  return venv
+end
+
+local hide_in_width = function()
+  local window_width_limit = 100
+  return vim.o.columns > window_width_limit
+end
+
+local component = {
+  python_env = {
+    function()
+      if vim.bo.filetype == "python" then
+        local venv = os.getenv "CONDA_DEFAULT_ENV" or os.getenv "VIRTUAL_ENV"
+        if venv then
+          return string.format("(%s)", env_cleanup(venv))
+        end
+      end
+      return ""
+    end,
+    color = { fg = "#98be65" },
+    cond = hide_in_width,
+  },
+}
 
 lualine.setup {
   options = {
@@ -53,11 +89,15 @@ lualine.setup {
   },
   sections = {
     lualine_a = { "mode" },
-    lualine_b = { "branch" },
+    lualine_b = { { "b:gitsigns_head", icon = "", color = { gui = "bold" } } },
     lualine_c = { diagnostics },
-    lualine_x = { diff, spaces, "encoding", filetype },
+    lualine_x = {
+      diff,
+      spaces,
+      filetype,
+      component.python_env,
+    },
     lualine_y = { location },
     lualine_z = { progress },
   },
 }
-

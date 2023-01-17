@@ -1,7 +1,7 @@
 ## Roadmap
 - [x] Configure which-key plugin
 - [x] Check colors working in lualine
-- [ ] Add all line quantity in lualine
+- [x] Add all line quantity in lualine
 - [ ] Add formatters
 - [ ] Add lints
 - [x] Add virtual text
