@@ -80,9 +80,6 @@ local which_key = {
     ["q"] = { ":q<Return>", "Quit" },
     ["Q"] = { ":q!<Return>", "Force quit" },
     ["d"] = { "dd", "Delete Line" },
-    ["e"] = { ":NvimTreeToggle<Return>", "Explorer" },
-    ["s"] = { ":SymbolsOutline<Return>", "Symbols outline" },
-    ["c"] = { ":ComAnnotation<Return>", "Comment Annotatation" },
     v = {
       name = "Virtual Text",
       d = { ":lua vim.diagnostic.config({ virtual_text = false })<Return>", "Disable Virtual Text" },
