@@ -2,6 +2,7 @@
 - [x] Configure which-key plugin
 - [x] Check colors working in lualine
 - [x] Add all line quantity in lualine
+- [ ] Hide LSP diagnostic when value equals 0 in lualine
 - [ ] Add formatters
 - [ ] Add lints
 - [x] Add virtual text
