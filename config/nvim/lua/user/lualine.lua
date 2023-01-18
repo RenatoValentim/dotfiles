@@ -61,7 +61,7 @@ local hide_in_width = function()
   return vim.o.columns > window_width_limit
 end
 
-py_component = {
+local py_component = {
   python_env = {
     function()
       if vim.bo.filetype == "python" then
@@ -77,7 +77,7 @@ py_component = {
   },
 }
 
-lap_component = {
+local lap_component = {
   lsp = {
     function(msg)
       msg = msg or "LS Inactive"
