@@ -1,3 +1,5 @@
+local M = {}
+
 local status_ok, lualine = pcall(require, "lualine")
 if not status_ok then
   return
@@ -61,7 +63,7 @@ local hide_in_width = function()
   return vim.o.columns > window_width_limit
 end
 
-local component = {
+M.py_component = {
   python_env = {
     function()
       if vim.bo.filetype == "python" then
@@ -73,6 +75,38 @@ local component = {
       return ""
     end,
     color = { fg = "#98be65" },
+    cond = hide_in_width,
+  },
+}
+
+M.lap_component = {
+  lsp = {
+    function(msg)
+      msg = msg or "LS Inactive"
+      local buf_clients = vim.lsp.buf_get_clients()
+      if next(buf_clients) == nil then
+        -- TODO: clean up this if statement
+        if type(msg) == "boolean" or #msg == 0 then
+          return "LS Inactive"
+        end
+        return msg
+      end
+      local buf_client_names = {}
+
+      -- add client
+      for _, client in pairs(buf_clients) do
+        if client.name ~= "null-ls" and client.name ~= "copilot" then
+          table.insert(buf_client_names, client.name)
+        end
+      end
+
+      local unique_client_names = vim.fn.uniq(buf_client_names)
+
+      local language_servers = "[" .. table.concat(unique_client_names, ", ") .. "]"
+
+      return language_servers
+    end,
+    color = { gui = "bold" },
     cond = hide_in_width,
   },
 }
@@ -93,9 +127,10 @@ lualine.setup {
     lualine_c = { diagnostics },
     lualine_x = {
       diff,
+      M.lap_component.lsp,
       spaces,
       filetype,
-      component.python_env,
+      M.py_component.python_env,
     },
     lualine_y = { location },
     lualine_z = { progress },
