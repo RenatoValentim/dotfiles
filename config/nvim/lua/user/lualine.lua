@@ -101,6 +101,9 @@ local lap_component = {
       local unique_client_names = vim.fn.uniq(buf_client_names)
 
       local language_servers = "[" .. table.concat(unique_client_names, ", ") .. "]"
+      if language_servers == "[]" then
+        return "Ls Inactive"
+      end
 
       return language_servers
     end,
