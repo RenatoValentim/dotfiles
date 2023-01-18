@@ -1,5 +1,3 @@
-local M = {}
-
 local status_ok, lualine = pcall(require, "lualine")
 if not status_ok then
   return
@@ -63,7 +61,7 @@ local hide_in_width = function()
   return vim.o.columns > window_width_limit
 end
 
-M.py_component = {
+py_component = {
   python_env = {
     function()
       if vim.bo.filetype == "python" then
@@ -79,7 +77,7 @@ M.py_component = {
   },
 }
 
-M.lap_component = {
+lap_component = {
   lsp = {
     function(msg)
       msg = msg or "LS Inactive"
@@ -127,10 +125,10 @@ lualine.setup {
     lualine_c = { diagnostics },
     lualine_x = {
       diff,
-      M.lap_component.lsp,
+      lap_component.lsp,
       spaces,
       filetype,
-      M.py_component.python_env,
+      py_component.python_env,
     },
     lualine_y = { location },
     lualine_z = { progress },
