@@ -7,6 +7,9 @@ local servers = {
 	"bashls",
 	"jsonls",
 	"yamlls",
+  "gopls",
+  "dockerls",
+  "cmake"
 }
 
 local settings = {
