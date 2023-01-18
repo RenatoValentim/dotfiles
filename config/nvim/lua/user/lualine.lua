@@ -56,7 +56,7 @@ local function env_cleanup(venv)
   return venv
 end
 
-local hide_in_width = function()
+hide_in_width = function()
   local window_width_limit = 100
   return vim.o.columns > window_width_limit
 end
