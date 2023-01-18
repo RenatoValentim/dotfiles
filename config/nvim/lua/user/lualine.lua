@@ -13,7 +13,7 @@ local diagnostics = {
   sections = { "error", "warn" },
   symbols = { error = " ", warn = " " },
   colored = true,
-  always_visible = true,
+  always_visible = false,
 }
 
 local diff = {
