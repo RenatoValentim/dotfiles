@@ -29,6 +29,8 @@ vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
 vim.opt.wrap = false -- No Wrap lines
 vim.opt.backspace = { 'start', 'eol', 'indent' }
+vim.opt.listchars:append "eol:↴"
+vim.opt.list = true
 vim.opt.path:append { '**' } -- Finding files - Search down into subfolders
 vim.opt.wildignore:append { '*/node_modules/*' }
 vim.opt.clipboard = "unnamedplus"
