@@ -77,7 +77,7 @@ local py_component = {
   },
 }
 
-local lap_component = {
+local lsp_component = {
   lsp = {
     function(msg)
       msg = msg or "LS Inactive"
@@ -128,7 +128,7 @@ lualine.setup {
     lualine_c = { diagnostics },
     lualine_x = {
       diff,
-      lap_component.lsp,
+      lsp_component.lsp,
       spaces,
       filetype,
       py_component.python_env,
