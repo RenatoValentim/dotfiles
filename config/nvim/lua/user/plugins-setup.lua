@@ -55,23 +55,30 @@ return packer.startup(function(use)
   use { "goolord/alpha-nvim", commit = "0bb6fc0646bcd1cdb4639737a1cee8d6e08bcc31" }
   use { "akinsho/toggleterm.nvim", commit = "2a787c426ef00cb3488c11b14f5dcf892bbd0bda" }
   use "norcalli/nvim-colorizer.lua"
-	use {
-		"iamcco/markdown-preview.nvim",
-		run = function()
-			vim.fn["mkdp#util#install"]()
-		end,
-	}
-	use "mg979/vim-visual-multi"
-	use {
-		"folke/todo-comments.nvim",
-		requires = "nvim-lua/plenary.nvim",
-	}
+  use {
+    "iamcco/markdown-preview.nvim",
+    run = function()
+      vim.fn["mkdp#util#install"]()
+    end,
+  }
+  use "mg979/vim-visual-multi"
+  use {
+    "folke/todo-comments.nvim",
+    requires = "nvim-lua/plenary.nvim",
+  }
   use { "fatih/vim-go", run = ":GoUpdateBinaries" }
   use {
-		"folke/trouble.nvim",
-		requires = "kyazdani42/nvim-web-devicons",
-	}
-	use "folke/which-key.nvim"
+    "folke/trouble.nvim",
+    requires = "kyazdani42/nvim-web-devicons",
+  }
+  use "folke/which-key.nvim"
+  use {
+    "glepnir/lspsaga.nvim",
+    branch = "main",
+    -- config = function()
+    --   require("lspsaga").setup {}
+    -- end,
+  }
 
   -- cmp plugins
   use { "hrsh7th/nvim-cmp", commit = "b0dff0ec4f2748626aae13f011d1a47071fe9abc" } -- The completion plugin
@@ -92,11 +99,9 @@ return packer.startup(function(use)
   use { "nvim-telescope/telescope.nvim", commit = "76ea9a898d3307244dce3573392dcf2cc38f340f" }
   use "nvim-telescope/telescope-file-browser.nvim"
 
-
   -- Git
   use { "lewis6991/gitsigns.nvim", commit = "f98c85e7c3d65a51f45863a34feb4849c82f240f" }
   use "f-person/git-blame.nvim"
-
 
   -- LSP
   use { "RRethy/vim-illuminate", commit = "a2e8476af3f3e993bb0d6477438aad3096512e42" }
@@ -117,4 +122,3 @@ return packer.startup(function(use)
     require("packer").sync()
   end
 end)
-
