@@ -166,6 +166,7 @@ local which_key = {
         l = { ":TodoLocList<Return>", "List all todos" },
         t = { ":TodoTelescope<Return>", "List all todos whit telescope" },
       },
+      a = { ":Lspsaga code_action<Return>", "Native neovim explorer" },
       e = { ":e ", "Native neovim explorer" },
       f = { ":find ", "Native neovim finder" },
       r = { ":luafile %<Return>", "Reload lua files" },

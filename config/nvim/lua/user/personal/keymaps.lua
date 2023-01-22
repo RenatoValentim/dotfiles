@@ -19,8 +19,8 @@ keymap.set("n", "<leader>d", "dd", opts)
 keymap.set("n", "<leader>uh", ":nohlsearch<Return>", opts)
 keymap.set("n", "<leader>Nc", ":e ~/.config/nvim/init.lua<Return>", opts)
 keymap.set("n", "<leader>Nl", ":luafile %<Return>", opts)
-keymap.set("n", "<C-f>", ":%s///gc", opts)
-keymap.set("n", "<C-f>f", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], opts)
+keymap.set("n", "<C-f>", ":%s///gc")
+keymap.set("n", "<C-f>f", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
 keymap.set("n", "x", '"_x', opts)
 
@@ -62,12 +62,12 @@ keymap.set("v", ">", ">gv", opts)
 keymap.set("i", "jk", "<ESC>", opts)
 
 -- Telescope
-keymap.set("n", "<leader>ff", ":Telescope find_files<CR>", opts)
-keymap.set("n", "<leader>fg", ":Telescope live_grep<CR>", opts)
-keymap.set("n", "<leader>fb", ":Telescope buffers<CR>", opts)
-keymap.set("n", "<leader>fr", ":Telescope resume<CR>", opts)
-keymap.set("n", "<leader>fd", ":Telescope diagnostics<CR>", opts)
-keymap.set("n", "<leader>fd", ":Telescope keymaps<CR>", opts)
+keymap.set("n", "<leader>ff", ":Telescope find_files<Return>", opts)
+keymap.set("n", "<leader>fg", ":Telescope live_grep<Return>", opts)
+keymap.set("n", "<leader>fb", ":Telescope buffers<Return>", opts)
+keymap.set("n", "<leader>fr", ":Telescope resume<Return>", opts)
+keymap.set("n", "<leader>fd", ":Telescope diagnostics<Return>", opts)
+keymap.set("n", "<leader>fd", ":Telescope keymaps<Return>", opts)
 
 -- Trouble
 keymap.set("n", "<leader>tr", ":Trouble lsp_references<Return>")
@@ -76,3 +76,6 @@ keymap.set("n", "<leader>td", ":Trouble document_diagnostics<Return>")
 keymap.set("n", "<leader>tq", ":Trouble quickfix<Return>")
 keymap.set("n", "<leader>tl", ":Trouble loclist<Return>")
 keymap.set("n", "<leader>tw", ":Trouble workspace_diagnostics<Return>")
+
+-- lspsaga
+keymap.set({"n", "v"}, "ua", ":Lspsaga code_action<Return>")
