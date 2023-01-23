@@ -78,4 +78,4 @@ keymap.set("n", "<leader>tl", ":Trouble loclist<Return>")
 keymap.set("n", "<leader>tw", ":Trouble workspace_diagnostics<Return>")
 
 -- lspsaga
-keymap.set({"n", "v"}, "ua", ":Lspsaga code_action<Return>")
+keymap.set({"n", "v"}, "<leader>ua", ":Lspsaga code_action<Return>")

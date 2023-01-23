@@ -203,5 +203,3 @@ wk.register(vmappings, vopts)
 if which_key.on_config_done then
   which_key.on_config_done(wk)
 end
-
-vim.opt_local.timeoutlen = 300
