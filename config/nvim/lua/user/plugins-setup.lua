@@ -53,7 +53,6 @@ return packer.startup(function(use)
   use { "lukas-reineke/indent-blankline.nvim", commit = "db7cbcb40cc00fc5d6074d7569fb37197705e7f6" }
   use { "kyazdani42/nvim-web-devicons", commit = "563f3635c2d8a7be7933b9e547f7c178ba0d4352" }
   use { "goolord/alpha-nvim", commit = "0bb6fc0646bcd1cdb4639737a1cee8d6e08bcc31" }
-  use { "akinsho/toggleterm.nvim", commit = "2a787c426ef00cb3488c11b14f5dcf892bbd0bda" }
   use "norcalli/nvim-colorizer.lua"
   use {
     "iamcco/markdown-preview.nvim",
@@ -75,9 +74,6 @@ return packer.startup(function(use)
   use {
     "glepnir/lspsaga.nvim",
     branch = "main",
-    -- config = function()
-    --   require("lspsaga").setup {}
-    -- end,
   }
 
   -- cmp plugins
