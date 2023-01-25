@@ -143,7 +143,6 @@ local which_key = {
       d = { ":Telescope lsp_document_symbols<Return>", "Document Symbols" },
       f = { ":lua vim.lsp.buf.format()<Return>", "Format" },
       i = { ":LspInfo<Return>", "Info" },
-      I = { ":LspInstallInfo<Return>", "Installer Info - LspInstall" },
       m = { ":Mason<Return>", "Installer Info - Mason" },
       r = { ":lua vim.lsp.buf.rename()<Return>", "Rename" },
     },
