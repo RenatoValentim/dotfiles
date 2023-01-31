@@ -39,6 +39,7 @@ vim.opt.incsearch = true
 vim.opt.updatetime = 300
 vim.opt.signcolumn = "yes"
 vim.opt.swapfile = false
+vim.opt.cursorline = true
 
 -- Undercurl
 vim.cmd([[let &t_Cs = "\e[4:3m"]])
