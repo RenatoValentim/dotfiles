@@ -20,7 +20,8 @@ keymap.set("n", "<leader>uh", ":nohlsearch<Return>", opts)
 keymap.set("n", "<leader>Nc", ":e ~/.config/nvim/init.lua<Return>", opts)
 keymap.set("n", "<leader>Nl", ":luafile %<Return>", opts)
 keymap.set("n", "<C-f>", ":%s///gc")
-keymap.set("n", "<C-f>f", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+keymap.set("n", "<C-f>r", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gIc<Left><Left><Left>]])
+keymap.set("n", "<C-f>f", [[:/\<<C-r><C-w>\>/<Return>]])
 
 keymap.set("n", "x", '"_x', opts)
 
