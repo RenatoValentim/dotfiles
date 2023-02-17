@@ -169,7 +169,6 @@ local which_key = {
       e = { ":e ", "Native neovim explorer" },
       f = { ":find ", "Native neovim finder" },
       r = { ":luafile %<Return>", "Reload lua files" },
-      h = { ":nohlsearch<Return>", "No highlight" },
     },
     t = {
       name = "Trouble",
