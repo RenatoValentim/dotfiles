@@ -9,4 +9,4 @@
 - [x] Add lints
 - [x] Add virtual text
 - [ ] Add colors to telescope file browser
-- [ ] Add breadcrumbs
+- [x] Add breadcrumbs
