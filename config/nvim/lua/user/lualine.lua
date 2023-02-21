@@ -1,10 +1,15 @@
-local status_ok, lualine = pcall(require, "lualine")
-if not status_ok then
+local lualine_status, lualine = pcall(require, "lualine")
+if not lualine_status then
   return
 end
 
 local hide_in_width = function()
   return vim.fn.winwidth(0) > 80
+end
+
+local pomodoro_status, pomodoro = pcall(require, "pomodoro")
+if not pomodoro_status then
+  return
 end
 
 local diagnostics = {
@@ -128,6 +133,7 @@ lualine.setup {
     lualine_c = { diagnostics },
     lualine_x = {
       diff,
+      pomodoro.statusline,
       lsp_component.lsp,
       spaces,
       filetype,

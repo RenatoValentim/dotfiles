@@ -158,7 +158,7 @@ local which_key = {
       c = { ":Telescope git_commits<Return>", "All Commits" },
     },
     u = {
-      name = "utils",
+      name = "Utils",
       t = {
         name = "TODO",
         q = { ":TodoQuickFix<Return>", "List quick fix" },
@@ -169,6 +169,12 @@ local which_key = {
       e = { ":e ", "Native neovim explorer" },
       f = { ":find ", "Native neovim finder" },
       r = { ":luafile %<Return>", "Reload lua files" },
+      p = {
+        name = "Pomodoro",
+        i = { ":PomodoroStart<Return>", "Start pomodoro timer" },
+        s = { ":PomodoroStatus<Return>", "Status of the pomodoro timer" },
+        e = { ":PomodoroStop<Return>", "Stop pomodoro timer" }
+      }
     },
     t = {
       name = "Trouble",
