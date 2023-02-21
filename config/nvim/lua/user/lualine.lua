@@ -117,6 +117,14 @@ local lsp_component = {
   },
 }
 
+local pomodoro_component = {
+  statusline = {
+    pomodoro.statusline,
+    color = { gui = "bold" },
+    cond = hide_in_width,
+  },
+}
+
 lualine.setup {
   options = {
     globalstatus = true,
@@ -133,7 +141,7 @@ lualine.setup {
     lualine_c = { diagnostics },
     lualine_x = {
       diff,
-      pomodoro.statusline,
+      pomodoro_component.statusline,
       lsp_component.lsp,
       spaces,
       filetype,
