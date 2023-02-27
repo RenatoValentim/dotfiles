@@ -79,6 +79,16 @@ return packer.startup(function(use)
     "wthollingsworth/pomodoro.nvim",
     requires = "MunifTanjim/nui.nvim",
   }
+  use {
+    "bennypowers/nvim-regexplainer",
+    config = function()
+      require("regexplainer").setup()
+    end,
+    requires = {
+      "nvim-treesitter/nvim-treesitter",
+      "MunifTanjim/nui.nvim",
+    },
+  }
 
   -- cmp plugins
   use { "hrsh7th/nvim-cmp", commit = "b0dff0ec4f2748626aae13f011d1a47071fe9abc" } -- The completion plugin
