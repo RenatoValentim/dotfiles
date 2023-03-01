@@ -5,8 +5,9 @@
 - [x] Hide diagnostic when value equals 0 in lualine
 - [x] Add formatters
 - [ ] Add option to formatters on save
-- [ ] Add formatters and linters in lualine
+- [ ] Add formatters and linter's in lualine
 - [x] Add lints
 - [x] Add virtual text
-- [ ] Add colors to telescope file browser
+- [ ] Add colors theme to telescope file browser
 - [x] Add breadcrumbs
+- [ ] change breadcrumbs colors scheme like the theme
