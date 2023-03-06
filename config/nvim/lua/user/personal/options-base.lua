@@ -1,5 +1,13 @@
 vim.cmd("autocmd!")
 
+local default_shell = os.getenv("SHELL")
+
+if default_shell and default_shell:match("zsh") then
+  vim.o.shell = "zsh"
+else
+  vim.o.shell = "bash"
+end
+
 vim.scriptencoding = 'utf-8'
 vim.opt.encoding = 'utf-8'
 vim.opt.fileencoding = 'utf-8'
@@ -18,7 +26,6 @@ vim.opt.laststatus = 2
 vim.opt.expandtab = true
 vim.opt.scrolloff = 10
 vim.opt.sidescrolloff = 10
-vim.opt.shell = 'zsh'
 vim.opt.backupskip = { '/tmp/*', '/private/tmp/*' }
 vim.opt.inccommand = 'split'
 vim.opt.ignorecase = true -- Case insensitive searching UNLESS /C or capital in search
