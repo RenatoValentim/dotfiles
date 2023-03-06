@@ -166,7 +166,11 @@ local which_key = {
         t = { ":TodoTelescope<Return>", "List all todos whit telescope" },
       },
       a = { ":Lspsaga code_action<Return>", "Native neovim explorer" },
-      e = { ":e ", "Native neovim explorer" },
+      e = { 
+        name = "Explorer",
+        e = {":e ", "Native neovim explorer"},
+        t = {":NvimTreeToggle<Return>", "Native neovim explorer"}
+      },
       f = { ":find ", "Native neovim finder" },
       r = { ":luafile %<Return>", "Reload lua files" },
       p = {

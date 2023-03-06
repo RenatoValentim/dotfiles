@@ -89,6 +89,13 @@ return packer.startup(function(use)
       "MunifTanjim/nui.nvim",
     },
   }
+  use {
+    "nvim-tree/nvim-tree.lua",
+    requires = {
+      "nvim-tree/nvim-web-devicons", -- optional, for file icons
+    },
+    tag = "nightly", -- optional, updated every week. (see issue #1193)
+  }
 
   -- cmp plugins
   use { "hrsh7th/nvim-cmp", commit = "b0dff0ec4f2748626aae13f011d1a47071fe9abc" } -- The completion plugin
