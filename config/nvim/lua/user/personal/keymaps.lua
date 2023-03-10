@@ -22,6 +22,8 @@ keymap.set("n", "<leader>Nl", ":luafile %<Return>", opts)
 keymap.set("n", "<C-f>", ":%s///gc")
 keymap.set("n", "<C-f>r", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gIc<Left><Left><Left>]])
 keymap.set("n", "<C-f>f", [[:/\<<C-r><C-w>\>/<Return>]])
+keymap.set("n", "<leader>uzi", "<c-w>_ | <c-w>|")
+keymap.set("n", "<leader>uzo", "<c-w>=")
 
 keymap.set("n", "x", '"_x', opts)
 
@@ -83,4 +85,3 @@ keymap.set({ "n", "v" }, "<leader>ua", ":Lspsaga code_action<Return>")
 
 -- NvimTree
 keymap.set({ "n", "v" }, "<leader>uet<Return>", ":<Return>")
-

@@ -178,6 +178,11 @@ local which_key = {
         i = { ":PomodoroStart<Return>", "Start pomodoro timer" },
         s = { ":PomodoroStatus<Return>", "Status of the pomodoro timer" },
         e = { ":PomodoroStop<Return>", "Stop pomodoro timer" }
+      },
+      z = {
+        name = "Zoom screen",
+        i = { "<c-w>_ | <c-w>|", "Zoom in screen" },
+        o = { "<c-w>=", "Zoom out screen" },
       }
     },
     t = {
