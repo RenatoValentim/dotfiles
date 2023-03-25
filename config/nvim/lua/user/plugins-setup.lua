@@ -98,6 +98,7 @@ return packer.startup(function(use)
   }
   use {
     "jackMort/ChatGPT.nvim",
+    commit = '8820b99c', -- March 6th 2023, before submit
     config = function()
       require("chatgpt").setup {
         -- optional configuration
