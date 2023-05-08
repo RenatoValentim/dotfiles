@@ -13,7 +13,6 @@ M.opts = {
   buftype_exclude = { "terminal", "nofile" },
   filetype_exclude = {
     "help",
-    "packer",
     "NvimTree",
   },
 }

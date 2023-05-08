@@ -32,7 +32,6 @@ function M.config()
       "fugitive",
       "alpha",
       "NvimTree",
-      "packer",
       "neogitstatus",
       "Trouble",
       "lir",
