@@ -22,7 +22,7 @@ vim.opt.hlsearch = true
 vim.opt.backup = false
 vim.opt.showcmd = true
 vim.opt.cmdheight = 1
-vim.opt.laststatus = 2
+vim.opt.laststatus = 3
 vim.opt.expandtab = true
 vim.opt.scrolloff = 10
 vim.opt.sidescrolloff = 10
@@ -47,6 +47,27 @@ vim.opt.updatetime = 300
 vim.opt.signcolumn = "yes"
 vim.opt.swapfile = false
 vim.opt.cursorline = true
+vim.opt.completeopt = { "menuone", "noselect" }
+vim.opt.conceallevel = 0
+vim.opt.mouse = "a"
+vim.opt.pumheight = 10
+vim.opt.showtabline = 0
+vim.opt.smartcase = true
+vim.opt.splitbelow = false
+vim.opt.splitright = false
+vim.opt.termguicolors = true
+vim.opt.timeout = true
+vim.opt.timeoutlen = 300
+vim.opt.undofile = true
+vim.opt.writebackup = false
+vim.opt.ruler = false
+vim.opt.numberwidth = 4
+vim.opt.guifont = "monospace:h17"
+vim.opt.fillchars.eob = " "
+vim.opt.shortmess:append "c"
+vim.opt.whichwrap:append "<,>,[,],h,l"
+vim.opt.iskeyword:append "-"
+vim.opt.linebreak = true
 
 -- Undercurl
 vim.cmd([[let &t_Cs = "\e[4:3m"]])
@@ -58,5 +79,4 @@ vim.api.nvim_create_autocmd("InsertLeave", {
   command = "set nopaste"
 })
 
--- Add asterisks in block comments
-vim.opt.formatoptions:append { 'r' }
+vim.opt.formatoptions:remove { "c", "r", "o" }

@@ -1,9 +1,14 @@
-local status_ok, lspsaga = pcall(require, "lspsaga")
-if not status_ok then
-  return
-end
+local M = {
+  "glepnir/lspsaga.nvim",
+  branch = "main",
+  event = "LspAttach",
+  dependencies = {
+    "nvim-tree/nvim-web-devicons",
+    "nvim-treesitter/nvim-treesitter"
+  },
+}
 
-lspsaga.setup {
+local settings = {
   symbol_in_winbar = {
     enable = true,
     separator = " » ",
@@ -14,3 +19,11 @@ lspsaga.setup {
     color_mode = true,
   },
 }
+
+function M.config()
+  local lspsaga = require "lspsaga"
+
+  lspsaga.setup(settings)
+end
+
+return M

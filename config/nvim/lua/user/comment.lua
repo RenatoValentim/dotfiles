@@ -1,29 +1,38 @@
-local status_ok, comment = pcall(require, "Comment")
-if not status_ok then
-  return
-end
+local M = {
+  "numToStr/Comment.nvim",
+  commit = "eab2c83a0207369900e92783f56990808082eac2",
+  event = "BufRead",
+  dependencies = {
+    {
+      "JoosepAlviste/nvim-ts-context-commentstring",
+      event = "VeryLazy",
+      commit = "a0f89563ba36b3bacd62cf967b46beb4c2c29e52",
+    },
+  },
+}
 
-comment.setup {
+local settings = {
   toggler = {
     ---Line-comment toggle keymap
     -- line = 'gcc',
-    line = '<leader>/',
+    line = "<leader>/",
     ---Block-comment toggle keymap
-    block = 'gbc',
+    block = "gbc",
   },
-
-  ---LHS of operator-pending mappings in NORMAL mode
-  ---LHS of mapping in VISUAL mode
-  ---@type table
   opleader = {
     ---Line-comment keymap
     -- line = 'gc',
-    line = '<leader>/',
+    line = "<leader>/",
     ---Block-comment keymap
-    block = 'gb',
+    block = "gb",
   },
+}
 
-  pre_hook = function(ctx)
+function M.config()
+  COMMENT = require "Comment"
+  COMMENT.setup(settings)
+
+  PRE_HOOK = function(ctx)
     -- Only calculate commentstring for tsx filetypes
     if vim.bo.filetype == "typescriptreact" then
       local U = require "Comment.utils"
@@ -44,6 +53,7 @@ comment.setup {
         location = location,
       }
     end
-  end,
-}
+  end
+end
 
+return M
