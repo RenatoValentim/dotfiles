@@ -137,6 +137,10 @@ function M.config()
           ":lua require('telescope.builtin').keymaps()<Return>",
           "Find Keymaps",
         },
+        p = {
+          ":lua require('telescope').extensions.projects.projects()<Return>",
+          "Find Projects",
+        },
       },
       l = {
         name = "LSP",
