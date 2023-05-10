@@ -23,6 +23,11 @@ function M.config()
         color = "#22b2e3",
         name = "Dockerignore",
       },
+      ["docker-compose.yml"] = {
+        icon = "",
+        color = "#22b2e3",
+        name = "dockercompose",
+      },
     },
     color_icons = true,
     default = true,
