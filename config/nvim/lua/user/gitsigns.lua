@@ -2,6 +2,10 @@ local M = {
   "lewis6991/gitsigns.nvim",
   commit = "ec4742a7eebf68bec663041d359b95637242b5c3",
   event = "BufReadPre",
+  dependencies = {
+    "f-person/git-blame.nvim",
+    commit = "37abc3436aef9b9fe37f38541fe096f8a42b8d4a"
+  },
 }
 
 M.opts = {
