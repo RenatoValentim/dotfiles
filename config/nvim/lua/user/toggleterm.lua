@@ -46,7 +46,7 @@ function M.config()
     float_opts = {
       border = "none",
       width = 100000,
-      height = 51,
+      height = 50,
     },
     on_open = function(_)
       vim.cmd "startinsert!"
