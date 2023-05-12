@@ -160,6 +160,7 @@ function M.config()
         l = { ":lua require 'gitsigns'.blame_line()<Return>", "Blame" },
         b = { ":Telescope git_branches<Return>", "Checkout branch" },
         c = { ":Telescope git_commits<Return>", "All Commits" },
+        g = { "<cmd>lua _LAZYGIT_TOGGLE()<Return>", "Lazygit" },
       },
       u = {
         name = "Utils",

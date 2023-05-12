@@ -18,7 +18,7 @@ function M.config()
     shading_factor = 2,
     start_in_insert = true,
     insert_mappings = true,
-    persist_size = true,
+    persist_size = false,
     direction = "float",
     close_on_exit = true,
     shell = vim.o.shell,
@@ -39,7 +39,21 @@ function M.config()
   vim.cmd "autocmd! TermOpen term://* lua set_terminal_keymaps()"
 
   local Terminal = require("toggleterm.terminal").Terminal
-  local lazygit = Terminal:new { cmd = "lazygit", hidden = true }
+  local lazygit = Terminal:new {
+    cmd = "lazygit",
+    hidden = true,
+    direction = "float",
+    float_opts = {
+      border = "none",
+      width = 100000,
+      height = 50,
+    },
+    on_open = function(_)
+      vim.cmd "startinsert!"
+    end,
+    on_close = function(_) end,
+    count = 99,
+  }
 
   function _LAZYGIT_TOGGLE()
     lazygit:toggle()
