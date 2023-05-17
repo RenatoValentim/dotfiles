@@ -8,6 +8,7 @@ end
 
 config.color_scheme = "tokyonight_night"
 config.enable_tab_bar = false
+config.font = wezterm.font 'Fira Code'
 config.font = wezterm.font("JetBrains Mono", {
 	weight = "Regular", -- "Regular" "Thin" "ExtraLight" "Light" "DemiLight" "Book" "Regular" "Medium" "DemiBold" "Bold" "ExtraBold" "Black" "ExtraBlack"
 	italic = true,
