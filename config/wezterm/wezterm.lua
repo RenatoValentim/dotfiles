@@ -8,15 +8,14 @@ end
 
 config.color_scheme = "tokyonight_night"
 config.enable_tab_bar = false
-config.font_size = 11.3
 config.font = wezterm.font("JetBrains Mono", {
-	weight = "Bold",
+	weight = "Regular", -- "Regular" "Thin" "ExtraLight" "Light" "DemiLight" "Book" "Regular" "Medium" "DemiBold" "Bold" "ExtraBold" "Black" "ExtraBlack"
 	italic = true,
 })
 config.window_padding = {
 	left = 8,
 	right = 8,
-	top = 0,
+	top = 8,
 	bottom = 0,
 }
 
