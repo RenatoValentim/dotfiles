@@ -5,9 +5,9 @@ local M = {
 function M.config()
   local colorizer = require "colorizer"
 
-  colorizer.setup({
-    '*';
-  })
+  colorizer.setup {
+    "*";
+  }
 end
 
 return M

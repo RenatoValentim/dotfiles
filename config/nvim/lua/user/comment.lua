@@ -1,12 +1,12 @@
 local M = {
   "numToStr/Comment.nvim",
-  commit = "eab2c83a0207369900e92783f56990808082eac2",
+  commit = "e1fe53117aab24c378d5e6deaad786789c360123",
   event = "BufRead",
   dependencies = {
     {
       "JoosepAlviste/nvim-ts-context-commentstring",
       event = "VeryLazy",
-      commit = "a0f89563ba36b3bacd62cf967b46beb4c2c29e52",
+      commit = "0bf8fbc2ca8f8cdb6efbd0a9e32740d7a991e4c3",
     },
   },
 }
