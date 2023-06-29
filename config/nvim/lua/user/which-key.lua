@@ -89,8 +89,12 @@ function M.config()
       ["Q"] = { ":q!<Return>", "Force quit" },
       ["d"] = { "dd", "Delete Line" },
       ["N"] = { ":e ~/.config/nvim/init.lua<Return>", "Open neovim config file" },
-      ["c"] = { ":! ", "Terminal commands from neovim" },
       ["e"] = { ":NvimTreeToggle<Return>", "NvimTree" },
+      c = {
+        name = "Commands",
+        f = { ":!", "CMD Filter" },
+        l = { ":", "CMD Mode" },
+      },
       v = {
         name = "Virtual Text",
         d = { ":lua vim.diagnostic.config({ virtual_text = false })<Return>", "Disable Virtual Text" },
