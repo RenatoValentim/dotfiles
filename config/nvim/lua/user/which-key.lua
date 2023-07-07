@@ -88,7 +88,7 @@ function M.config()
       ["q"] = { ":q<Return>", "Quit" },
       ["Q"] = { ":q!<Return>", "Force quit" },
       ["d"] = { "dd", "Delete Line" },
-      ["N"] = { ":e ~/.config/nvim/init.lua<Return>", "Open neovim config file" },
+      ["N"] = { ":e $MYVIMRC <CR>", "Open neovim config file" },
       ["e"] = { ":NvimTreeToggle<Return>", "NvimTree" },
       c = {
         name = "Commands",
@@ -175,10 +175,7 @@ function M.config()
           t = { ":TodoTelescope<Return>", "List all todos whit telescope" },
         },
         a = { ":Lspsaga code_action<Return>", "Code Action" },
-        e = {
-          name = "Explorer",
-          e = { ":e ", "Native neovim explorer" },
-        },
+        e = { ":e ", "Native neovim explorer" },
         f = { ":find ", "Native neovim finder" },
         r = { ":luafile %<Return>", "Reload lua files" },
         p = {
