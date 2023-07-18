@@ -28,6 +28,31 @@ function M.config()
         color = "#22b2e3",
         name = "dockercompose",
       },
+      [".env.example"] = {
+        icon = "",
+        color = "#eed202",
+        name = "env",
+      },
+      ["app.env"] = {
+        icon = "",
+        color = "#eed202",
+        name = "env",
+      },
+      ["app.env.example"] = {
+        icon = "",
+        color = "#eed202",
+        name = "env",
+      },
+      ["go.mod"] = {
+        icon = "ﳑ",
+        color = "#de5048",
+        name = "gomod",
+      },
+      ["go.sum"] = {
+        icon = "ﳑ",
+        color = "#de5048",
+        name = "gosum",
+      },
     },
     color_icons = true,
     default = true,
