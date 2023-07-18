@@ -219,11 +219,11 @@ function M.config()
   local min_width = 80
 
   if width >= min_width then
-    require("noice").setup(settings)
     settings.markdown.hover = {
       ["|(%S-)|"] = vim.cmd.help, -- vim help links
       ["%[.-%]%((%S-)%)"] = require("noice.util").open, -- markdown links
     }
+    require("noice").setup(settings)
   end
 end
 
