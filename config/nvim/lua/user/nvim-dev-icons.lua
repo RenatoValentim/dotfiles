@@ -13,15 +13,15 @@ function M.config()
         cterm_color = "65",
         name = "Zsh",
       },
-      dockerfile = {
+      Dockerfile = {
         icon = "",
         color = "#22b2e3",
-        name = "Dockerfile",
+        name = "dockerfile",
       },
       [".dockerignore"] = {
         icon = "",
         color = "#22b2e3",
-        name = "Dockerignore",
+        name = ".dockerignore",
       },
       ["docker-compose.yml"] = {
         icon = "",
