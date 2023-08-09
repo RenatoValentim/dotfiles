@@ -5,9 +5,11 @@
 - [x] Hide diagnostic when value equals 0 in lualine
 - [x] Add formatters
 - [ ] Add option to formatters on save
+- [ ] Fix Lazy not load vim-visual-multi plugin
+- [ ] Fix Lazy not load nvim-colorizer.lua plugin
 - [ ] Add formatters and linter's in lualine
 - [x] Add lints
 - [x] Add virtual text
-- [ ] Add colors theme to telescope file browser
+- [x] Add colors theme to telescope file browser
 - [x] Add breadcrumbs
-- [ ] change breadcrumbs colors scheme like the theme
+- [x] change breadcrumbs colors scheme like the theme

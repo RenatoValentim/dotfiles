@@ -45,6 +45,12 @@ keymap.set("n", "<C-j>", "<C-w>j", opts)
 keymap.set("n", "<C-k>", "<C-w>k", opts)
 keymap.set("n", "<C-l>", "<C-w>l", opts)
 
+-- Move cursor on insert mode
+keymap.set("i", "<C-l>", "<right>", opts)
+keymap.set("i", "<C-h>", "<left>", opts)
+keymap.set("i", "<C-j>", "<down>", opts)
+keymap.set("i", "<C-k>", "<up>", opts)
+
 -- Resize window
 keymap.set("n", "<A-left>", "<C-w><", opts)
 keymap.set("n", "<A-right>", "<C-w>>", opts)
@@ -72,6 +78,7 @@ keymap.set("n", "<leader>fb", ":Telescope buffers<Return>", opts)
 keymap.set("n", "<leader>fr", ":Telescope resume<Return>", opts)
 keymap.set("n", "<leader>fd", ":Telescope diagnostics<Return>", opts)
 keymap.set("n", "<leader>fd", ":Telescope keymaps<Return>", opts)
+keymap.set("n", "<leader>fs", ":Telescope current_buffer_fuzzy_find<Return>", opts)
 
 -- Trouble
 keymap.set("n", "<leader>tr", ":Trouble lsp_references<Return>")
@@ -89,3 +96,7 @@ keymap.set({ "n", "v" }, "<leader>uet<Return>", ":<Return>")
 
 -- Git
 keymap.set("n", "<leader>gg", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", opts)
+
+-- Comment
+keymap.set("n", "<leader>/", "<cmd>lua require('Comment.api').toggle.linewise.current()<CR>", opts)
+keymap.set("x", "<leader>/", "<esc><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>", opts)

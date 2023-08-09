@@ -145,6 +145,10 @@ function M.config()
           ":lua require('telescope').extensions.projects.projects()<Return>",
           "Find Projects",
         },
+        s = {
+          ":lua require('telescope.builtin').current_buffer_fuzzy_find()<Return>",
+          "Current buffer fuzzy find",
+        },
       },
       l = {
         name = "LSP",

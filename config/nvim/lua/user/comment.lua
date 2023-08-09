@@ -1,7 +1,7 @@
 local M = {
   "numToStr/Comment.nvim",
   commit = "e1fe53117aab24c378d5e6deaad786789c360123",
-  event = "BufRead",
+  event = { "BufRead", "BufNewFile" },
   dependencies = {
     {
       "JoosepAlviste/nvim-ts-context-commentstring",
@@ -11,28 +11,8 @@ local M = {
   },
 }
 
-local settings = {
-  toggler = {
-    ---Line-comment toggle keymap
-    -- line = 'gcc',
-    line = "<leader>/",
-    ---Block-comment toggle keymap
-    block = "gbc",
-  },
-  opleader = {
-    ---Line-comment keymap
-    -- line = 'gc',
-    line = "<leader>/",
-    ---Block-comment keymap
-    block = "gb",
-  },
-}
-
 function M.config()
-  COMMENT = require "Comment"
-  COMMENT.setup(settings)
-
-  PRE_HOOK = function(ctx)
+  pre_hook = function(ctx)
     -- Only calculate commentstring for tsx filetypes
     if vim.bo.filetype == "typescriptreact" then
       local U = require "Comment.utils"
