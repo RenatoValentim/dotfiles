@@ -5,7 +5,7 @@ local M = {
   dependencies = {
     "wthollingsworth/pomodoro.nvim",
     dependencies = "MunifTanjim/nui.nvim",
-  }
+  },
 }
 
 function M.config()
@@ -16,6 +16,10 @@ function M.config()
   end
 
   local pomodoro = require "pomodoro"
+  local noice_ok, noice = pcall(require, "noice")
+  if not noice_ok then
+    noice = {}
+  end
 
   local diagnostics = {
     "diagnostics",
@@ -117,7 +121,7 @@ function M.config()
 
         return language_servers
       end,
-      color = { gui = "bold" },
+      color = { gui = "bold", fg = "#0078d7" },
       cond = hide_in_width,
     },
   }
@@ -125,10 +129,19 @@ function M.config()
   local pomodoro_component = {
     statusline = {
       pomodoro.statusline,
-      color = { gui = "bold" },
+      color = { gui = "bold", fg = "red" },
       cond = hide_in_width,
     },
   }
+
+  local noice_component = { "" }
+  if noice_ok then
+    noice_component = {
+      noice.api.statusline.mode.get,
+      color = { fg = "#ff9e64" },
+      cond = noice.api.statusline.mode.has,
+    }
+  end
 
   lualine.setup {
     options = {
@@ -146,6 +159,7 @@ function M.config()
       lualine_c = { diagnostics },
       lualine_x = {
         diff,
+        noice_component,
         pomodoro_component.statusline,
         lsp_component.lsp,
         spaces,

@@ -2,10 +2,6 @@ local M = {
   "lewis6991/gitsigns.nvim",
   commit = "a36bc3360d584d39b4fb076d855c4180842d4444",
   event = "BufReadPre",
-  dependencies = {
-    "f-person/git-blame.nvim",
-    commit = "37abc3436aef9b9fe37f38541fe096f8a42b8d4a"
-  },
 }
 
 M.opts = {
@@ -24,10 +20,11 @@ M.opts = {
     follow_files = true,
   },
   attach_to_untracked = true,
+  current_line_blame = true,
   current_line_blame_opts = {
     virt_text = true,
     virt_text_pos = "eol", -- 'eol' | 'overlay' | 'right_align'
-    delay = 1000,
+    delay = 5,
   },
   sign_priority = 6,
   update_debounce = 100,

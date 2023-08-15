@@ -5,7 +5,7 @@ local M = {
 }
 
 function M.config()
-	vim.g.mkdp_auto_start = 1
+  vim.g.mkdp_auto_start = 1
 end
 
 return M
