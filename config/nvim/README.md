@@ -7,6 +7,8 @@
 - [ ] Add option to formatters on save
 - [ ] Fix Lazy not load vim-visual-multi plugin
 - [ ] Fix Lazy not load nvim-colorizer.lua plugin
+- [ ] Fix Lazy not load diffview-nvim.lua plugin
+- [ ] To configure diffview-nvim.lua plugin
 - [ ] Add formatters and linter's in lualine
 - [x] Add lints
 - [x] Add virtual text
