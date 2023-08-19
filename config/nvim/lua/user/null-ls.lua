@@ -28,7 +28,7 @@ function M.config()
     sources = {
       formatting.prettier.with {
         extra_filetypes = { "toml" },
-        extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote", "--print-width", "100" },
+        extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote", "--print-width", "120" },
       },
       formatting.black.with { extra_args = { "--fast" } },
       formatting.blue.with { extra_args = { "--fast" } },
