@@ -21,7 +21,7 @@ M.opts = {
   },
   attach_to_untracked = true,
   current_line_blame = true,
-  current_line_blame_formatter = "<author>, <author_time:%Y-%m-%d %H:%M:%S> - <summary>",
+  current_line_blame_formatter = " <author>, <author_time:%Y-%m-%d %H:%M:%S> - <summary>",
   current_line_blame_opts = {
     virt_text = true,
     virt_text_pos = "eol", -- 'eol' | 'overlay' | 'right_align'
