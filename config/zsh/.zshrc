@@ -145,7 +145,6 @@ alias install-lvim="bash <(curl -s https://raw.githubusercontent.com/lunarvim/lu
 alias uninstall-lvim="bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/uninstall.sh)"
 alias update-upgrade="sudo apt update && apt upgrade -y"
 alias szshrc="source ~/.zshrc"
-alias v="nvim"
 alias lv="lvim"
 alias t="tree"
 alias lg="lazygit"
@@ -155,6 +154,22 @@ alias keybr="setxkbmap -model pc105 -layout br -variant abnt2"
 alias la="exa -laF --icons --header"
 alias ll="exa -lF --icons --header"
 alias loadnvimconfroot="export VIMINIT='source ~/.config/nvim-root/init.lua'"
+
+alias v="NVIM_APPNAME=RootNvim nvim"
+alias v="NVIM_APPNAME=PersonalNvim nvim"
+alias vc="NVIM_APPNAME=ClojureNvim nvim"
+function ns() {
+  items=("RootNvim" "PersonalNvim" "ClojureNvim")
+  config=$(printf "%s\n" "${items[@]}" | fzf --prompt=" Neovim Config  " --height=50% --layout=reverse --border --exit-0)
+  if [[ -z $config ]]; then
+    echo "Nothing selected"
+    return 0
+  elif [[ $config == "default" ]]; then
+    config=""
+  fi
+  NVIM_APPNAME=$config nvim $@
+}
+bindkey -s ^a "ns\n"
 
 # Using with tmux
 alias ide4="tmux split-window -v -p 30 && tmux split-window -h -p 66 && tmux split-window -h -p 50"
