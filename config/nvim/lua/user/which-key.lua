@@ -193,6 +193,13 @@ function M.config()
           i = { "<c-w>_ | <c-w>|", "Zoom in screen" },
           o = { "<c-w>=", "Zoom out screen" },
         },
+        w = {
+          name = "Move window",
+          h = { ":wincmd H<Return>", "Move current split window to the far left" },
+          j = { ":wincmd J<Return>", "Move current split window to the very bottom" },
+          k = { ":wincmd K<Return>", "Move current split window to the very top" },
+          l = { ":wincmd L<Return>", "Move current split window to the far right" },
+        }
       },
       t = {
         name = "Trouble",
