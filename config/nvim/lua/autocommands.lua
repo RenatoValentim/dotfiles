@@ -17,6 +17,7 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 })
 
 vim.cmd "autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif"
+vim.cmd([[autocmd BufEnter * if (winnr("$") == 1 && exists("b:current_syntax") && b:current_syntax == "treeview") | NvimTreeFindFile | endif]])
 
 vim.api.nvim_create_autocmd({ "VimResized" }, {
   callback = function()
