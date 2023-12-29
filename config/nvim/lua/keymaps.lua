@@ -91,9 +91,6 @@ keymap.set("n", "<leader>tw", ":Trouble workspace_diagnostics<Return>")
 -- lspsaga
 keymap.set({ "n", "v" }, "<leader>ua", ":Lspsaga code_action<Return>")
 
--- NvimTree
-keymap.set({ "n", "v" }, "<leader>uet<Return>", ":<Return>")
-
 -- Git
 keymap.set("n", "<leader>gg", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", opts)
 
