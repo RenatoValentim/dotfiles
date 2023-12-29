@@ -2,7 +2,7 @@ local M = {}
 local awful = require("awful")
 local wibox = require("wibox")
 -- local docker_widget = require("awesome-wm-widgets.docker-widget.docker")
-local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
+local volume_widget = require("awesome-wm-widgets.volume-widget.volume")
 -- local ram_widget = require("awesome-wm-widgets.ram-widget.ram-widget")
 local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
 -- local net_speed_widget = require("awesome-wm-widgets.net-speed-widget.net-speed")
@@ -17,17 +17,18 @@ local mytextclock = wibox.widget.textclock("  %a %b(%m) %d, %H:%M")
 local mykeyboardlayout = awful.widget.keyboardlayout()
 
 local cw = calendar_widget({
-    theme = "nord",
-    placement = "top_right",
-    start_sunday = true,
-    radius = 4,
-    previous_month_button = 1,
-    next_month_button = 3,
+	theme = "nord",
+	placement = "top_right",
+	start_sunday = true,
+	radius = 4,
+	previous_month_button = 1,
+	next_month_button = 3,
 })
 
-mytextclock:connect_signal("button::press",
-function(_, _, _, button)
-    if button == 1 then cw.toggle() end
+mytextclock:connect_signal("button::press", function(_, _, _, button)
+	if button == 1 then
+		cw.toggle()
+	end
 end)
 
 M.make_widgets = function(s)
