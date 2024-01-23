@@ -22,7 +22,8 @@ gui:
     selectedRangeBgColor:
       - default
     cherryPickedCommitBgColor:
-      - cyan
+      # - cyan
+      - default # set to `default` to have no background colour
     cherryPickedCommitFgColor:
       - blue
     unstagedChangesColor:
