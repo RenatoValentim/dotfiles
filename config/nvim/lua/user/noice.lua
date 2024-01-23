@@ -5,7 +5,7 @@ local noice_min_width = 80
 local notify_min_width = 187
 local can_use_noice = terminal_width >= noice_min_width
 local can_use_notify = terminal_width >= notify_min_width
-can_use_notify = true
+can_use_notify = false
 
 if can_use_noice then
   M = {
