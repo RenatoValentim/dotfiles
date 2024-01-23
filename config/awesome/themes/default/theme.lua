@@ -41,10 +41,9 @@ theme.border_marked = "#91231c"
 -- prompt_[fg|bg|fg_cursor|bg_cursor|font]
 -- hotkeys_[bg|fg|border_width|border_color|shape|opacity|modifiers_fg|label_bg|label_fg|group_margin|font|description_font]
 -- Example:
---theme.taglist_bg_focus = "#ff0000"
 
-theme.tasklist_bg_focus = "#1a1b26"
-theme.tasklist_fg_focus = "#6c7081"
+theme.taglist_bg_focus = "#3A4C40"
+theme.tasklist_fg_focus = "#3A4C40"
 
 -- Generate taglist squares:
 local taglist_square_size = dpi(4)

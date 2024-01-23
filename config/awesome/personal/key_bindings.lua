@@ -8,6 +8,9 @@ local menu_module = require("personal.menu")
 local modkey_module = require("personal.modkey")
 
 local globalkeys = gears.table.join(
+	awful.key({ modkey_module.modkey }, "w", function()
+		awful.util.spawn("arandr")
+	end, { description = "Open Display Manager", group = "Display" }),
 	awful.key({ modkey_module.modkey }, "s", hotkeys_popup.show_help, { description = "show help", group = "awesome" }),
 	awful.key({ modkey_module.modkey, "Control" }, "l", function()
 		awful.spawn("xscreensaver-command -lock")
@@ -24,9 +27,9 @@ local globalkeys = gears.table.join(
 	awful.key({ modkey_module.modkey }, "k", function()
 		awful.client.focus.byidx(-1)
 	end, { description = "focus previous by index", group = "client" }),
-	awful.key({ modkey_module.modkey }, "w", function()
-		menu_module.mymainmenu:show()
-	end, { description = "show main menu", group = "awesome" }),
+	-- awful.key({ modkey_module.modkey }, "w", function()
+	-- 	menu_module.mymainmenu:show()
+	-- end, { description = "show main menu", group = "awesome" }),
 
 	-- Layout manipulation
 	awful.key({ modkey_module.modkey, "Shift" }, "j", function()
