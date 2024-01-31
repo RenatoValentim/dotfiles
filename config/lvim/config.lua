@@ -1,5 +1,5 @@
 -- Personal keymaps
-require("keymaps")
+require("user-keymaps")
 
 -- Personal
 lvim.builtin.breadcrumbs.options.separator = " » "
@@ -15,19 +15,22 @@ lvim.builtin.telescope.defaults.mappings = require("user.telescope").mappings
 lvim.builtin.telescope.extensions = require("user.telescope").extensions
 
 -- Plugins
-lvim.plugins = require("plugins")
+lvim.plugins = require("user-plugins")
 
 -- Plugins extentions
 lvim.keys.normal_mode["<leader>ub"] = require("user.telescope").file_browser
 
+require("user-formatters")
+require("user-autocommands")
+
 -- FIXME: This is not working
-local noice = require("noice")
-local noice_component = {
-  noice.api.statusline.mode.get,
-  color = { fg = "#ff9e64" },
-  cond = noice.api.statusline.mode.has,
-}
-table.insert(
-  lvim.builtin.lualine.sections.lualine_c,
-  noice_component
-)
+-- local noice = require("noice")
+-- local noice_component = {
+--   noice.api.statusline.mode.get,
+--   color = { fg = "#ff9e64" },
+--   cond = noice.api.statusline.mode.has,
+-- }
+-- table.insert(
+--   lvim.builtin.lualine.sections.lualine_c,
+--   noice_component
+-- )
