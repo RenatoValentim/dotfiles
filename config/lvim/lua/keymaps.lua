@@ -41,6 +41,7 @@ lvim.builtin.which_key.mappings.g.d = {
   o = { ":DiffviewOpen<Return>", "Open Git Diff" },
   c = { ":DiffviewClose<Return>", "Close Git Diff" },
 }
+lvim.builtin.which_key.mappings["f"] = { ":Telescope find_files<Return>", "Find Files" }
 
 lvim.keys.normal_mode["gl"] = "<cmd>lua vim.diagnostic.open_float()<CR>"
 lvim.keys.normal_mode["gk"] = "<cmd>lua vim.diagnostic.goto_prev()<CR>"
