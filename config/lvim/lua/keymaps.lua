@@ -43,6 +43,12 @@ lvim.builtin.which_key.mappings["t"] = {
   l = { "<cmd>TroubleToggle loclist<cr>", "Loclist" },
   r = { "<cmd>TroubleToggle lsp_references<cr>", "References" },
 }
+lvim.builtin.which_key.mappings.g.d[1] = {
+  name = "Git Diff",
+  o = { ":DiffviewOpen<Return>", "Open Git Diff" },
+  c = { ":DiffviewClose<Return>", "Close Git Diff" },
+}
+
 lvim.keys.normal_mode["gl"] = "<cmd>lua vim.diagnostic.open_float()<CR>"
 lvim.keys.normal_mode["gk"] = "<cmd>lua vim.diagnostic.goto_prev()<CR>"
 lvim.keys.normal_mode["gj"] = "<cmd>lua vim.diagnostic.goto_next()<CR>"

@@ -72,9 +72,7 @@ local M = {
       "MunifTanjim/nui.nvim",
     },
     config = function()
-      -- customs lualine
-      local noice = require("noice")
-      noice.setup({
+      require("noice").setup({
         lsp = {
           ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
           ["vim.lsp.util.stylize_markdown"] = true,
@@ -87,15 +85,6 @@ local M = {
           lsp_doc_border = true,
         }
       })
-      local noice_component = {
-        noice.api.statusline.mode.get,
-        color = { fg = "#ff9e64" },
-        cond = noice.api.statusline.mode.has,
-      }
-      table.insert(
-        lvim.builtin.lualine.sections.lualine_x,
-        noice_component
-      )
     end
   },
   {
@@ -106,6 +95,10 @@ local M = {
       require("dap-install").config("python", {})
       require("dap-install").config("go_delve", {})
     end
-  }
+  },
+  {
+    "sindrets/diffview.nvim",
+    event = "BufRead",
+  },
 }
 return M
