@@ -14,6 +14,7 @@ lvim.builtin.cmp.cmdline.enable = true
 lvim.builtin.gitsigns.opts.current_line_blame = true
 lvim.builtin.gitsigns.opts.current_line_blame_formatter = " <author>, <author_time:%Y-%m-%d %H:%M:%S> - <summary>"
 lvim.builtin.gitsigns.opts.current_line_blame_opts.delay = 5
+lvim.builtin.terminal.open_mapping = "<c-t>"
 
 -- Plugins
 lvim.plugins = require("plugins")
@@ -21,6 +22,7 @@ lvim.plugins = require("plugins")
 -- Plugins extentions
 lvim.keys.normal_mode["<leader>ub"] = require("file_browser")
 
+-- FIXME: This is not working
 local noice = require("noice")
 local noice_component = {
   noice.api.statusline.mode.get,

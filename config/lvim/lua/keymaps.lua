@@ -3,13 +3,6 @@ lvim.builtin.which_key.mappings["Q"] = { ":q!<Return>", "Force Quit" }
 lvim.builtin.which_key.mappings["x"] = { ":x<Return>", "Save Quit" }
 lvim.builtin.which_key.mappings["u"] = {
   name = "utils",
-  c = { ":! ", "Commands" },
-  e = { ":e ", "Nvim Navite Explore" },
-  f = { ":find ", "Find" },
-  l = {
-    name = "LSP",
-    d = { ":Telescope lsp_document_symbols<Return>", "Document Symbols" },
-  },
   z = {
     name = "Zoom",
     i = { "<c-w>_ | <c-w>|", "Zoom In" },
@@ -43,7 +36,7 @@ lvim.builtin.which_key.mappings["t"] = {
   l = { "<cmd>TroubleToggle loclist<cr>", "Loclist" },
   r = { "<cmd>TroubleToggle lsp_references<cr>", "References" },
 }
-lvim.builtin.which_key.mappings.g.d[1] = {
+lvim.builtin.which_key.mappings.g.d = {
   name = "Git Diff",
   o = { ":DiffviewOpen<Return>", "Open Git Diff" },
   c = { ":DiffviewClose<Return>", "Close Git Diff" },
