@@ -72,14 +72,10 @@ function M.config()
       enable = true,
       show_on_dirs = true,
       icons = {
-        -- hint = "",
-        hint = "",
-        -- info = "",
-        info = "",
-        -- warning = "",
-        warning = "",
-        -- error = "",
-        error = "",
+        hint = "",
+        info = "",
+        warning = "",
+        error = "",
       },
     },
     view = {

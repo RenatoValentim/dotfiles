@@ -201,9 +201,8 @@ function M.config()
         r = { ":luafile %<Return>", "Reload lua files" },
         p = {
           name = "Pomodoro",
-          i = { ":PomodoroStart<Return>", "Start pomodoro timer" },
-          s = { ":PomodoroStatus<Return>", "Status of the pomodoro timer" },
-          e = { ":PomodoroStop<Return>", "Stop pomodoro timer" },
+          a = { ":PomodoroStart<Return>", "Start pomodoro timer" },
+          o = { ":PomodoroStop<Return>", "Stop pomodoro timer" },
         },
         z = {
           name = "Zoom screen",

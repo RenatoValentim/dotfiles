@@ -15,11 +15,11 @@ function M.config()
         alt = { "FIXME", "BUG", "FIXIT", "ISSUE", "ERROR", "ERR" }, -- a set of other keywords that all map to this FIX keywords
         -- signs = false, -- configure signs for some keywords individually
       },
-      TODO = { icon = " ", color = "#2563EB", },
-      HACK = { icon = " ", color = "#FBBF24" },
-      WARN = { icon = " ", color = "#FBBF24", alt = { "WARNING", "XXX" } },
-      PERF = { icon = " ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
-      NOTE = { icon = " ", color = "#10B981", alt = { "INFO" } },
+      TODO = { icon = " ", color = "#2563EB", },
+      HACK = { icon = " ", color = "#FBBF24" },
+      WARN = { icon = "", color = "#FBBF24", alt = { "WARNING", "XXX" } },
+      PERF = { icon = "󰅒 ", alt = { "OPTIM", "PERFORMANCE", "OPTIMIZE" } },
+      NOTE = { icon = " ", color = "#10B981", alt = { "INFO" } },
     },
   }
 
