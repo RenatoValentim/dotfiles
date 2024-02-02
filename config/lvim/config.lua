@@ -2,6 +2,7 @@
 require("user-keymaps")
 
 -- Personal
+vim.opt.relativenumber = true
 lvim.builtin.breadcrumbs.options.separator = " » "
 lvim.builtin.bufferline.active = false
 lvim.builtin.cmp.cmdline.enable = true
@@ -16,6 +17,7 @@ lvim.builtin.telescope.extensions = require("user.telescope").extensions
 
 -- Plugins
 lvim.plugins = require("user-plugins")
+lvim.builtin.dap.ui.config.layouts = require("user.dapui").layouts
 
 -- Plugins extentions
 lvim.keys.normal_mode["<leader>ub"] = require("user.telescope").file_browser

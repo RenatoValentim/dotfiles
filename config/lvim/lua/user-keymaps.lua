@@ -42,6 +42,24 @@ lvim.builtin.which_key.mappings.g.d = {
   c = { ":DiffviewClose<Return>", "Close Git Diff" },
 }
 lvim.builtin.which_key.mappings["f"] = { ":Telescope find_files<Return>", "Find Files" }
+lvim.builtin.which_key.mappings.d = {
+  name = "Debug",
+  t = { "<cmd>lua require'dap'.toggle_breakpoint()<cr>", "Toggle Breakpoint" },
+  x = { "<cmd>lua require'dap'.clear_breakpoints()<cr>", "Clear all Breakpoints" },
+  b = { "<cmd>lua require'dap'.step_back()<cr>", "Step Back" },
+  c = { "<cmd>lua require'dap'.continue()<cr>", "Continue" },
+  C = { "<cmd>lua require'dap'.run_to_cursor()<cr>", "Run To Cursor" },
+  d = { "<cmd>lua require'dap'.disconnect()<cr>", "Disconnect" },
+  -- g = { "<cmd>lua require'dap'.session()<cr>", "Get Session" },
+  i = { "<cmd>lua require'dap'.step_into()<cr>", "Step Into" },
+  o = { "<cmd>lua require'dap'.step_over()<cr>", "Step Over" },
+  -- u = { "<cmd>lua require'dap'.step_out()<cr>", "Step Out" },
+  -- p = { "<cmd>lua require'dap'.pause()<cr>", "Pause" },
+  -- r = { "<cmd>lua require'dap'.repl.toggle()<cr>", "Toggle Repl" },
+  -- s = { "<cmd>lua require'dap'.continue()<cr>", "Start" },
+  -- q = { "<cmd>lua require'dap'.close()<cr>", "Quit" },
+  u = { "<cmd>lua require'dapui'.toggle({reset = true})<cr>", "Toggle UI" },
+}
 
 lvim.keys.normal_mode["gl"] = "<cmd>lua vim.diagnostic.open_float()<CR>"
 lvim.keys.normal_mode["gk"] = "<cmd>lua vim.diagnostic.goto_prev()<CR>"
@@ -49,6 +67,7 @@ lvim.keys.normal_mode["gj"] = "<cmd>lua vim.diagnostic.goto_next()<CR>"
 lvim.keys.normal_mode["+"] = "<C-a>"
 lvim.keys.normal_mode["-"] = "<C-x>"
 lvim.keys.normal_mode["<C-a>"] = "gg<S-v>G"
+lvim.keys.normal_mode["<C-c>"] = ":"
 lvim.keys.normal_mode["ss"] = ":split<Return><C-w>w"
 lvim.keys.normal_mode["vs"] = ":vsplit<Return><C-w>w"
 lvim.keys.insert_mode["<C-l>"] = "<right>"
