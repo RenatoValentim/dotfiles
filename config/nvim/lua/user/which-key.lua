@@ -27,7 +27,7 @@ function M.config()
         group = "+",
       },
       window = {
-        border = "single", -- none, single, double, shadow
+        border = "single",   -- none, single, double, shadow
         position = "bottom", -- bottom, top
         margin = { 1, 0, 1, 0 },
         padding = { 2, 2, 2, 2 },
@@ -42,7 +42,7 @@ function M.config()
       hidden = { "<silent>", ":", ":", "<Return>", "call", "lua", "^:", "^ " },
       ignore_missing = true, -- enable this to hide mappings for which you didn't specify a label
       show_help = true,
-      triggers = "auto", -- automatically setup triggers
+      triggers = "auto",     -- automatically setup triggers
       triggers_blacklist = {
         -- list of mode / prefixes that should never be hooked by WhichKey
         -- this is mostly relevant for key maps that start with a native binding
@@ -114,8 +114,6 @@ function M.config()
       },
       v = {
         name = "Virtual Text",
-        d = { ":lua vim.diagnostic.config({ virtual_text = false })<Return>", "Disable Virtual Text" },
-        e = { ":lua vim.diagnostic.config({ virtual_text = true })<Return>", "Enable Virtual Text" },
       },
       b = {
         name = "Buffers",
@@ -179,8 +177,9 @@ function M.config()
         name = "Git",
         s = { ":Telescope git_status<Return>", "Open changed file in git status" },
         d = {
-          ":Gitsigns diffthis HEAD<Return>",
-          "Git Diff",
+          name = "Git Diff",
+          o = { ":DiffviewOpen<Return>", "Open Git Diff" },
+          c = { ":DiffviewClose<Return>", "Close Git Diff" },
         },
         l = { ":lua require 'gitsigns'.blame_line()<Return>", "Blame" },
         b = { ":Telescope git_branches<Return>", "Checkout branch" },
