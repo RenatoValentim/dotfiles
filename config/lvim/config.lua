@@ -17,7 +17,7 @@ lvim.builtin.telescope.extensions = require("user.telescope").extensions
 
 -- Plugins
 lvim.plugins = require("user-plugins")
-lvim.builtin.dap.ui.config.layouts = require("user.dapui").layouts
+lvim.builtin.dap.ui.config = require("user.dapui")
 
 -- Plugins extentions
 lvim.keys.normal_mode["<leader>ub"] = require("user.telescope").file_browser
