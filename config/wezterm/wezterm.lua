@@ -21,6 +21,6 @@ config.window_padding = {
   top = 8,
   bottom = 0,
 }
-config.window_decorations = "NONE"
+config.window_decorations = "RESIZE"
 
 return config
