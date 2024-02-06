@@ -42,6 +42,8 @@ local M = {
   },
 }
 
+local icons = require("utils.icons")
+
 function M.config()
   local cmp = require "cmp"
   local luasnip = require "luasnip"
@@ -53,31 +55,31 @@ function M.config()
   end
 
   local kind_icons = {
-    Text = "",
-    Method = "",
-    Function = "",
-    Constructor = "",
-    Field = "",
-    Variable = "",
-    Class = "",
-    Interface = "",
-    Module = "",
-    Property = "",
-    Unit = "",
-    Value = "",
-    Enum = "",
-    Keyword = "",
-    Snippet = "",
-    Color = "",
-    File = "",
-    Reference = "",
-    Folder = "󰉋",
-    EnumMember = "",
-    Constant = "",
-    Struct = "",
-    Event = "",
-    Operator = "",
-    TypeParameter = "",
+    Text = icons.cmp.Text,
+    Method = icons.cmp.Method,
+    Function = icons.cmp.Function,
+    Constructor = icons.cmp.Constructor,
+    Field = icons.cmp.Field,
+    Variable = icons.cmp.Variable,
+    Class = icons.cmp.Class,
+    Interface = icons.cmp.Interface,
+    Module = icons.cmp.Module,
+    Property = icons.cmp.Unit,
+    Unit = icons.cmp.Unit,
+    Value = icons.cmp.Value,
+    Enum = icons.cmp.Enum,
+    Keyword = icons.cmp.Keyword,
+    Snippet = icons.cmp.Snippet,
+    Color = icons.cmp.Color,
+    File = icons.cmp.File,
+    Reference = icons.cmp.Reference,
+    Folder = icons.cmp.Folder,
+    EnumMember = icons.cmp.EnumMember,
+    Constant = icons.cmp.Constant,
+    Struct = icons.cmp.Struct,
+    Event = icons.cmp.Event,
+    Operator = icons.cmp.Operator,
+    TypeParameter = icons.cmp.TypeParameter,
   }
 
   cmp.setup {

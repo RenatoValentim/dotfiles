@@ -4,52 +4,54 @@ local M = {
   commit = "0568104bf8d0c3ab16395433fcc5c1638efc25d4",
 }
 
+local icons = require("utils.icons")
+
 function M.config()
   require("nvim-web-devicons").setup {
     override = {
       zsh = {
-        icon = "",
+        icon = icons.plugins.nvim_dev_icon.zsh,
         color = "#428850",
         cterm_color = "65",
         name = "Zsh",
       },
       Dockerfile = {
-        icon = "",
+        icon = icons.plugins.nvim_dev_icon.docker,
         color = "#22b2e3",
         name = "dockerfile",
       },
       [".dockerignore"] = {
-        icon = "",
+        icon = icons.plugins.nvim_dev_icon.docker,
         color = "#22b2e3",
         name = ".dockerignore",
       },
       ["docker-compose.yml"] = {
-        icon = "",
+        icon = icons.plugins.nvim_dev_icon.docker,
         color = "#22b2e3",
         name = "dockercompose",
       },
       [".env.example"] = {
-        icon = "",
+        icon = icons.plugins.nvim_dev_icon.env,
         color = "#eed202",
         name = "env",
       },
       ["app.env"] = {
-        icon = "",
+        icon = icons.plugins.nvim_dev_icon.env,
         color = "#eed202",
         name = "env",
       },
       ["app.env.example"] = {
-        icon = "",
+        icon = icons.plugins.nvim_dev_icon.env,
         color = "#eed202",
         name = "env",
       },
       ["go.mod"] = {
-        icon = "ﳑ",
+        icon = icons.plugins.nvim_dev_icon.go,
         color = "#de5048",
         name = "gomod",
       },
       ["go.sum"] = {
-        icon = "ﳑ",
+        icon = icons.plugins.nvim_dev_icon.go,
         color = "#de5048",
         name = "gosum",
       },

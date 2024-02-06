@@ -12,13 +12,15 @@ local M = {
   },
 }
 
+local icons = require("utils.icons")
+
 local settings = {
   ui = {
     border = "none",
     icons = {
-      package_installed = "◍",
-      package_pending = "◍",
-      package_uninstalled = "◍",
+      package_installed = icons.plugins.mason.installed,
+      package_pending = icons.plugins.mason.pending,
+      package_uninstalled = icons.plugins.mason.uninstalled,
     },
   },
   log_level = vim.log.levels.INFO,

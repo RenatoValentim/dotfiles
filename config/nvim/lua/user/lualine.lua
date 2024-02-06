@@ -8,6 +8,8 @@ local M = {
   },
 }
 
+local icons = require("utils.icons")
+
 function M.config()
   local lualine = require "lualine"
 
@@ -25,7 +27,7 @@ function M.config()
     "diagnostics",
     sources = { "nvim_diagnostic" },
     sections = { "error", "warn" },
-    symbols = { error = " ", warn = " " },
+    symbols = { error = icons.plugins.lualine.error, warn = icons.plugins.lualine.warn },
     colored = true,
     always_visible = false,
   }
@@ -33,7 +35,7 @@ function M.config()
   local diff = {
     "diff",
     colored = true,
-    symbols = { added = " ", modified = " ", removed = " " }, -- changes diff symbols
+    symbols = { added = icons.plugins.lualine.added, modified = icons.plugins.lualine.modified, removed = icons.plugins.lualine.removed }, -- changes diff symbols
     cond = hide_in_width,
   }
 
@@ -56,7 +58,7 @@ function M.config()
   }
 
   local spaces = function()
-    return "󰌒 " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
+    return icons.plugins.lualine.tab .. vim.api.nvim_buf_get_option(0, "shiftwidth")
   end
 
   local function env_cleanup(venv)
@@ -150,7 +152,7 @@ function M.config()
       theme = "auto",
       component_separators = { left = "", right = "" },
       -- section_separators = { left = "", right = "" },
-      section_separators = { left = "", right = "" },
+      section_separators = { left = icons.plugins.lualine.separators_left, right = icons.plugins.lualine.separators_right },
       disabled_filetypes = { "alpha", "dashboard" },
       always_divide_middle = true,
 
@@ -158,7 +160,7 @@ function M.config()
     },
     sections = {
       lualine_a = { "mode" },
-      lualine_b = { { "b:gitsigns_head", icon = "", color = { gui = "bold" } } },
+      lualine_b = { { "b:gitsigns_head", icon = icons.plugins.lualine.git_branch, color = { gui = "bold" } } },
       lualine_c = { diagnostics },
       lualine_x = {
         diff,

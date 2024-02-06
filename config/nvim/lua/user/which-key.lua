@@ -114,6 +114,8 @@ function M.config()
       },
       v = {
         name = "Virtual Text",
+        d = { ":lua vim.diagnostic.config({ virtual_text = false })<Return>", "Disable Virtual Text" },
+        e = { ":lua vim.diagnostic.config({ virtual_text = true })<Return>", "Enable Virtual Text" },
       },
       b = {
         name = "Buffers",

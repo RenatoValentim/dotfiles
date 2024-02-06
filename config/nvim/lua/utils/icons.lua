@@ -1,0 +1,151 @@
+local arch = require("utils.get-os-architecture").getLinuxArchitecture()
+
+local M = {}
+
+M.dashboard = {
+  find_files = (arch == "arm64") and " " or "󰈞 ",
+  new_files = (arch == "arm64") and " " or " ",
+  find_project = (arch == "arm64") and " " or " ",
+  recent_files = (arch == "arm64") and " " or " ",
+  find_text = (arch == "arm64") and " " or "󰊄 ",
+  config = (arch == "arm64") and " " or " ",
+  quit = (arch == "arm64") and " " or "󰅖 ",
+}
+
+M.cmp = {
+  Text = (arch == "arm64") and "" or "",
+  Method = (arch == "arm64") and "" or "",
+  Function = (arch == "arm64") and "" or "",
+  Constructor = (arch == "arm64") and "" or "",
+  Field = (arch == "arm64") and "" or "",
+  Variable = (arch == "arm64") and "" or "",
+  Class = (arch == "arm64") and "" or "",
+  Interface = (arch == "arm64") and "" or "",
+  Module = (arch == "arm64") and "" or "",
+  Property = (arch == "arm64") and "" or "",
+  Unit = (arch == "arm64") and "" or "",
+  Value = (arch == "arm64") and "" or "",
+  Enum = (arch == "arm64") and "" or "",
+  Keyword = (arch == "arm64") and "" or "",
+  Snippet = (arch == "arm64") and "" or "",
+  Color = (arch == "arm64") and "" or "",
+  File = (arch == "arm64") and "" or "",
+  Reference = (arch == "arm64") and "" or "",
+  Folder = (arch == "arm64") and "" or "󰉋",
+  EnumMember = (arch == "arm64") and "" or "",
+  Constant = (arch == "arm64") and "" or "",
+  Struct = (arch == "arm64") and "" or "",
+  Event = (arch == "arm64") and "" or "",
+  Operator = (arch == "arm64") and "" or "",
+  TypeParameter = (arch == "arm64") and "" or "",
+}
+
+M.lsp = {
+  error = "",
+  warn = "",
+  hint = "",
+  info = "",
+}
+
+M.plugins = {
+  dapui = {
+    expanded = "",
+    collapsed = "",
+    circular = "",
+    pause = "",
+    play = "",
+    run_last = "",
+    step_back = "",
+    step_out = "",
+    step_into = "",
+    step_over = "",
+    terminate = "",
+    breakpoint = "",
+  },
+  gitsigns = {
+    add = "▎",
+    change = "▎",
+    delete = "",
+    topdelete = "",
+    changedelete = "▎",
+  },
+  indent_blankline = {
+    char = "▏",
+  },
+  lualine = {
+    error = " ",
+    warn = " ",
+    added = " ",
+    modified = " ",
+    removed = " ",
+    separators_left = "",
+    separators_right = "",
+    git_branch = "",
+    tab = "󰌒 ",
+  },
+  mason = {
+    installed = "◍",
+    pending = "◍",
+    uninstalled = "◍",
+  },
+  noice = {
+    cmdline = "",
+    search_down = " ",
+    search_up = " ",
+    filter = "",
+    lua = "",
+    help = "",
+  },
+  nvim_dev_icon = {
+    zsh    = "",
+    docker = "",
+    env    = "",
+    go     = (arch == "arm64") and "ﳑ" or "",
+  },
+  nvim_tree = {
+    corner = "└",
+    edge = "│",
+    item = "│",
+    none = " ",
+    padding = " ",
+    symlink_arrow = " ➛ ",
+    default = "",
+    symlink = "",
+    arrow_open = "",
+    arrow_closed = "",
+    folder_default = "",
+    open = "",
+    empty = "",
+    empty_open = "",
+    folder_symlink = "",
+    symlink_open = "",
+    git_unstaged = "",
+    git_staged = "S",
+    git_unmerged = "",
+    git_renamed = "",
+    git_untracked = "U",
+    git_deleted = "",
+    git_ignored = "◌",
+    hint = "",
+    info = "",
+    warning = "",
+    error = "",
+  },
+  telescope = {
+    prompt_prefix = " ",
+    selection_caret = " ",
+  },
+  todo_comments = {
+    fix = (arch == "arm64") and " " or " ",
+    todo = (arch == "arm64") and " " or " ",
+    hack = (arch == "arm64") and " " or " ",
+    warn = (arch == "arm64") and " " or "",
+    perf = (arch == "arm64") and " " or "󰅒 ",
+    note = (arch == "arm64") and " " or " ",
+  },
+  lspsaga = {
+    breadcrumbs_separator = " » ",
+  }
+}
+
+return M

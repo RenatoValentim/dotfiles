@@ -14,6 +14,8 @@ local M = {
   },
 }
 
+local icons = require("utils.icons")
+
 function M.config()
   local telescope = require "telescope"
 
@@ -27,8 +29,8 @@ function M.config()
 
   telescope.setup {
     defaults = {
-      prompt_prefix = " ",
-      selection_caret = " ",
+      prompt_prefix = icons.plugins.telescope.prompt_prefix,
+      selection_caret = icons.plugins.telescope.selection_caret,
       path_display = { "smart" },
       file_ignore_patterns = { ".git/", "node_modules", "venv", ".venv" },
       mappings = {

@@ -10,24 +10,26 @@ local M = {
   },
 }
 
+local icons = require("utils.icons")
+
 function M.config()
   require("dapui").setup {
     expand_lines = true,
     icons = {
-      expanded = "",
-      collapsed = "",
-      circular = "",
+      expanded = icons.plugins.dapui.expanded,
+      collapsed = icons.plugins.dapui.collapsed,
+      circular = icons.plugins.dapui.circular,
     },
     controls = {
       icons = {
-        pause = "",
-        play = "",
-        run_last = "",
-        step_back = "",
-        step_out = "",
-        step_into = "",
-        step_over = "",
-        terminate = "",
+        pause = icons.plugins.dapui.pause,
+        play = icons.plugins.dapui.play,
+        run_last = icons.plugins.dapui.run_last,
+        step_back = icons.plugins.dapui.step_back,
+        step_out = icons.plugins.dapui.step_out,
+        step_into = icons.plugins.dapui.step_into,
+        step_over = icons.plugins.dapui.step_over,
+        terminate = icons.plugins.dapui.terminate,
       }
     },
     mappings = {
@@ -73,7 +75,7 @@ function M.config()
     },
   }
 
-  vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "DiagnosticSignError", linehl = "", numhl = "" })
+  vim.fn.sign_define("DapBreakpoint", { text = icons.plugins.dapui.breakpoint, texthl = "DiagnosticSignError", linehl = "", numhl = "" })
 end
 
 return M

@@ -4,8 +4,10 @@ local M = {
   event = "BufReadPre",
 }
 
+local icons = require("utils.icons")
+
 M.opts = {
-  char = "▏",
+  char = icons.plugins.indent_blankline.char,
   show_trailing_blankline_indent = false,
   show_first_indent_level = true,
   use_treesitter = true,

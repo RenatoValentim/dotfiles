@@ -10,6 +10,8 @@ local M = {
   },
 }
 
+local icons = require("utils.icons")
+
 local cmp_nvim_lsp = require "cmp_nvim_lsp"
 function M.config()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -68,10 +70,10 @@ function M.config()
   end
 
   local signs = {
-    { name = "DiagnosticSignError", text = "" },
-    { name = "DiagnosticSignWarn", text = "" },
-    { name = "DiagnosticSignHint", text = "" },
-    { name = "DiagnosticSignInfo", text = "" },
+    { name = "DiagnosticSignError", text = icons.lsp.error },
+    { name = "DiagnosticSignWarn", text = icons.lsp.warn },
+    { name = "DiagnosticSignHint", text = icons.lsp.hint },
+    { name = "DiagnosticSignInfo", text = icons.lsp.info },
   }
 
   for _, sign in ipairs(signs) do
