@@ -82,7 +82,7 @@ M.plugins = {
     separators_left = "",
     separators_right = "",
     git_branch = "",
-    tab = (arch == get_arch.android_arch) and "" or "󰌒 ",
+    tab = (arch == get_arch.android_arch) and " " or "󰌒 ",
   },
   mason = {
     installed = "◍",
