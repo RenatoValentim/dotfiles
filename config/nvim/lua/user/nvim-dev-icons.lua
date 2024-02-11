@@ -9,6 +9,12 @@ local icons = require("utils.icons")
 function M.config()
   require("nvim-web-devicons").setup {
     override = {
+      ["txt"] = {
+        icon = icons.plugins.nvim_dev_icon.txt,
+        color = "#89e051",
+        cterm_color = "113",
+        name = "Txt",
+      },
       zsh = {
         icon = icons.plugins.nvim_dev_icon.zsh,
         color = "#428850",

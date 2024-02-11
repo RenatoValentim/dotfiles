@@ -102,6 +102,7 @@ M.plugins = {
     docker = "",
     env    = "",
     go     = (arch == get_arch.android_arch) and "ﳑ" or "",
+    txt = (arch == get_arch.android_arch) and "" or "󰈙",
   },
   nvim_tree = {
     corner = "└",
