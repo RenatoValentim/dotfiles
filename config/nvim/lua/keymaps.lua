@@ -1,9 +1,6 @@
 local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
 
---Remap space as leader key
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
 keymap.set("n", "<Space>", "<Nop>", opts)
 
 keymap.set("n", "<leader>w", ":w<Return>", opts)
