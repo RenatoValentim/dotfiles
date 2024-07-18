@@ -11,6 +11,7 @@ lvim.builtin.gitsigns.opts.current_line_blame_formatter = " <author>, <author_ti
 lvim.builtin.gitsigns.opts.current_line_blame_opts.delay = 5
 lvim.builtin.terminal.open_mapping = "<c-t>"
 lvim.colorscheme = "tokyonight-night"
+lvim.transparent_window = false
 
 lvim.builtin.telescope.theme = "ivy"
 lvim.builtin.telescope.defaults.mappings = require("user.telescope").mappings

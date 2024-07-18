@@ -7,18 +7,18 @@ local can_use_noice = terminal_width >= noice_min_width
 local can_use_notify = terminal_width >= notify_min_width
 can_use_notify = false
 
-local icons = require("utils.icons")
+local icons = require 'utils.icons'
 
 if can_use_noice then
   M = {
-    "folke/noice.nvim",
-    event = "VeryLazy",
+    'folke/noice.nvim',
+    event = 'VeryLazy',
     opts = {
       -- add any options here
     },
     dependencies = {
       -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-      "MunifTanjim/nui.nvim",
+      'MunifTanjim/nui.nvim',
     },
   }
 
@@ -26,13 +26,13 @@ if can_use_noice then
     -- OPTIONAL:
     --   `nvim-notify` is only needed, if you want to use the notification view.
     --   If not available, we use `mini` as the fallback
-    table.insert(M.dependencies, "rcarriga/nvim-notify")
+    table.insert(M.dependencies, 'rcarriga/nvim-notify')
   end
 
   local settings = {
     cmdline = {
       enabled = true, -- enables the Noice cmdline UI
-      view = "cmdline_popup", -- view for rendering the cmdline. Change to `cmdline` to get a classic cmdline at the bottom
+      view = 'cmdline_popup', -- view for rendering the cmdline. Change to `cmdline` to get a classic cmdline at the bottom
       opts = {}, -- global options for the cmdline. See section on views
       ---@type table<string, CmdlineFormat>
       format = {
@@ -41,12 +41,16 @@ if can_use_noice then
         -- opts: any options passed to the view
         -- icon_hl_group: optional hl_group for the icon
         -- title: set to anything or empty string to hide
-        cmdline = { pattern = "^:", icon = icons.plugins.noice.cmdline, lang = "vim" },
-        search_down = { kind = "search", pattern = "^/", icon = icons.plugins.noice.search_down, lang = "regex" },
-        search_up = { kind = "search", pattern = "^%?", icon = icons.plugins.noice.search_up, lang = "regex" },
-        filter = { pattern = "^:%s*!", icon = icons.plugins.noice.filter, lang = "bash" },
-        lua = { pattern = { "^:%s*lua%s+", "^:%s*lua%s*=%s*", "^:%s*=%s*" }, icon = icons.plugins.noice.lua, lang = "lua" },
-        help = { pattern = "^:%s*he?l?p?%s+", icon = icons.plugins.noice.help },
+        cmdline = { pattern = '^:', icon = icons.plugins.noice.cmdline, lang = 'vim' },
+        search_down = { kind = 'search', pattern = '^/', icon = icons.plugins.noice.search_down, lang = 'regex' },
+        search_up = { kind = 'search', pattern = '^%?', icon = icons.plugins.noice.search_up, lang = 'regex' },
+        filter = { pattern = '^:%s*!', icon = icons.plugins.noice.filter, lang = 'bash' },
+        lua = {
+          pattern = { '^:%s*lua%s+', '^:%s*lua%s*=%s*', '^:%s*=%s*' },
+          icon = icons.plugins.noice.lua,
+          lang = 'lua',
+        },
+        help = { pattern = '^:%s*he?l?p?%s+', icon = icons.plugins.noice.help },
         input = {}, -- Used by input()
         -- lua = false, -- to disable a format, set to `false`
       },
@@ -54,17 +58,17 @@ if can_use_noice then
     messages = {
       -- NOTE: If you enable messages, then the cmdline is enabled automatically.
       -- This is a current Neovim limitation.
-      enabled = true, -- enables the Noice messages UI
-      view = "notify", -- default view for messages
-      view_error = "notify", -- view for errors
-      view_warn = "notify", -- view for warnings
-      view_history = "messages", -- view for :messages
-      view_search = "virtualtext", -- view for search count messages. Set to `false` to disable
+      enabled = false, -- enables the Noice messages UI
+      view = 'notify', -- default view for messages
+      view_error = 'notify', -- view for errors
+      view_warn = 'notify', -- view for warnings
+      view_history = 'messages', -- view for :messages
+      view_search = 'virtualtext', -- view for search count messages. Set to `false` to disable
     },
     popupmenu = {
-      enabled = true, -- enables the Noice popupmenu UI
+      enabled = false, -- enables the Noice popupmenu UI
       ---@type 'nui'|'cmp'
-      backend = "nui", -- backend to use to show regular cmdline completions
+      backend = 'nui', -- backend to use to show regular cmdline completions
       ---@type NoicePopupmenuItemKind|false
       -- Icons for completion item kinds (see defaults at noice.config.icons.kinds)
       kind_icons = {}, -- set to `false` to disable icons
@@ -73,37 +77,37 @@ if can_use_noice then
     -- see the section on Command Redirection
     ---@type NoiceRouteConfig
     redirect = {
-      view = "popup",
-      filter = { event = "msg_show" },
+      view = 'popup',
+      filter = { event = 'msg_show' },
     },
     -- You can add any custom commands below that will be available with `:Noice command`
     ---@type table<string, NoiceCommand>
     commands = {
       history = {
         -- options for the message history that you get with `:Noice`
-        view = "split",
-        opts = { enter = true, format = "details" },
+        view = 'split',
+        opts = { enter = true, format = 'details' },
         filter = {
           any = {
-            { event = "notify" },
+            { event = 'notify' },
             { error = true },
             { warning = true },
-            { event = "msg_show", kind = { "" } },
-            { event = "lsp", kind = "message" },
+            { event = 'msg_show', kind = { '' } },
+            { event = 'lsp', kind = 'message' },
           },
         },
       },
       -- :Noice last
       last = {
-        view = "popup",
-        opts = { enter = true, format = "details" },
+        view = 'popup',
+        opts = { enter = true, format = 'details' },
         filter = {
           any = {
-            { event = "notify" },
+            { event = 'notify' },
             { error = true },
             { warning = true },
-            { event = "msg_show", kind = { "" } },
-            { event = "lsp", kind = "message" },
+            { event = 'msg_show', kind = { '' } },
+            { event = 'lsp', kind = 'message' },
           },
         },
         filter_opts = { count = 1 },
@@ -111,8 +115,8 @@ if can_use_noice then
       -- :Noice errors
       errors = {
         -- options for the message history that you get with `:Noice`
-        view = "popup",
-        opts = { enter = true, format = "details" },
+        view = 'popup',
+        opts = { enter = true, format = 'details' },
         filter = { error = true },
         filter_opts = { reverse = true },
       },
@@ -123,8 +127,8 @@ if can_use_noice then
       -- event is always "notify" and kind can be any log level as a string
       -- The default routes will forward notifications to nvim-notify
       -- Benefit of using Noice for this is the routing and consistent history view
-      enabled = true,
-      view = "notify",
+      enabled = false,
+      view = 'notify',
     },
     lsp = {
       progress = {
@@ -132,19 +136,19 @@ if can_use_noice then
         -- Lsp Progress is formatted using the builtins for lsp_progress. See config.format.builtin
         -- See the section on formatting for more details on how to customize.
         --- @type NoiceFormat|string
-        format = "lsp_progress",
+        format = 'lsp_progress',
         --- @type NoiceFormat|string
-        format_done = "lsp_progress_done",
+        format_done = 'lsp_progress_done',
         throttle = 1000 / 30, -- frequency to update lsp progress message
-        view = "mini",
+        view = 'mini',
       },
       override = {
         -- override the default lsp markdown formatter with Noice
-        ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+        ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
         -- override the lsp markdown formatter with Noice
-        ["vim.lsp.util.stylize_markdown"] = true,
+        ['vim.lsp.util.stylize_markdown'] = true,
         -- override cmp documentation with Noice (needs the other options to work)
-        ["cmp.entry.get_documentation"] = true,
+        ['cmp.entry.get_documentation'] = true,
       },
       hover = {
         enabled = true,
@@ -167,34 +171,34 @@ if can_use_noice then
       },
       message = {
         -- Messages shown by lsp servers
-        enabled = true,
-        view = "notify",
+        enabled = false,
+        view = 'notify',
         opts = {},
       },
       -- defaults for hover and signature help
       documentation = {
-        view = "hover",
+        view = 'hover',
         ---@type NoiceViewOptions
         opts = {
-          lang = "markdown",
+          lang = 'markdown',
           replace = true,
-          render = "plain",
-          format = { "{message}" },
-          win_options = { concealcursor = "n", conceallevel = 3 },
+          render = 'plain',
+          format = { '{message}' },
+          win_options = { concealcursor = 'n', conceallevel = 3 },
         },
       },
     },
     markdown = {
       hover = {
-        ["|(%S-)|"] = vim.cmd.help, -- vim help links
+        ['|(%S-)|'] = vim.cmd.help, -- vim help links
       },
       highlights = {
-        ["|%S-|"] = "@text.reference",
-        ["@%S+"] = "@parameter",
-        ["^%s*(Parameters:)"] = "@text.title",
-        ["^%s*(Return:)"] = "@text.title",
-        ["^%s*(See also:)"] = "@text.title",
-        ["{%S-}"] = "@parameter",
+        ['|%S-|'] = '@text.reference',
+        ['@%S+'] = '@parameter',
+        ['^%s*(Parameters:)'] = '@text.title',
+        ['^%s*(Return:)'] = '@text.title',
+        ['^%s*(See also:)'] = '@text.title',
+        ['{%S-}'] = '@parameter',
       },
     },
     health = {
@@ -204,7 +208,7 @@ if can_use_noice then
       -- noice tries to move out of the way of existing floating windows.
       enabled = true, -- you can disable this behaviour here
       -- add any filetypes here, that shouldn't trigger smart move.
-      excluded_filetypes = { "cmp_menu", "cmp_docs", "notify" },
+      excluded_filetypes = { 'cmp_menu', 'cmp_docs', 'notify' },
     },
     ---@type NoicePresets
     presets = {
@@ -248,8 +252,8 @@ if can_use_noice then
   }
 
   function M.config()
-    settings.markdown.hover["%[.-%]%((%S-)%)"] = require("noice.util").open -- markdown links
-    require("noice").setup(settings)
+    settings.markdown.hover['%[.-%]%((%S-)%)'] = require('noice.util').open -- markdown links
+    require('noice').setup(settings)
   end
 
   return M

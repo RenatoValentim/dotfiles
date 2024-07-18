@@ -1,18 +1,18 @@
 local M = {
-  "jose-elias-alvarez/null-ls.nvim",
-  event = "BufReadPre",
-  commit = "60b4a7167c79c7d04d1ff48b55f2235bf58158a7",
+  'jose-elias-alvarez/null-ls.nvim',
+  event = 'BufReadPre',
+  commit = '60b4a7167c79c7d04d1ff48b55f2235bf58158a7',
   dependencies = {
     {
-      "nvim-lua/plenary.nvim",
-      commit = "9a0d3bf7b832818c042aaf30f692b081ddd58bd9",
+      'nvim-lua/plenary.nvim',
+      commit = '9a0d3bf7b832818c042aaf30f692b081ddd58bd9',
       lazy = true,
     },
   },
 }
 
 function M.config()
-  local null_ls_status_ok, null_ls = pcall(require, "null-ls")
+  local null_ls_status_ok, null_ls = pcall(require, 'null-ls')
   if not null_ls_status_ok then
     return
   end
@@ -26,15 +26,16 @@ function M.config()
   null_ls.setup {
     debug = false,
     sources = {
-      formatting.prettier.with {
-        extra_filetypes = { "toml" },
-        extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote", "--print-width", "120" },
-      },
-      formatting.black.with { extra_args = { "--fast" } },
-      formatting.blue.with { extra_args = { "--fast" } },
+      formatting.prettier,
+      -- formatting.prettier.with {
+      --   extra_filetypes = { "toml" },
+      --   extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote", "--print-width", "120" },
+      -- },
+      formatting.black,
+      formatting.blue.with { extra_args = { '--fast' } },
       formatting.stylua,
-      formatting.google_java_format,
-      diagnostics.flake8,
+      -- formatting.google_java_format,
+      -- diagnostics.flake8,
     },
   }
 end

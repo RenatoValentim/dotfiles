@@ -1,17 +1,17 @@
 local M = {
-  "kyazdani42/nvim-tree.lua",
-  commit = "59e65d88db177ad1e6a8cffaafd4738420ad20b6",
-  event = "VimEnter",
+  'kyazdani42/nvim-tree.lua',
+  commit = '59e65d88db177ad1e6a8cffaafd4738420ad20b6',
+  event = 'VimEnter',
   dependencies = {
-    "nvim-tree/nvim-web-devicons", -- optional, for file icons
+    'nvim-tree/nvim-web-devicons', -- optional, for file icons
   },
 }
 
-local icons = require("utils.icons")
+local icons = require 'utils.icons'
 
 function M.config()
-  local tree_cb = require("nvim-tree.config").nvim_tree_callback
-  require("nvim-tree").setup {
+  local tree_cb = require('nvim-tree.config').nvim_tree_callback
+  require('nvim-tree').setup {
     git = {
       enable = true,
       ignore = false,
@@ -28,8 +28,8 @@ function M.config()
       group_empty = false,
       highlight_git = true,
       full_name = false,
-      highlight_opened_files = "none",
-      root_folder_modifier = ":t",
+      highlight_opened_files = 'none',
+      root_folder_modifier = ':t',
       indent_width = 2,
       indent_markers = {
         enable = true,
@@ -42,7 +42,7 @@ function M.config()
         },
       },
       icons = {
-        git_placement = "before",
+        git_placement = 'before',
         padding = icons.plugins.nvim_tree.padding,
         symlink_arrow = icons.plugins.nvim_tree.symlink_arrow,
         glyphs = {
@@ -84,9 +84,9 @@ function M.config()
       adaptive_size = true,
       mappings = {
         list = {
-          { key = { "l", "<CR>", "o" }, cb = tree_cb "edit" },
-          { key = "h", cb = tree_cb "close_node" },
-          { key = "v", cb = tree_cb "vsplit" },
+          { key = { 'l', '<CR>', 'o' }, cb = tree_cb 'edit' },
+          { key = 'h', cb = tree_cb 'close_node' },
+          { key = 'v', cb = tree_cb 'vsplit' },
         },
       },
     },

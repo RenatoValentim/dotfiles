@@ -1,13 +1,20 @@
 local M = {
-  "glepnir/lspsaga.nvim",
-  branch = "main",
-  event = "LspAttach",
+  'glepnir/lspsaga.nvim',
+  branch = 'main',
+  event = 'LspAttach',
   dependencies = {
-    "nvim-tree/nvim-web-devicons",
-    "nvim-treesitter/nvim-treesitter"
+    'nvim-tree/nvim-web-devicons',
+    'nvim-treesitter/nvim-treesitter',
+  },
+  keys = {
+    {
+      '<leader>ua',
+      ':Lspsaga code_action<Return>',
+      desc = 'Code Action',
+    },
   },
 }
-local icons = require("utils.icons")
+local icons = require 'utils.icons'
 
 local settings = {
   symbol_in_winbar = {
@@ -22,7 +29,7 @@ local settings = {
 }
 
 function M.config()
-  local lspsaga = require "lspsaga"
+  local lspsaga = require 'lspsaga'
 
   lspsaga.setup(settings)
 end

@@ -1,5 +1,5 @@
-vim.api.nvim_create_autocmd({ "FileType" }, {
-  pattern = { "qf", "help", "man", "lspinfo", "spectre_panel" },
+vim.api.nvim_create_autocmd({ 'FileType' }, {
+  pattern = { 'qf', 'help', 'man', 'lspinfo', 'spectre_panel' },
   callback = function()
     vim.cmd [[
       nnoremap <silent> <buffer> q :close<CR>
@@ -8,8 +8,8 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
   end,
 })
 
-vim.api.nvim_create_autocmd({ "FileType" }, {
-  pattern = { "gitcommit", "markdown" },
+vim.api.nvim_create_autocmd({ 'FileType' }, {
+  pattern = { 'gitcommit', 'markdown' },
   callback = function()
     vim.opt_local.wrap = true
     vim.opt_local.spell = true
@@ -17,53 +17,53 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 })
 
 vim.cmd "autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif"
-vim.cmd([[autocmd BufEnter * if (winnr("$") == 1 && exists("b:current_syntax") && b:current_syntax == "treeview") | NvimTreeFindFile | endif]])
+vim.cmd [[autocmd BufEnter * if (winnr("$") == 1 && exists("b:current_syntax") && b:current_syntax == "treeview") | NvimTreeFindFile | endif]]
 
-vim.api.nvim_create_autocmd({ "VimResized" }, {
+vim.api.nvim_create_autocmd({ 'VimResized' }, {
   callback = function()
-    vim.cmd "tabdo wincmd ="
+    vim.cmd 'tabdo wincmd ='
   end,
 })
 
-vim.api.nvim_create_autocmd({ "CmdWinEnter" }, {
+vim.api.nvim_create_autocmd({ 'CmdWinEnter' }, {
   callback = function()
-    vim.cmd "quit"
+    vim.cmd 'quit'
   end,
 })
 
-vim.api.nvim_create_autocmd({ "TextYankPost" }, {
+vim.api.nvim_create_autocmd({ 'TextYankPost' }, {
   callback = function()
-    vim.highlight.on_yank { higroup = "Visual", timeout = 200 }
+    vim.highlight.on_yank { higroup = 'Visual', timeout = 200 }
   end,
 })
 
-vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-  pattern = { "*.java" },
+vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
+  pattern = { '*.java' },
   callback = function()
     vim.lsp.codelens.refresh()
   end,
 })
 
-vim.api.nvim_create_autocmd({ "VimEnter" }, {
+vim.api.nvim_create_autocmd({ 'VimEnter' }, {
   callback = function()
-    vim.cmd "hi link illuminatedWord LspReferenceText"
+    vim.cmd 'hi link illuminatedWord LspReferenceText'
   end,
 })
 
-vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
+vim.api.nvim_create_autocmd({ 'BufWinEnter' }, {
   callback = function()
     local line_count = vim.api.nvim_buf_line_count(0)
     if line_count >= 5000 then
-      vim.cmd "IlluminatePauseBuf"
+      vim.cmd 'IlluminatePauseBuf'
     end
   end,
 })
 
-local format_sync_grp = vim.api.nvim_create_augroup("GoImport", {})
-vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = "*.go",
+local format_sync_grp = vim.api.nvim_create_augroup('GoImport', {})
+vim.api.nvim_create_autocmd('BufWritePre', {
+  pattern = '*.go',
   callback = function()
-    require("go.format").goimport()
+    require('go.format').goimport()
   end,
   group = format_sync_grp,
 })

@@ -1,11 +1,11 @@
 local M = {
-  "norcalli/nvim-colorizer.lua",
+  'norcalli/nvim-colorizer.lua',
 }
 
 function M.config()
-  local colorizer = require "colorizer"
+  local colorizer = require 'colorizer'
 
-  colorizer.setup({ "*" }, {
+  colorizer.setup({ '*' }, {
     RGB = true, -- #RGB hex codes
     RRGGBB = true, -- #RRGGBB hex codes
     RRGGBBAA = true, -- #RRGGBBAA hex codes

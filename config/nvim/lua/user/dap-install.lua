@@ -4,9 +4,10 @@ local M = {
 }
 
 function M.config()
-  require("dap-install").setup {}
-  require("dap-install").config("python", {})
-  require("dap-install").config("go_delve", {})
+  local dap_inatall = require("dap-install")
+  dap_inatall.setup {}
+  dap_inatall.config("python", {})
+  dap_inatall.config("go_delve", {})
 end
 
 return M

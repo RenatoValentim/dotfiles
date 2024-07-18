@@ -1,10 +1,10 @@
 local M = {
-  "lukas-reineke/indent-blankline.nvim",
-  commit = "8299fe7703dfff4b1752aeed271c3b95281a952d",
-  event = "BufReadPre",
+  'lukas-reineke/indent-blankline.nvim',
+  commit = '8299fe7703dfff4b1752aeed271c3b95281a952d',
+  event = 'BufReadPre',
 }
 
-local icons = require("utils.icons")
+local icons = require 'utils.icons'
 
 M.opts = {
   char = icons.plugins.indent_blankline.char,
@@ -12,10 +12,10 @@ M.opts = {
   show_first_indent_level = true,
   use_treesitter = true,
   show_current_context = true,
-  buftype_exclude = { "terminal", "nofile" },
+  buftype_exclude = { 'terminal', 'nofile' },
   filetype_exclude = {
-    "help",
-    "NvimTree",
+    'help',
+    'NvimTree',
   },
 }
 
