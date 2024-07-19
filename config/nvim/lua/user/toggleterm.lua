@@ -10,7 +10,7 @@ function M.config()
     return
   end
 
-  toggleterm.setup {
+  toggleterm.setup({
     size = 20,
     open_mapping = [[<c-t>]],
     hide_numbers = true,
@@ -27,7 +27,7 @@ function M.config()
       width = 100000,
       height = 40,
     },
-  }
+  })
 
   function _G.set_terminal_keymaps()
     local opts = { noremap = true }
@@ -38,10 +38,10 @@ function M.config()
     -- vim.api.nvim_buf_set_keymap(0, "t", "<C-l>", [[<C-\><C-n><C-W>l]], opts)
   end
 
-  vim.cmd 'autocmd! TermOpen term://* lua set_terminal_keymaps()'
+  vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
 
   local Terminal = require('toggleterm.terminal').Terminal
-  local lazygit = Terminal:new {
+  local lazygit = Terminal:new({
     cmd = 'lazygit',
     hidden = true,
     direction = 'float',
@@ -51,11 +51,11 @@ function M.config()
       height = 45,
     },
     on_open = function(_)
-      vim.cmd 'startinsert!'
+      vim.cmd('startinsert!')
     end,
     on_close = function(_) end,
     count = 99,
-  }
+  })
 
   function _LAZYGIT_TOGGLE()
     lazygit:toggle()

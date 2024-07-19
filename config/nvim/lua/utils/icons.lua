@@ -1,4 +1,4 @@
-local get_arch = require 'utils.get-os-architecture'
+local get_arch = require('utils.get-os-architecture')
 local arch = get_arch.getLinuxArchitecture()
 
 local M = {}

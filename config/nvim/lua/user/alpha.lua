@@ -1,5 +1,5 @@
-local icons = require 'utils.icons'
-local actions = require 'utils.actions'
+local icons = require('utils.icons')
+local actions = require('utils.actions')
 
 local M = {
   'goolord/alpha-nvim',
@@ -8,8 +8,8 @@ local M = {
 }
 
 function M.config()
-  local alpha = require 'alpha'
-  local dashboard = require 'alpha.themes.dashboard'
+  local alpha = require('alpha')
+  local dashboard = require('alpha.themes.dashboard')
   dashboard.section.header.val = {
     '                                                     ',
     '                                                     ',

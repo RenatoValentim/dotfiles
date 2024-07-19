@@ -3,7 +3,7 @@ local M = {
 }
 
 function M.config()
-  require('transparent').setup { -- Optional, you don't have to run setup.
+  require('transparent').setup({ -- Optional, you don't have to run setup.
     groups = { -- table: default groups
       'Normal',
       'NormalNC',
@@ -37,10 +37,10 @@ function M.config()
       'TelescopeNormal', -- Telescope
     },
     exclude_groups = {}, -- table: groups you don't want to clear
-  }
+  })
 
-  require('tokyonight').setup { transparent = vim.g.transparent_enabled }
-  require('transparent').clear_prefix 'BufferLine'
+  require('tokyonight').setup({ transparent = vim.g.transparent_enabled })
+  require('transparent').clear_prefix('BufferLine')
   -- require('transparent').clear_prefix('lualine')
 end
 

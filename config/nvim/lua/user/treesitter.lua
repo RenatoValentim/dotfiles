@@ -22,15 +22,15 @@ local M = {
 }
 
 function M.config()
-  local treesitter = require 'nvim-treesitter'
-  local configs = require 'nvim-treesitter.configs'
+  local treesitter = require('nvim-treesitter')
+  local configs = require('nvim-treesitter.configs')
   local status, ts_context = pcall(require, 'treesitter-context')
   if not status then
     vim.notify('Failed to load treesitter-context', vim.log.levels.ERROR)
     return
   end
 
-  configs.setup {
+  configs.setup({
     ensure_installed = {
       'lua',
       'markdown',
@@ -91,7 +91,7 @@ function M.config()
       -- Silenciar erros ao não carregar contexto
       silent = true,
     },
-  }
+  })
 end
 
 return M

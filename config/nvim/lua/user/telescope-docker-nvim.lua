@@ -1,4 +1,4 @@
-local actions = require 'utils.actions'
+local actions = require('utils.actions')
 
 return {
   'krisajenkins/telescope-docker.nvim',
@@ -7,8 +7,8 @@ return {
     'nvim-telescope/telescope.nvim',
   },
   config = function()
-    require('telescope').load_extension 'telescope_docker'
-    require('telescope_docker').setup {}
+    require('telescope').load_extension('telescope_docker')
+    require('telescope_docker').setup({})
   end,
 
   -- Example keybindings. Adjust these to suit your preferences or remove

@@ -1,10 +1,10 @@
 vim.api.nvim_create_autocmd({ 'FileType' }, {
   pattern = { 'qf', 'help', 'man', 'lspinfo', 'spectre_panel' },
   callback = function()
-    vim.cmd [[
+    vim.cmd([[
       nnoremap <silent> <buffer> q :close<CR>
       set nobuflisted
-    ]]
+    ]])
   end,
 })
 
@@ -16,24 +16,26 @@ vim.api.nvim_create_autocmd({ 'FileType' }, {
   end,
 })
 
-vim.cmd "autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif"
-vim.cmd [[autocmd BufEnter * if (winnr("$") == 1 && exists("b:current_syntax") && b:current_syntax == "treeview") | NvimTreeFindFile | endif]]
+vim.cmd("autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif")
+vim.cmd(
+  [[autocmd BufEnter * if (winnr("$") == 1 && exists("b:current_syntax") && b:current_syntax == "treeview") | NvimTreeFindFile | endif]]
+)
 
 vim.api.nvim_create_autocmd({ 'VimResized' }, {
   callback = function()
-    vim.cmd 'tabdo wincmd ='
+    vim.cmd('tabdo wincmd =')
   end,
 })
 
 vim.api.nvim_create_autocmd({ 'CmdWinEnter' }, {
   callback = function()
-    vim.cmd 'quit'
+    vim.cmd('quit')
   end,
 })
 
 vim.api.nvim_create_autocmd({ 'TextYankPost' }, {
   callback = function()
-    vim.highlight.on_yank { higroup = 'Visual', timeout = 200 }
+    vim.highlight.on_yank({ higroup = 'Visual', timeout = 200 })
   end,
 })
 
@@ -46,7 +48,7 @@ vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
 
 vim.api.nvim_create_autocmd({ 'VimEnter' }, {
   callback = function()
-    vim.cmd 'hi link illuminatedWord LspReferenceText'
+    vim.cmd('hi link illuminatedWord LspReferenceText')
   end,
 })
 
@@ -54,7 +56,7 @@ vim.api.nvim_create_autocmd({ 'BufWinEnter' }, {
   callback = function()
     local line_count = vim.api.nvim_buf_line_count(0)
     if line_count >= 5000 then
-      vim.cmd 'IlluminatePauseBuf'
+      vim.cmd('IlluminatePauseBuf')
     end
   end,
 })

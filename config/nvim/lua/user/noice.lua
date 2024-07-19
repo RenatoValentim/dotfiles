@@ -7,7 +7,7 @@ local can_use_noice = terminal_width >= noice_min_width
 local can_use_notify = terminal_width >= notify_min_width
 can_use_notify = false
 
-local icons = require 'utils.icons'
+local icons = require('utils.icons')
 
 if can_use_noice then
   M = {

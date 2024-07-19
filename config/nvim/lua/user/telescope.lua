@@ -1,4 +1,4 @@
-local actions = require 'utils.actions'
+local actions = require('utils.actions')
 
 local M = {
   'nvim-telescope/telescope.nvim',
@@ -53,20 +53,20 @@ local M = {
   },
 }
 
-local icons = require 'utils.icons'
+local icons = require('utils.icons')
 
 function M.config()
-  local telescope = require 'telescope'
+  local telescope = require('telescope')
 
-  local actions = require 'telescope.actions'
+  local actions = require('telescope.actions')
 
   local function telescope_buffer_dir()
-    return vim.fn.expand '%:p:h'
+    return vim.fn.expand('%:p:h')
   end
 
   local fb_actions = require('telescope').extensions.file_browser.actions
 
-  telescope.setup {
+  telescope.setup({
     defaults = {
       prompt_prefix = icons.plugins.telescope.prompt_prefix,
       selection_caret = icons.plugins.telescope.selection_caret,
@@ -94,7 +94,7 @@ function M.config()
           -- your custom insert mode mappings
           ['i'] = {
             ['<C-w>'] = function()
-              vim.cmd 'normal vbd'
+              vim.cmd('normal vbd')
             end,
           },
           ['n'] = {
@@ -106,18 +106,18 @@ function M.config()
             ['x'] = fb_actions.remove,
             ['h'] = fb_actions.goto_parent_dir,
             ['/'] = function()
-              vim.cmd 'startinsert'
+              vim.cmd('startinsert')
             end,
           },
         },
       },
     },
-  }
+  })
 
-  telescope.load_extension 'file_browser'
+  telescope.load_extension('file_browser')
 
   vim.keymap.set('n', '<leader>fe', function()
-    telescope.extensions.file_browser.file_browser {
+    telescope.extensions.file_browser.file_browser({
       path = '%:p:h',
       cwd = telescope_buffer_dir(),
       respect_gitignore = false,
@@ -126,7 +126,7 @@ function M.config()
       previewer = false,
       initial_mode = 'normal',
       layout_config = { height = 40 },
-    }
+    })
   end)
 end
 

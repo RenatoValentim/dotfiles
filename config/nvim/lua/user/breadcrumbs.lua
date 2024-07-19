@@ -14,7 +14,7 @@ local M = {
     },
   },
 }
-local icons = require 'utils.icons'
+local icons = require('utils.icons')
 
 local settings = {
   symbol_in_winbar = {
@@ -29,7 +29,7 @@ local settings = {
 }
 
 function M.config()
-  local lspsaga = require 'lspsaga'
+  local lspsaga = require('lspsaga')
 
   lspsaga.setup(settings)
 end

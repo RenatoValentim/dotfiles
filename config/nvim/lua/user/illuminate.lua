@@ -5,7 +5,7 @@ local M = {
 }
 
 function M.config()
-  local illuminate = require 'illuminate'
+  local illuminate = require('illuminate')
   vim.g.Illuminate_ftblacklist = { 'alpha', 'NvimTree' }
   vim.api.nvim_set_keymap(
     'n',
@@ -20,7 +20,7 @@ function M.config()
     { noremap = true }
   )
 
-  illuminate.configure {
+  illuminate.configure({
     providers = {
       'lsp',
       'treesitter',
@@ -47,7 +47,7 @@ function M.config()
     providers_regex_syntax_denylist = {},
     providers_regex_syntax_allowlist = {},
     under_cursor = true,
-  }
+  })
 end
 
 return M

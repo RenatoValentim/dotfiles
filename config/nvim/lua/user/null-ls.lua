@@ -23,7 +23,7 @@ function M.config()
   local diagnostics = null_ls.builtins.diagnostics
 
   -- https://github.com/prettier-solidity/prettier-plugin-solidity
-  null_ls.setup {
+  null_ls.setup({
     debug = false,
     sources = {
       formatting.prettier,
@@ -32,12 +32,12 @@ function M.config()
       --   extra_args = { "--no-semi", "--single-quote", "--jsx-single-quote", "--print-width", "120" },
       -- },
       formatting.black,
-      formatting.blue.with { extra_args = { '--fast' } },
+      formatting.blue.with({ extra_args = { '--fast' } }),
       formatting.stylua,
       -- formatting.google_java_format,
       -- diagnostics.flake8,
     },
-  }
+  })
 end
 
 return M

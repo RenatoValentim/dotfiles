@@ -3,7 +3,7 @@ local M = {
 }
 
 function M.config()
-  local colorizer = require 'colorizer'
+  local colorizer = require('colorizer')
 
   colorizer.setup({ '*' }, {
     RGB = true, -- #RGB hex codes

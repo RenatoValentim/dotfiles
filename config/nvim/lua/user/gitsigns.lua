@@ -4,7 +4,7 @@ local M = {
   event = 'BufReadPre',
 }
 
-local icons = require 'utils.icons'
+local icons = require('utils.icons')
 
 M.opts = {
   signs = {

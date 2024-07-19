@@ -10,10 +10,10 @@ local M = {
   },
 }
 
-local icons = require 'utils.icons'
+local icons = require('utils.icons')
 
 function M.config()
-  require('dapui').setup {
+  require('dapui').setup({
     expand_lines = true,
     icons = {
       expanded = icons.plugins.dapui.expanded,
@@ -73,7 +73,7 @@ function M.config()
         close = { 'q', '<Esc>' },
       },
     },
-  }
+  })
 
   vim.fn.sign_define(
     'DapBreakpoint',

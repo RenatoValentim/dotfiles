@@ -13,9 +13,9 @@ local M = {
   },
 }
 
-local icons = require 'utils.icons'
+local icons = require('utils.icons')
 
-local cmp_nvim_lsp = require 'cmp_nvim_lsp'
+local cmp_nvim_lsp = require('cmp_nvim_lsp')
 function M.config()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -42,7 +42,7 @@ function M.config()
     keymap(bufnr, 'n', '<leader>lq', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
   end
 
-  local lspconfig = require 'lspconfig'
+  local lspconfig = require('lspconfig')
   local on_attach = function(client, bufnr)
     if client.name == 'tsserver' then
       client.server_capabilities.documentFormattingProvider = false

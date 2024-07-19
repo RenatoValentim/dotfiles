@@ -3,8 +3,13 @@ local actions = require('utils.actions')
 local M = {
   'folke/trouble.nvim',
   cmd = 'Trouble',
-  opts = {},
+  opts = {
+    auto_close = true,
+  },
   keys = {
+    r = 'refresh',
+    q = 'close',
+    o = 'jump_close',
     {
       '<leader>td',
       actions.trouble.diagnostics.command,
