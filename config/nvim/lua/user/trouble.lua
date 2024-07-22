@@ -11,7 +11,7 @@ local M = {
     q = 'close',
     o = 'jump_close',
     {
-      '<leader>td',
+      '<leader>tdd',
       actions.trouble.diagnostics.command,
       actions.trouble.diagnostics.desc,
     },
@@ -21,14 +21,12 @@ local M = {
       actions.trouble.diagnostics_current_file.desc,
     },
     {
-      '<leader>cs',
+      '<leader>ts',
       actions.trouble.symbols.command,
       actions.trouble.symbols.desc,
     },
     {
       '<leader>tr',
-      '<cmd>Trouble lsp toggle focus=true<Return>',
-      desc = 'LSP Definitions / references / ... (Trouble)',
       actions.trouble.lsp_definitions_references.command,
       actions.trouble.lsp_definitions_references.desc,
     },

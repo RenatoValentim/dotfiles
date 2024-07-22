@@ -205,6 +205,7 @@ function M.config()
         },
         q = { actions.trouble.qflist.command, actions.trouble.qflist.desc },
         l = { actions.trouble.loclist.command, actions.trouble.loclist.desc },
+        s = { actions.trouble.symbols.command, actions.trouble.symbols.desc },
       },
     },
   }
