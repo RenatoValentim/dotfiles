@@ -6,7 +6,7 @@ if wezterm.config_builder then
   config = wezterm.config_builder()
 end
 
-config.color_scheme = "tokyonight_night"
+config.color_scheme = "tokyonight_night" -- tokyonight tokyonight_night tokyonight_storm tokyonight_day tokyonight_moon
 config.enable_tab_bar = false
 config.warn_about_missing_glyphs = false
 config.window_background_opacity = 1

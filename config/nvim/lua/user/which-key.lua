@@ -91,7 +91,11 @@ function M.config()
       ['Q'] = { ':q!<Return>', 'Force quit' },
       ['N'] = { ':e $MYVIMRC <CR>', 'Open neovim config file' },
       ['e'] = { ':NvimTreeToggle<Return>', 'NvimTree' },
-      ['c'] = { ':!', 'CMD Filter' },
+      c = {
+        name = 'CMDs',
+        f = { ':!', 'CMD Filer' },
+        c = { ':', 'CMD mode' },
+      },
       d = {
         name = 'Debug',
         t = { "<cmd>lua require'dap'.toggle_breakpoint()<cr>", 'Toggle Breakpoint' },
@@ -194,6 +198,7 @@ function M.config()
           i = { actions.telescope.docker_images.command, actions.telescope.docker_images.desc },
           p = { actions.telescope.docker_processes.command, actions.telescope.docker_processes.desc },
         },
+        l = { ':luafile %<Return>', 'Reload current Lua file' },
       },
       t = {
         name = 'Trouble',
