@@ -74,7 +74,7 @@ return {
       desc = 'Buffer Diagnostics (Trouble)',
     },
     symbols = {
-      command = '<cmd>Trouble symbols toggle focus=true<Return>',
+      command = '<cmd>Trouble symbols toggle focus=true win.position=bottom<Return>',
       desc = 'Symbols (Trouble)',
     },
     lsp_definitions_references = {
