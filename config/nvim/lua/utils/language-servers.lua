@@ -14,6 +14,7 @@ M.servers = {
   -- "sqls",
   'eslint',
   'prismals',
+  'vimls'
 }
 
 -- if on Linux distro
