@@ -90,7 +90,6 @@ plugins=(
   tmux
   tmux-cssh
   tmuxinator
-
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -166,5 +165,3 @@ zinit light zdharma-continuum/fast-syntax-highlighting
 
 # Snippet
 zinit snippet https://gist.githubusercontent.com/hightemp/5071909/raw/
-
-source <(fzf --zsh)
