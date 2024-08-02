@@ -1,7 +1,7 @@
 return {
   'David-Kunz/gen.nvim',
   opts = {
-    model = 'codellama', -- The default model to use.
+    model = 'llama3.1', -- The default model to use. llama3.1 phi3 codellama
     quit_map = 'q', -- set keymap for close the response window
     retry_map = '<c-r>', -- set keymap to re-send the current prompt
     accept_map = '<c-cr>', -- set keymap to replace the previous selection with the last result
@@ -11,7 +11,7 @@ return {
     show_prompt = false, -- Shows the prompt submitted to Ollama.
     show_model = false, -- Displays which model you are using at the beginning of your chat session.
     no_auto_close = false, -- Never closes the window automatically.
-    hidden = true, -- Hide the generation window (if true, will implicitly set `prompt.replace = true`)
+    hidden = false, -- Hide the generation window (if true, will implicitly set `prompt.replace = true`)
     init = function(options)
       pcall(io.popen, 'ollama serve > /dev/null 2>&1 &')
     end,
