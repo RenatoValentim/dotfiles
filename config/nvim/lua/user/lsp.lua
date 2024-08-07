@@ -70,6 +70,35 @@ function M.config()
       }
     end
 
+    if server == 'yamlls' then
+      Opts.settings = Opts.settings or {}
+      Opts.settings.yaml = {
+        schemaStore = {
+          -- You must disable built-in schemaStore support if you want to use
+          -- this plugin and its advanced options like `ignore`.
+          enable = false,
+          -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
+          url = "",
+        },
+        schemas = require('schemastore').yaml.schemas(),
+      }
+    end
+
+    if server == 'emmet_ls' then
+      Opts.filetypes = Opts.filetypes or {}
+      Opts.init_options = Opts.init_options or {}
+      Opts.filetypes = { "css", "eruby", "html", "javascript", "javascriptreact", "less", "sass", "scss", "svelte", "pug",
+        "typescriptreact", "vue" }
+      Opts.init_options = {
+        html = {
+          options = {
+            -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
+            ["bem.enabled"] = true,
+          },
+        },
+      }
+    end
+
     server = vim.split(server, '@')[1]
 
     local require_ok, conf_opts = pcall(require, 'settings.' .. server)
@@ -82,9 +111,9 @@ function M.config()
 
   local signs = {
     { name = 'DiagnosticSignError', text = icons.lsp.transparent_error },
-    { name = 'DiagnosticSignWarn', text = icons.lsp.transparent_warn },
-    { name = 'DiagnosticSignHint', text = icons.lsp.transparent_hint },
-    { name = 'DiagnosticSignInfo', text = icons.lsp.transparent_info },
+    { name = 'DiagnosticSignWarn',  text = icons.lsp.transparent_warn },
+    { name = 'DiagnosticSignHint',  text = icons.lsp.transparent_hint },
+    { name = 'DiagnosticSignInfo',  text = icons.lsp.transparent_info },
   }
 
   for _, sign in ipairs(signs) do

@@ -2,6 +2,7 @@ local M = {
   'rcarriga/nvim-notify',
   opts = {
     -- render = 'default', -- default minimal simple compact wrapped-compact wrapped-default
+    background_colour = "#000000"
   },
 }
 

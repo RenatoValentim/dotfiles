@@ -6,5 +6,11 @@ return {
     opts.scroll = {
       enable = false,
     }
-  end,
+    opts.open = {
+     enable = false
+    }
+    opts.close = {
+     enable = false
+    }
+end,
 }

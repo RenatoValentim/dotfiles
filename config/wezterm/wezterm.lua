@@ -9,7 +9,7 @@ end
 config.color_scheme = "tokyonight_night" -- tokyonight tokyonight_night tokyonight_storm tokyonight_day tokyonight_moon
 config.enable_tab_bar = false
 config.warn_about_missing_glyphs = false
-config.window_background_opacity = 1
+config.window_background_opacity = 0.9
 config.font = wezterm.font("JetBrains Mono", {
   weight = "Regular", -- "Regular" "Thin" "ExtraLight" "Light" "DemiLight" "Book" "Regular" "Medium" "DemiBold" "Bold" "ExtraBold" "Black" "ExtraBlack"
   italic = true,
