@@ -10,8 +10,9 @@ config.color_scheme = "tokyonight_night" -- tokyonight tokyonight_night tokyonig
 config.enable_tab_bar = false
 config.warn_about_missing_glyphs = false
 config.window_background_opacity = 0.9
+-- MesloLGS NF
 config.font = wezterm.font("JetBrains Mono", {
-  weight = "Regular", -- "Regular" "Thin" "ExtraLight" "Light" "DemiLight" "Book" "Regular" "Medium" "DemiBold" "Bold" "ExtraBold" "Black" "ExtraBlack"
+  weight = "Regular",
   italic = true,
 })
 config.font_size = 13.0
