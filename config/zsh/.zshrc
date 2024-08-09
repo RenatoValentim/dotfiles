@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
@@ -8,7 +15,8 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time Oh My Zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="af-magic" # robbyrussell af-magic
+# ZSH_THEME="af-magic" # robbyrussell af-magic
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -131,15 +139,6 @@ source $ZSH/oh-my-zsh.sh
 ### Required to the installation of the gossdeep package
 export CGO_LDFLAGS_ALLOW="^-[Il].*$"
 
-## Personal alias
-# python
-alias p3="python3"
-
-# utils
-alias lg="lazygit"
-alias la="exa -laF --icons --header"
-alias ll="exa -lF --icons --header"
-
 # Load private if True
 [ -f $HOME/.secrets.zsh ] && source $HOME/.secrets.zsh
 
@@ -156,12 +155,59 @@ source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
-# Plugin history-search-multi-word loaded with investigating.
 zinit load zdharma-continuum/history-search-multi-word
-
-# Two regular plugins loaded without investigating.
+zinit light zsh-users/zsh-history-substring-search
 zinit light zsh-users/zsh-autosuggestions
 zinit light zdharma-continuum/fast-syntax-highlighting
+zinit light zsh-users/zsh-completions
+zinit light Aloxaf/fzf-tab
 
-# Snippet
-zinit snippet https://gist.githubusercontent.com/hightemp/5071909/raw/
+# Load completions
+autoload -Uz compinit && compinit
+
+zinit cdreplay -q
+
+# Keybindings
+bindkey -e
+bindkey '^p' history-search-backward
+bindkey '^n' history-search-forward
+bindkey '^[w' kill-region
+
+# History
+HISTSIZE=5000
+HISTFILE=~/.zsh_history
+SAVEHIST=$HISTSIZE
+HISTDUP=erase
+setopt appendhistory
+setopt sharehistory
+setopt hist_ignore_space
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_ignore_dups
+setopt hist_find_no_dups
+
+# Completion styling
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' menu no
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
+
+## Personal alias
+# python
+alias p3="python3"
+
+# utils
+alias lg="lazygit"
+alias la="exa -laF --icons --header"
+alias ll="exa -lF --icons --header"
+alias v="nvim"
+
+# Define Go paths
+export GOROOT=$(asdf where golang)/go
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin:$GOROOT/bin
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+eval "$(zoxide init zsh)"

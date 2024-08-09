@@ -16,6 +16,7 @@ M.servers = {
   'prismals',
   'vimls',
   'emmet_ls',
+  'tailwindcss'
 }
 
 -- if on Linux distro
