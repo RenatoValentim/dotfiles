@@ -16,7 +16,6 @@ local M = {
     {
       'romgrk/nvim-treesitter-context',
       event = 'VeryLazy',
-      commit = 'add_the_commit_you_want_here',
     },
   },
 }

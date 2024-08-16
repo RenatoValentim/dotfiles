@@ -84,11 +84,31 @@ function M.config()
       }
     end
 
+    if server == 'tailwindcss' then
+      Opts.settings = Opts.settings or {}
+      Opts.filetypes = { 'aspnetcorerazor', 'astro', 'astro-markdown', 'blade', 'clojure', 'django-html', 'htmldjango',
+        'edge', 'eelixir', 'elixir', 'ejs', 'erb', 'eruby', 'gohtml', 'gohtmltmpl', 'haml', 'handlebars', 'hbs', 'html',
+        'htmlangular', 'html-eex', 'heex', 'jade', 'leaf', 'liquid', 'markdown', 'mdx', 'mustache', 'njk', 'nunjucks',
+        'php', 'razor', 'slim', 'twig', 'css', 'less', 'postcss', 'sass', 'scss', 'stylus', 'sugarss',
+        'javascriptreact', 'reason', 'rescript', 'typescriptreact', 'vue', 'svelte', 'templ' }
+    end
+
     if server == 'emmet_ls' then
       Opts.filetypes = Opts.filetypes or {}
       Opts.init_options = Opts.init_options or {}
-      Opts.filetypes = { "css", "eruby", "html", "javascript", "javascriptreact", "less", "sass", "scss", "svelte", "pug",
-        "typescriptreact", "vue" }
+      Opts.filetypes = {
+        'css',
+        'eruby',
+        'html',
+        'javascriptreact',
+        'less',
+        'sass',
+        'scss',
+        'svelte',
+        'pug',
+        'typescriptreact',
+        'vue'
+      }
       Opts.init_options = {
         html = {
           options = {
