@@ -16,6 +16,15 @@ map('n', '<leader>mh', ':nohlsearch<Return>', get_keymap_options(true, true, 'Tu
 map('n', '<leader>mN', ':e $MYVIMRC <CR>', get_keymap_options(true, true, 'Open Neovim Config'))
 map('n', '<leader>mzi', '<c-w>_ | <c-w>|')
 map('n', '<leader>mzo', '<c-w>=')
+map('n', '<leader>h', ':nohlsearch<Return>', get_keymap_options(true, true, 'Turn Off Highlight'))
+
+-- lsp diagnostic
+map('n', 'gl', '<cmd>lua vim.diagnostic.open_float()<CR>', get_keymap_options(true, true, 'Diagnostic Open Float'))
+map('n', 'gk', '<cmd>lua vim.diagnostic.goto_prev()<CR>', get_keymap_options(true, true, 'Diagnostic Go Prev'))
+map('n', 'gj', '<cmd>lua vim.diagnostic.goto_next()<CR>', get_keymap_options(true, true, 'Diagnostic Go Next'))
+
+-- Alpha dashboard
+map('n', '<leader>;', ':Alpha<Return>', get_keymap_options(true, true, 'Go to Alpha Dashboard'))
 
 -- Increment/decrement
 map('n', '+', '<C-a>', get_keymap_options(true, true, 'Increment Number'))
