@@ -9,14 +9,14 @@ local function getKeymapOptions(noremap, silent, desc)
 end
 
 -- Dev
-map('n', '<leader>dw', ':w<Return>', getKeymapOptions(true, true, 'Save Current File'))
-map('n', '<leader>dq', ':q<Return>', getKeymapOptions(true, true, 'Quit Current File'))
-map('n', '<leader>dQ', ':q!<Return>', getKeymapOptions(true, true, 'Force Quit Current File'))
-map('n', '<leader>dx', ':x<Return>', getKeymapOptions(true, true, 'Save Quit Current File'))
-map('n', '<leader>dh', ':nohlsearch<Return>', getKeymapOptions(true, true, 'Turn Highlight Off'))
-map('n', '<leader>dN', ':e $MYVIMRC <CR>', getKeymapOptions(true, true, 'Open Neovim Config'))
-map('n', '<leader>dzi', '<c-w>_ | <c-w>|')
-map('n', '<leader>dzo', '<c-w>=')
+map('n', '<leader>mw', ':w<Return>', getKeymapOptions(true, true, 'Save Current File'))
+map('n', '<leader>mq', ':q<Return>', getKeymapOptions(true, true, 'Quit Current File'))
+map('n', '<leader>mQ', ':q!<Return>', getKeymapOptions(true, true, 'Force Quit Current File'))
+map('n', '<leader>mx', ':x<Return>', getKeymapOptions(true, true, 'Save Quit Current File'))
+map('n', '<leader>mh', ':nohlsearch<Return>', getKeymapOptions(true, true, 'Turn Highlight Off'))
+map('n', '<leader>mN', ':e $MYVIMRC <CR>', getKeymapOptions(true, true, 'Open Neovim Config'))
+map('n', '<leader>mzi', '<c-w>_ | <c-w>|')
+map('n', '<leader>mzo', '<c-w>=')
 
 -- Increment/decrement
 map('n', '+', '<C-a>', getKeymapOptions(true, true, 'Increment Number'))
