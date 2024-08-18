@@ -1,2 +1,10 @@
 config/tmux/plugins
 config/tmux.mobile/plugins
+tt.*
+.tests
+doc/tags
+debug
+.repro
+foo.*
+*.log
+data
