@@ -1,4 +1,6 @@
-local M = {
+local key_options = require('me.utils.keymap_options_config').set_keymap_options
+
+return {
   'folke/trouble.nvim',
   cmd = 'Trouble',
   opts = {
@@ -11,19 +13,17 @@ local M = {
     {
       '<leader>ctd',
       '<cmd>Trouble diagnostics toggle focus=true<Return>',
-      desc = 'Diagnostics (Trouble)',
+      key_options('Diagnostics (Trouble)'),
     },
     {
       '<leader>ctf',
       '<cmd>Trouble diagnostics toggle focus=true filter.buf=0<Return>',
-      desc = 'Buffer Diagnostics (Trouble)',
+      key_options('Buffer Diagnostics (Trouble)'),
     },
     {
       '<leader>ctr',
       '<cmd>Trouble lsp toggle focus=true win.position=bottom<Return>',
-      desc = 'LSP Definitions / references / ... (Trouble)',
+      key_options('LSP Definitions / references / ... (Trouble)'),
     },
   },
 }
-
-return M

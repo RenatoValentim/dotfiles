@@ -1,3 +1,5 @@
+local key_options = require('me.utils.keymap_options_config').set_keymap_options
+
 return {
   {
     'nvim-telescope/telescope.nvim',
@@ -11,9 +13,10 @@ return {
       {
         '<leader>fB',
         ':Telescope file_browser file_browser path=%:p:h=%:p:h<cr>',
-        desc = 'Browse Files',
+        key_options('Browse Files'),
       },
     },
+
     config = function(_, opts)
       local telescope = require('telescope')
       telescope.load_extension('undo')
