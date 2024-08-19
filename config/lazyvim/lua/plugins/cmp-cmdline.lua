@@ -24,6 +24,15 @@ return {
               end
             end,
           },
+          ['<CR>'] = {
+            c = function(fallback)
+              if cmp.visible() then
+                cmp.confirm({ select = true })
+              else
+                fallback()
+              end
+            end,
+          },
         }),
         sources = cmp.config.sources({
           { name = 'path' },
