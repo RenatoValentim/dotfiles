@@ -7,13 +7,11 @@ local map = LazyVim.safe_keymap_set
 local key_options = require('me.utils.keymap_options_config').set_keymap_options
 
 -- Dev
-map('n', '<leader>mq', ':q<Return>', key_options({ desc = 'Quit Current File' }))
-map('n', '<leader>mQ', ':q!<Return>', key_options({ desc = 'Force Quit Current File' }))
-map('n', '<leader>mx', ':x<Return>', key_options({ desc = 'Save Quit Current File' }))
-map('n', '<leader>mh', ':nohlsearch<Return>', key_options({ desc = 'Turn Highlight Off' }))
-map('n', '<leader>mN', ':e $MYVIMRC <CR>', key_options({ desc = 'Open Neovim Config' }))
-map('n', '<leader>mzi', '<c-w>_ | <c-w>|')
-map('n', '<leader>mzo', '<c-w>=')
+map('n', '<C-q>', ':q<Return>', key_options({ desc = 'Quit Current File' }))
+map('n', '<A-n>', ':e $MYVIMRC <CR>', key_options({ desc = 'Open Neovim Config' }))
+map('n', '<C-x>', ':x<Return>', key_options({ desc = 'Save Quit Current File' }))
+map('n', '<leader>zi', '<c-w>_ | <c-w>|')
+map('n', '<leader>zo', '<c-w>=')
 map('n', '<leader>h', ':nohlsearch<Return>', key_options({ desc = 'Turn Off Highlight' }))
 
 -- lsp diagnostic
