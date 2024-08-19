@@ -13,17 +13,17 @@ return {
     {
       '<leader>ctd',
       '<cmd>Trouble diagnostics toggle focus=true<Return>',
-      key_options('Diagnostics (Trouble)'),
+      key_options({ desc = 'Diagnostics (Trouble)' }),
     },
     {
       '<leader>ctf',
       '<cmd>Trouble diagnostics toggle focus=true filter.buf=0<Return>',
-      key_options('Buffer Diagnostics (Trouble)'),
+      key_options({ desc = 'Buffer Diagnostics (Trouble)' }),
     },
     {
       '<leader>ctr',
       '<cmd>Trouble lsp toggle focus=true win.position=bottom<Return>',
-      key_options('LSP Definitions / references / ... (Trouble)'),
+      key_options({ desc = 'LSP Definitions / references / ... (Trouble)' }),
     },
   },
 }

@@ -13,7 +13,7 @@ return {
       {
         '<leader>fB',
         ':Telescope file_browser file_browser path=%:p:h=%:p:h<cr>',
-        key_options('Browse Files'),
+        key_options({ desc = 'Browse Files' }),
       },
     },
 

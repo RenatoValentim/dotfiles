@@ -1,9 +1,11 @@
 local M = {}
 
-function M.set_keymap_options(noremap, silent, desc)
-  noremap = noremap == nil and true or noremap
-  silent = silent == nil and true or silent
-  desc = desc or 'No description provided'
+---@param args table {noremap: boolean, silent: boolean, desc: string}
+function M.set_keymap_options(args)
+  local noremap = args.noremap or true
+  local silent = args.silent or true
+  print(args.desc)
+  local desc = args.desc or 'No description provided'
 
   return { noremap = noremap, silent = silent, desc = desc }
 end
