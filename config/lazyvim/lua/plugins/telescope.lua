@@ -8,6 +8,7 @@ return {
       'nvim-lua/plenary.nvim',
       'debugloop/telescope-undo.nvim',
       'nvim-telescope/telescope-file-browser.nvim',
+      'ahmedkhalf/project.nvim',
     },
     keys = {
       {
@@ -24,6 +25,16 @@ return {
         '<leader>cbf',
         ':lua require("telescope.builtin").current_buffer_fuzzy_find({ previewer = false })<CR>',
         key_options({ noremap = false, silent = false, desc = 'LSP Document Find, Buffer' }),
+      },
+      {
+        '<leader>cd',
+        ':Telescope diagnostics<Return>',
+        key_options({ noremap = false, silent = false, desc = 'Diagnostics' }),
+      },
+      {
+        '<leader>fp',
+        ':lua require("telescope").extensions.projects.projects()<Return>',
+        key_options({ noremap = false, silent = false, desc = 'Find Projects' }),
       },
     },
 
