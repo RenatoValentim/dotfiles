@@ -10,6 +10,8 @@ return {
     r = 'refresh',
     q = 'close',
     o = 'jump_close',
+    { '<leader>cs', false },
+    { '<leader>cS', false },
     {
       '<leader>ctd',
       '<cmd>Trouble diagnostics toggle focus=true<Return>',
