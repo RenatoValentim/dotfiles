@@ -21,7 +21,7 @@ map('n', 'gk', '<cmd>lua vim.diagnostic.goto_prev()<CR>', key_options({ desc = '
 map('n', 'gj', '<cmd>lua vim.diagnostic.goto_next()<CR>', key_options({ desc = 'Diagnostic Go Next' }))
 
 -- Alpha dashboard
-map('n', '<leader>;', ':Alpha<Return>', key_options({ desc = 'Go to Alpha Dashboard' }))
+map('n', '<C-d>', ':Alpha<Return>', key_options({ desc = 'Go to Alpha Dashboard' }))
 
 -- Increment/decrement
 map('n', '+', '<C-a>', key_options({ desc = 'Increment Number' }))
