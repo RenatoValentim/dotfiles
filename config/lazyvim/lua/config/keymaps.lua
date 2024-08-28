@@ -34,9 +34,9 @@ map('i', '<C-j>', '<down>', key_options({ desc = 'Insert Mode Mode Cursor Down' 
 map('i', '<C-k>', '<up>', key_options({ desc = 'Insert Mode Mode Cursor Up' }))
 
 -- Move window
-map('n', '<A-h>', ':wincmd H<Return>', key_options({ desc = 'Move current split window to the far left' }))
-map('n', '<A-j>', ':wincmd J<Return>', key_options({ desc = 'Move current split window to the very bottom' }))
-map('n', '<A-k>', ':wincmd K<Return>', key_options({ desc = 'Move current split window to the very top' }))
-map('n', '<A-L>', ':wincmd L<Return>', key_options({ desc = 'Move current split window to the far right' }))
+map('n', '<leader>umh', ':wincmd H<Return>', key_options({ desc = 'Move current split window to the far left' }))
+map('n', '<leader>umj', ':wincmd J<Return>', key_options({ desc = 'Move current split window to the very bottom' }))
+map('n', '<leader>umk', ':wincmd K<Return>', key_options({ desc = 'Move current split window to the very top' }))
+map('n', '<leader>umL', ':wincmd L<Return>', key_options({ desc = 'Move current split window to the far right' }))
 
 map('i', 'jk', '<ESC>')
