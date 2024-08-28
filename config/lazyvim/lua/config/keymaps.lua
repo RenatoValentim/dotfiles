@@ -39,4 +39,18 @@ map('n', '<leader>umj', ':wincmd J<Return>', key_options({ desc = 'Move current 
 map('n', '<leader>umk', ':wincmd K<Return>', key_options({ desc = 'Move current split window to the very top' }))
 map('n', '<leader>umL', ':wincmd L<Return>', key_options({ desc = 'Move current split window to the far right' }))
 
+-- Virtual Text
+map(
+  'n',
+  '<leader>vd',
+  ':lua vim.diagnostic.config({ virtual_text = false })<Return>',
+  key_options({ desc = 'Disable virtual text' })
+)
+map(
+  'n',
+  '<leader>ve',
+  ':lua vim.diagnostic.config({ virtual_text = false })<Return>',
+  key_options({ desc = 'Enable virtual text' })
+)
+
 map('i', 'jk', '<ESC>')
