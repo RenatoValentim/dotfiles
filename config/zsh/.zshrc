@@ -80,6 +80,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   git
+  gh
   dirhistory
   history
   history-substring-search
@@ -90,7 +91,6 @@ plugins=(
   vi-mode
   docker
   docker-compose
-  docker-machine
   emoji
   emoji-clock
   golang
@@ -98,6 +98,8 @@ plugins=(
   tmux
   tmux-cssh
   tmuxinator
+  minikube
+  kubectl
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -130,11 +132,6 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-
-# Load asdf and aasdf completions
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-. $HOME/.asdf/asdf.sh
-. $HOME/.asdf/completions/asdf.bash
 
 ### Required to the installation of the gossdeep package
 export CGO_LDFLAGS_ALLOW="^-[Il].*$"
@@ -202,10 +199,19 @@ alias lg="lazygit"
 alias la="exa -laF --icons --header"
 alias ll="exa -lF --icons --header"
 alias v="nvim"
+resetnvim() {
+  rm -rf ~/.local/share/nvim
+  rm -rf ~/.local/state/nvim
+  rm -rf ~/.cache/nvim
+}
+alias dc=devcontainer
 
 # Define Go paths
-export GOROOT=$(asdf where golang)/go
-export GOPATH=$HOME/go
+if asdf >/dev/null 2>&1; then
+  export GOROOT=$(asdf where golang)/go
+else
+  export GOROOT=$HOME/go
+fi
 export PATH=$PATH:$GOPATH/bin:$GOROOT/bin
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
