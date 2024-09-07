@@ -100,6 +100,7 @@ plugins=(
   tmuxinator
   minikube
   kubectl
+  mise
 )
 
 source $ZSH/oh-my-zsh.sh
