@@ -81,12 +81,8 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 plugins=(
   git
   gh
-  dirhistory
-  history
-  history-substring-search
-  per-directory-history
   poetry
-  poetry-env
+  # poetry-env
   vim-interaction
   vi-mode
   docker
@@ -153,8 +149,6 @@ source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
 autoload -Uz _zinit
 (( ${+_comps} )) && _comps[zinit]=_zinit
 
-zinit load zdharma-continuum/history-search-multi-word
-zinit light zsh-users/zsh-history-substring-search
 zinit light zsh-users/zsh-autosuggestions
 zinit light zdharma-continuum/fast-syntax-highlighting
 zinit light zsh-users/zsh-completions
@@ -206,6 +200,8 @@ resetnvim() {
   rm -rf ~/.cache/nvim
 }
 alias dc=devcontainer
+alias zshrc="nvim $HOME/.zshrc"
+alias lzsh="exec zsh"
 
 # Define Go paths
 if asdf >/dev/null 2>&1; then
@@ -218,3 +214,9 @@ export PATH=$PATH:$GOPATH/bin:$GOROOT/bin
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 eval "$(zoxide init zsh)"
+
+# Carregar keybindings e funções do fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# Definir Ctrl+R para usar fzf no histórico
+bindkey '^R' fzf-history-widget
