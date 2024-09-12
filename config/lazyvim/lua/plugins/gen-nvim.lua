@@ -9,8 +9,8 @@ return {
     port = '11434', -- The port on which the Ollama service is listening.
     display_mode = 'horizontal-split', -- The display mode. Can be "float" or "split" or "horizontal-split".
     show_prompt = false, -- Shows the prompt submitted to Ollama.
-    show_model = false, -- Displays which model you are using at the beginning of your chat session.
-    no_auto_close = false, -- Never closes the window automatically.
+    show_model = true, -- Displays which model you are using at the beginning of your chat session.
+    no_auto_close = true, -- Never closes the window automatically.
     hidden = false, -- Hide the generation window (if true, will implicitly set `prompt.replace = true`)
     init = function(options)
       pcall(io.popen, 'ollama serve > /dev/null 2>&1 &')
@@ -26,14 +26,5 @@ return {
     -- (context property is optional).
     -- list_models = '<omitted lua function>', -- Retrieves a list of model names
     debug = false, -- Prints errors and the command which is run.
-  },
-  keys = {
-    {
-      '<leader>ia',
-      ':Gen Ask<Return>',
-      mode = { 'n', 'v' },
-      desc = 'Ask AI',
-      groups = 'IA',
-    },
   },
 }
