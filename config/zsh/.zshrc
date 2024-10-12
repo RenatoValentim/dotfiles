@@ -82,7 +82,7 @@ plugins=(
   git
   gh
   poetry
-  # poetry-env
+  poetry-env
   vim-interaction
   vi-mode
   docker
@@ -96,7 +96,10 @@ plugins=(
   tmuxinator
   minikube
   kubectl
-  mise
+  # mise
+  asdf
+  z
+  zoxide
 )
 
 source $ZSH/oh-my-zsh.sh
