@@ -1,15 +1,15 @@
-local key_options = require('me.utils.keymap_options_config').set_keymap_options
+local key_options = require("me.utils.keymap_options_config").set_keymap_options
 
 local M = {
-  'stevearc/oil.nvim',
+  "stevearc/oil.nvim",
   -- Optional dependencies
-  dependencies = { { 'echasnovski/mini.icons', opts = {} } },
+  dependencies = { { "echasnovski/mini.icons", opts = {} } },
   -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
   keys = {
     {
-      '<leader>o',
-      ':Oil --float<Return>',
-      key_options({ desc = 'Open parent directory' }),
+      "<leader>o",
+      ":Oil --float<Return>",
+      key_options({ desc = "Open parent directory" }),
     },
   },
 }
@@ -17,25 +17,25 @@ local M = {
 function M.config()
   local detail = false
 
-  require('oil').setup({
+  require("oil").setup({
     keymaps = {
-      ['gd'] = {
-        desc = 'Toggle file detail view',
+      ["gd"] = {
+        desc = "Toggle file detail view",
         callback = function()
           detail = not detail
           if detail then
-            require('oil').set_columns({ 'icon', 'permissions', 'size', 'mtime' })
+            require("oil").set_columns({ "icon", "permissions", "size", "mtime" })
           else
-            require('oil').set_columns({ 'icon' })
+            require("oil").set_columns({ "icon" })
           end
         end,
       },
-      ['<CR>'] = 'actions.select',
-      ['<A-/>'] = { 'actions.select', opts = { vertical = true }, desc = 'Open the entry in a vertical split' },
-      ['<A-->'] = { 'actions.select', opts = { horizontal = true }, desc = 'Open the entry in a horizontal split' },
-      ['<C-p>'] = 'actions.preview',
-      ['-'] = 'actions.parent',
-      ['_'] = 'actions.open_cwd',
+      ["<CR>"] = "actions.select",
+      ["<A-/>"] = { "actions.select", opts = { vertical = true }, desc = "Open the entry in a vertical split" },
+      ["<A-->"] = { "actions.select", opts = { horizontal = true }, desc = "Open the entry in a horizontal split" },
+      ["<C-p>"] = "actions.preview",
+      ["-"] = "actions.parent",
+      ["_"] = "actions.open_cwd",
     },
 
     use_default_keymaps = false,
@@ -50,12 +50,12 @@ function M.config()
       padding = 2,
       max_width = 0,
       max_height = 0,
-      border = 'rounded',
+      border = "rounded",
       win_options = {
         winblend = 0,
       },
       -- preview_split: Split direction: "auto", "left", "right", "above", "below".
-      preview_split = 'auto',
+      preview_split = "auto",
       -- This is the config that will be passed to nvim_open_win.
       -- Change values here to customize the layout
       override = function(conf)
@@ -81,7 +81,7 @@ function M.config()
       min_height = { 5, 0.1 },
       -- optionally define an integer/float for the exact height of the preview window
       height = nil,
-      border = 'rounded',
+      border = "rounded",
       win_options = {
         winblend = 0,
       },
@@ -97,8 +97,8 @@ function M.config()
       max_height = { 10, 0.9 },
       min_height = { 5, 0.1 },
       height = nil,
-      border = 'rounded',
-      minimized_border = 'none',
+      border = "rounded",
+      minimized_border = "none",
       win_options = {
         winblend = 0,
       },
@@ -106,11 +106,11 @@ function M.config()
 
     -- Configuration for the floating SSH window
     ssh = {
-      border = 'rounded',
+      border = "rounded",
     },
     -- Configuration for the floating keymaps help window
     keymaps_help = {
-      border = 'rounded',
+      border = "rounded",
     },
   })
 end

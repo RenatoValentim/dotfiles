@@ -81,8 +81,8 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 plugins=(
   git
   gh
-  poetry
-  poetry-env
+  # poetry
+  # poetry-env
   vim-interaction
   vi-mode
   docker
@@ -97,7 +97,7 @@ plugins=(
   minikube
   kubectl
   # mise
-  asdf
+  # asdf
   z
   zoxide
 )
@@ -157,9 +157,6 @@ zinit light zdharma-continuum/fast-syntax-highlighting
 zinit light zsh-users/zsh-completions
 zinit light Aloxaf/fzf-tab
 
-# Load completions
-autoload -Uz compinit && compinit
-
 zinit cdreplay -q
 
 # Keybindings
@@ -193,22 +190,75 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 alias p3="python3"
 
 # utils
+alias rv="NVIM_APPNAME=rootNvim nvim"
+alias v="NVIM_APPNAME=nvim nvim"
+function ns() {
+  items=("rootNvim" "nvim")
+  config=$(printf "%s\n" "${items[@]}" | fzf --prompt=" Neovim Config  " --height=50% --layout=reverse --border --exit-0)
+  if [[ -z $config ]]; then
+    echo "Nothing selected"
+    return 0
+  elif [[ $config == "default" ]]; then
+    config=""
+  fi
+  NVIM_APPNAME=$config nvim $@
+}
+bindkey -s ^a "ns\n"
+
 alias lg="lazygit"
 alias la="exa -laF --icons --header"
 alias ll="exa -lF --icons --header"
-alias v="nvim"
+alias fd=fdfind
 resetnvim() {
   rm -rf ~/.local/share/nvim
   rm -rf ~/.local/state/nvim
   rm -rf ~/.cache/nvim
 }
 alias dc=devcontainer
+alias dcb="devcontainer up --workspace-folder . --build-no-cache"
+alias dce="devcontainer exec --workspace-folder . zsh"
 alias zshrc="nvim $HOME/.zshrc"
 alias lzsh="exec zsh"
+alias pt="ptpython"
+alias vd="deactivate"
 
+va() {
+  ACTIVATE_FILE=$(find . -maxdepth 3 -type f -path "./*/bin/activate" 2>/dev/null | head -n 1)
+
+  if [ -n "$ACTIVATE_FILE" ]; then
+    . "$ACTIVATE_FILE"
+    echo "Activate Environment: $ACTIVATE_FILE"
+
+    PYTHON_PATH=$(which python)
+    PYTHON_VERSION=$(python --version 2>&1)
+    echo "Python Path: $PYTHON_PATH"
+    echo "Python Version: $PYTHON_VERSION"
+  else
+    echo "Python Virtual Environment not found in $(pwd)"
+  fi
+}
+
+psqldocker() {
+  docker exec -it $1 psql -U $2 -d $3
+}
+
+# asdf configuration
+. $HOME/.asdf/asdf.sh
+. $HOME/.asdf/completions/asdf.bash
+
+# configurations
+# fpath=(~/.zsh/completions $fpath)
+# autoload -Uz compinit
+# compinit
+
+# export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+# 
 # Define Go paths
 if asdf >/dev/null 2>&1; then
   export GOROOT=$(asdf where golang)/go
+
+  # fpath=(${ASDF_DIR}/completions $fpath)
+  # autoload -Uz compinit && compinit
 else
   export GOROOT=$HOME/go
 fi
@@ -223,3 +273,8 @@ eval "$(zoxide init zsh)"
 
 # Definir Ctrl+R para usar fzf no histórico
 bindkey '^R' fzf-history-widget
+TERM=wezterm
+
+# Load completions
+autoload -Uz compinit && compinit
+

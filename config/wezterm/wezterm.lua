@@ -9,7 +9,7 @@ end
 config.color_scheme = "tokyonight_night" -- tokyonight tokyonight_night tokyonight_storm tokyonight_day tokyonight_moon
 config.enable_tab_bar = false
 config.warn_about_missing_glyphs = false
-config.window_background_opacity = 1
+config.window_background_opacity = 0.8
 -- MesloLGS NF
 config.font = wezterm.font("JetBrains Mono", {
 	weight = "Regular",
@@ -23,5 +23,14 @@ config.window_padding = {
 	bottom = 0,
 }
 config.window_decorations = "RESIZE"
+config.term = "xterm-256color"
+config.enable_wayland = true
+config.keys = {
+	{
+		key = "f",
+		mods = "CTRL",
+		action = wezterm.action.ToggleFullScreen,
+	},
+}
 
 return config

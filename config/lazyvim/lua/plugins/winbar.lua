@@ -1,10 +1,10 @@
 return {
-  'utilyre/barbecue.nvim',
-  name = 'barbecue',
-  version = '*',
+  "utilyre/barbecue.nvim",
+  name = "barbecue",
+  version = "*",
   dependencies = {
-    'SmiteshP/nvim-navic',
-    'nvim-tree/nvim-web-devicons', -- optional dependency
+    "SmiteshP/nvim-navic",
+    "nvim-tree/nvim-web-devicons", -- optional dependency
   },
   opts = {
     ---Whether to attach navic to language servers automatically.
@@ -20,12 +20,12 @@ return {
     ---Buftypes to enable winbar in.
     ---
     ---@type string[]
-    include_buftypes = { '' },
+    include_buftypes = { "" },
 
     ---Filetypes not to enable winbar in.
     ---
     ---@type string[]
-    exclude_filetypes = { 'netrw', 'toggleterm' },
+    exclude_filetypes = { "netrw", "toggleterm" },
 
     modifiers = {
       ---Filename modifiers applied to dirname.
@@ -33,14 +33,14 @@ return {
       ---See: `:help filename-modifiers`
       ---
       ---@type string
-      dirname = ':~:.',
+      dirname = ":~:.",
 
       ---Filename modifiers applied to basename.
       ---
       ---See: `:help filename-modifiers`
       ---
       ---@type string
-      basename = '',
+      basename = "",
     },
 
     ---Whether to display path to file.
@@ -80,7 +80,7 @@ return {
     ---
     ---@type fun(bufnr: number, winnr: number): barbecue.Config.custom_section
     lead_custom_section = function()
-      return ' '
+      return " "
     end,
 
     ---@alias barbecue.Config.custom_section
@@ -94,7 +94,7 @@ return {
     ---
     ---@type fun(bufnr: number, winnr: number): barbecue.Config.custom_section
     custom_section = function()
-      return ' '
+      return " "
     end,
 
     ---@alias barbecue.Config.theme
@@ -105,7 +105,7 @@ return {
     ---Theme to be used for generating highlight groups dynamically.
     ---
     ---@type barbecue.Config.theme
-    theme = 'auto',
+    theme = "auto",
 
     ---Whether context text should follow its icon's color.
     ---
@@ -116,17 +116,17 @@ return {
       ---Modification indicator.
       ---
       ---@type string
-      modified = '●',
+      modified = "●",
 
       ---Truncation indicator.
       ---
       ---@type string
-      ellipsis = '…',
+      ellipsis = "…",
 
       ---Entry separator.
       ---
       ---@type string
-      separator = '»',
+      separator = "»",
     },
 
     ---@alias barbecue.Config.kinds
@@ -137,32 +137,32 @@ return {
     ---
     ---@type barbecue.Config.kinds
     kinds = {
-      File = '',
-      Module = '',
-      Namespace = '',
-      Package = '',
-      Class = '',
-      Method = '',
-      Property = '',
-      Field = '',
-      Constructor = '',
-      Enum = '',
-      Interface = '',
-      Function = '',
-      Variable = '',
-      Constant = '',
-      String = '',
-      Number = '',
-      Boolean = '',
-      Array = '',
-      Object = '',
-      Key = '',
-      Null = '',
-      EnumMember = '',
-      Struct = '',
-      Event = '',
-      Operator = '',
-      TypeParameter = '',
+      File = "",
+      Module = "",
+      Namespace = "",
+      Package = "",
+      Class = "",
+      Method = "",
+      Property = "",
+      Field = "",
+      Constructor = "",
+      Enum = "",
+      Interface = "",
+      Function = "",
+      Variable = "",
+      Constant = "",
+      String = "",
+      Number = "",
+      Boolean = "",
+      Array = "",
+      Object = "",
+      Key = "",
+      Null = "",
+      EnumMember = "",
+      Struct = "",
+      Event = "",
+      Operator = "",
+      TypeParameter = "",
     },
   },
 }
