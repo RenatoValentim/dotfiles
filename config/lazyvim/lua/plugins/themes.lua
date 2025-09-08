@@ -9,4 +9,25 @@ return {
       },
     },
   },
+  {
+    "catppuccin/nvim",
+    name = "catppuccin",
+    priority = 1000,
+    opts = {
+      flavour = "mocha",
+      transparent_background = false,
+      float = { transparent = true },
+      integrations = {
+        neotree = true,
+        telescope = { enabled = true },
+        treesitter = true,
+        cmp = true,
+        gitsigns = true,
+      },
+    },
+  },
+  {
+    "LazyVim/LazyVim",
+    opts = { colorscheme = "catppuccin" },
+  },
 }

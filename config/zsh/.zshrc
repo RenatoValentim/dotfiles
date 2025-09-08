@@ -100,6 +100,7 @@ plugins=(
   # asdf
   z
   zoxide
+  uv
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -208,6 +209,7 @@ bindkey -s ^a "ns\n"
 alias lg="lazygit"
 alias la="exa -laF --icons --header"
 alias ll="exa -lF --icons --header"
+alias cl="clear"
 alias fd=fdfind
 resetnvim() {
   rm -rf ~/.local/share/nvim
@@ -221,6 +223,11 @@ alias zshrc="nvim $HOME/.zshrc"
 alias lzsh="exec zsh"
 alias pt="ptpython"
 alias vd="deactivate"
+# Tmux
+alias split3="tmux split-window -h -p 66 && tmux split-window -h -p 50"
+alias split4='tmux split-window -h "tmux split-window -v; tmux select-pane -t 0; tmux split-window -v -p 50; tmux select-pane -t 2; tmux split-window -v -p 50; tmux select-pane -t 1"'
+alias split1_3='tmux split-window -v -p 30 \; split-window -h -p 33 -t 1 \; select-pane -t 1 \; split-window -h -p 50 \; select-pane -t 0'
+
 
 va() {
   ACTIVATE_FILE=$(find . -maxdepth 3 -type f -path "./*/bin/activate" 2>/dev/null | head -n 1)
@@ -254,14 +261,15 @@ psqldocker() {
 # export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 # 
 # Define Go paths
-if asdf >/dev/null 2>&1; then
-  export GOROOT=$(asdf where golang)/go
+# if asdf >/dev/null 2>&1; then
+# export GOROOT="$(asdf where golang)/go"
+export PATH="${GOROOT}/bin${PATH:+:$PATH}"
 
   # fpath=(${ASDF_DIR}/completions $fpath)
   # autoload -Uz compinit && compinit
-else
-  export GOROOT=$HOME/go
-fi
+# else
+#   export GOROOT=$HOME/go
+# fi
 export PATH=$PATH:$GOPATH/bin:$GOROOT/bin
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
@@ -278,3 +286,8 @@ TERM=wezterm
 # Load completions
 autoload -Uz compinit && compinit
 
+# The next line updates PATH for the Google Cloud SDK.
+# if [ -f '/home/rvsj/.local/share/google-cloud-sdk/path.zsh.inc' ]; then . '/home/rvsj/.local/share/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+# if [ -f '/home/rvsj/.local/share/google-cloud-sdk/completion.zsh.inc' ]; then . '/home/rvsj/.local/share/google-cloud-sdk/completion.zsh.inc'; fi

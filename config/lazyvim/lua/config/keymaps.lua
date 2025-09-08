@@ -22,7 +22,9 @@ map("n", "gk", "<cmd>lua vim.diagnostic.goto_prev()<CR>", key_options({ desc = "
 map("n", "gj", "<cmd>lua vim.diagnostic.goto_next()<CR>", key_options({ desc = "Diagnostic Go Next" }))
 
 -- Alpha dashboard
-map("n", "<C-d>", ":Alpha<Return>", key_options({ desc = "Go to Alpha Dashboard" }))
+-- map("n", "<C-d>", ":Alpha<Return>", key_options({ desc = "Go to Alpha Dashboard" }))
+
+map("n", "<leader>T", "<cmd>TransparentToggle<CR>", { noremap = true, silent = true, desc = "Toggle Transparency" })
 
 -- Increment/decrement
 map("n", "+", "<C-a>", key_options({ desc = "Increment Number" }))
@@ -50,7 +52,7 @@ map(
 map(
   "n",
   "<leader>ve",
-  ":lua vim.diagnostic.config({ virtual_text = false })<Return>",
+  ":lua vim.diagnostic.config({ virtual_text = true })<Return>",
   key_options({ desc = "Enable virtual text" })
 )
 
