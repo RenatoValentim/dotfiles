@@ -10,7 +10,7 @@ config.font = wezterm.font("JetBrains Mono", { weight = "Regular", italic = true
 config.font_size = 11.0
 config.window_padding = { left = 0, right = 0, top = 0, bottom = 0 }
 config.window_decorations = "RESIZE"
-config.term = "xterm-256color"
+config.term = "wezterm"
 config.enable_wayland = true
 
 -- Opcional:
