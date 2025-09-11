@@ -106,6 +106,8 @@ eval "$($HOME/.local/bin/mise activate zsh)"
 alias p3="python3"
 alias pt="ptpython"
 alias vd="deactivate"
+alias tsplit1_3="tmux split-window -v \; resize-pane -D -y 30% \; split-window -h -t 1 \; resize-pane -t 1 -x 33% \; split-window -h -t 2 \; resize-pane -t 2 -x 33% \; select-pane -t 0"
+alias tsplit4="tmux split-window -v \; split-window -h \; select-pane -t 0 \; split-window -h \; select-pane -t 0"
 
 # Neovim / env
 alias rv="NVIM_APPNAME=rootNvim nvim"
