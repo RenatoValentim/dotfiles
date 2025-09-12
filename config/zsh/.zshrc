@@ -128,6 +128,9 @@ alias ll="eza -lF --icons --header"
 alias cl="clear"
 alias fd=fdfind
 
+# AI tools
+alias gemini="npx https://github.com/google-gemini/gemini-cli"
+
 # Nvim reset
 resetnvim() {
   rm -rf ~/.local/share/nvim ~/.local/state/nvim ~/.cache/nvim
