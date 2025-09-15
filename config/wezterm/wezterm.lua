@@ -6,7 +6,7 @@ config.enable_tab_bar = false
 config.warn_about_missing_glyphs = false
 config.window_background_opacity = 1.0
 config.text_background_opacity = 1.0
-config.font = wezterm.font("JetBrains Mono", { weight = "Regular", italic = true })
+config.font = wezterm.font("JetBrains Mono Nerd Font", { weight = "Regular", italic = true })
 config.font_size = 11.0
 config.window_padding = { left = 0, right = 0, top = 0, bottom = 0 }
 config.window_decorations = "RESIZE"
