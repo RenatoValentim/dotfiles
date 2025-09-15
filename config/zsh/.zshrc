@@ -115,8 +115,8 @@ alias v="NVIM_APPNAME=nvim nvim"
 ns() {
   local items=("rootNvim" "nvim")
   local config
-  config=$(printf "%s\n" "${items[@]}" | fzf --prompt=" Neovim Config  " --height=50% --layout=reverse --border --exit-0)
-  [[ -z $config ]] && { echo "Nothing selected"; return 0; }
+  config=$(printf "%s\n" "${items[@]}" | fzf --prompt=" Neovim Config  " --height=50% --layout=reverse --border --exit-0)
+  [[ -z $config ]] && { echo "❌ Nothing selected"; return 0; }
   [[ $config == "default" ]] && config=""
   NVIM_APPNAME=$config nvim "$@"
 }
@@ -145,23 +145,41 @@ alias dce="devcontainer exec --workspace-folder . zsh"
 alias zshrc="nvim $HOME/.zshrc"
 alias lzsh="exec zsh"
 
+killproc() {
+  if [[ -z "$1" ]]; then
+    echo "❌ Erro: Process name not specified.\nUse: killproc <process_name>"
+    return 1
+  fi
+  echo "🔵 Trying to end '$1' process..."
+  kill $(ps aux | grep -i "$1" | grep -v grep | awk '{print $2}')
+
+  sleep 2
+
+  if [ -n "$(ps aux | grep -i "$1" | grep -v grep)" ]; then
+    echo "🔵 '$1' stay be in execution. Forcing termination..."
+    kill -9 $(ps aux | grep -i "$1" | grep -v grep | awk '{print $2}')
+  else
+    echo "✅ '$1' successfully ended."
+  fi
+}
+
 # Python venv helper
 va() {
   local ACTIVATE_FILE
   ACTIVATE_FILE=$(find . -maxdepth 3 -type f -path "./*/bin/activate" 2>/dev/null | head -n 1)
   if [[ -n "$ACTIVATE_FILE" ]]; then
     . "$ACTIVATE_FILE"
-    echo "Activate Environment: $ACTIVATE_FILE"
-    echo "Python Path: $(command -v python)"
-    echo "Python Version: $(python --version 2>&1)"
+    echo "🔵 Activate Environment: $ACTIVATE_FILE"
+    echo "🔵 Python Path: $(command -v python)"
+    echo "✅ Python Version: $(python --version 2>&1)"
   else
-    echo "Python Virtual Environment not found in $(pwd)"
+    echo "❌ Python Virtual Environment not found in $(pwd)"
   fi
 }
 
 uv_init() {
   if [[ -z "$1" ]]; then
-    echo "Erro: Python version not specified.\nUse: uv_init <python-version>"
+    echo "❌ Erro: Python version not specified.\nUse: uv_init <python-version>"
     return 1
   fi
   echo "🔵 Initializing Python $1 environment..."
@@ -173,7 +191,7 @@ uv_init() {
 # Postgres inside container
 psqldocker() {
   if [[ $# -ne 3 ]]; then
-    echo "Error: Missing required parameters.\nUsage: psqldocker <container> <user> <database>"
+    echo "❌ Error: Missing required parameters.\nUsage: psqldocker <container> <user> <database>"
     return 1
   fi
   echo "🔵 Connecting to PostgreSQL..."
