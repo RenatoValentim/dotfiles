@@ -127,6 +127,7 @@ alias la="eza -laF --icons --header"
 alias ll="eza -lF --icons --header"
 alias cl="clear"
 alias fd=fdfind
+alias cd="z" # zoxide overrides cd
 
 # AI tools
 alias gemini="npx https://github.com/google-gemini/gemini-cli"
