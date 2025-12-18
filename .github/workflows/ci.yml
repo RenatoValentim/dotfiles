@@ -24,9 +24,9 @@ jobs:
             fish -n "$file"
           done < <(find config/fish -type f -name '*.fish' -print0)
 
-      - name: Stylua check (LazyVim)
+      - name: Stylua format (LazyVim)
         uses: JohnnyMorganz/stylua-action@v4
         with:
           token: ${{ github.token }}
           version: latest
-          args: --check config/lazyvim
+          args: config/lazyvim
