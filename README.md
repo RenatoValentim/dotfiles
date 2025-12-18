@@ -127,9 +127,3 @@ CHECK_NVIM=1 ./scripts/check.sh
 | Prefix + `o` | Open tmux-sessionx (session/window switcher) |
 
 ---
-
-<div align="center">
-
-**Made with ❤️ for productivity**
-
-</div>
