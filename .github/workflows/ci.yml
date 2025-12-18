@@ -1,0 +1,28 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install fish
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fish
+
+      - name: Fish syntax check
+        run: |
+          while IFS= read -r -d '' file; do
+            fish -n "$file"
+          done < <(find config/fish -type f -name '*.fish' -print0)
+
+      - name: Stylua check (LazyVim)
+        uses: JohnnyMorganz/stylua-action@v4
+        with:
+          version: latest
+          args: --check config/lazyvim

@@ -1,0 +1,16 @@
+config/tmux/plugins
+config/tmux.mobile/plugins
+tt.*
+.tests
+doc/tags
+debug
+.repro
+foo.*
+*.log
+data
+*secrets*
+**/*.local.*
+config/fish/conf.d/local.fish
+config/lazygit/config.local.yml
+config/wezterm/wezterm.local.lua
+config/lazyvim/.nvimlog
