@@ -1,21 +1,21 @@
-# Keybindings e configurações avançadas para Fish
-# Equivalentes ao que você tinha no Zsh
+# Keybindings and advanced configurations for Fish
+# Equivalent to what you had in Zsh
 
 # ============================================================================
-# 1) Keybindings customizados
+# 1) Custom Keybindings
 # ============================================================================
 
-# Ctrl+R - FZF history search (já funciona por padrão com fzf)
-# Ctrl+P / Ctrl+N - História (já funciona por padrão)
+# Ctrl+R - FZF history search (already works by default with fzf)
+# Ctrl+P / Ctrl+N - History (already works by default)
 
 # ============================================================================
-# 2) Configurações de Completion
+# 2) Completion Settings
 # ============================================================================
 
-# Manter o comportamento de completion moderno
+# Keep modern completion behavior
 set -g fish_complete_text 1
 
 # ============================================================================
-# 3) Fish Alias para tmux splits (se necessário usar função)
+# 3) Fish Alias for tmux splits (use function if necessary)
 # ============================================================================
-# Nota: Em Fish, aliases complexos são melhores como funções
+# Note: In Fish, complex aliases are better as functions

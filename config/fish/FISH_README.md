@@ -14,16 +14,13 @@
 
 ## 🎨 Theme & Prompt
 
-### Starship (equivalent to Powerlevel10k)
+### Starship
 
 - **Config:** `~/.config/starship.toml`
 - **Features:**
   - Minimal 2-line prompt
   - Support for Git, Docker, Kubernetes, languages, etc.
   - Auto-initialized via `config.fish`
-
-> **Alternative:** P10K + Zinit on Zsh (not migrated to Fish)  
-> If you want to use Powerlevel10k in Fish, see: https://github.com/romkatv/powerlevel10k#fish
 
 ---
 
