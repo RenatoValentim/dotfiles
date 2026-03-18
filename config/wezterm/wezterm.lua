@@ -8,6 +8,7 @@ config.use_fancy_tab_bar = false
 config.show_new_tab_button_in_tab_bar = false
 config.show_tab_index_in_tab_bar = false
 config.tab_max_width = 18
+config.status_update_interval = 1000
 config.warn_about_missing_glyphs = false
 config.window_background_opacity = 1.0
 config.text_background_opacity = 1.0
@@ -134,12 +135,64 @@ local function tab_title(tab_info)
 	return pane.title or "shell"
 end
 
+local function label_width(label)
+	if wezterm.column_width then
+		return wezterm.column_width(label)
+	end
+
+	return #label
+end
+
+local function zoom_badge_from_panes(panes)
+	local pane_count = 0
+	local is_zoomed = false
+
+	for _, pane in ipairs(panes or {}) do
+		pane_count = pane_count + 1
+		if pane.is_zoomed then
+			is_zoomed = true
+		end
+	end
+
+	if not is_zoomed or pane_count < 2 then
+		return nil
+	end
+
+	return string.format("⛶ +%d", pane_count - 1)
+end
+
+local function tab_panes_with_info(tab_info, fallback_panes)
+	if tab_info.panes and #tab_info.panes > 0 then
+		return tab_info.panes
+	end
+
+	if wezterm.mux and wezterm.mux.get_tab and tab_info.tab_id then
+		local ok_tab, mux_tab = pcall(wezterm.mux.get_tab, tab_info.tab_id)
+		if ok_tab and mux_tab and mux_tab.panes_with_info then
+			local ok_panes, mux_panes = pcall(function()
+				return mux_tab:panes_with_info()
+			end)
+			if ok_panes and mux_panes and #mux_panes > 0 then
+				return mux_panes
+			end
+		end
+	end
+
+	return fallback_panes or {}
+end
+
+local function zoom_badge_text(tab_info, fallback_panes)
+	return zoom_badge_from_panes(tab_panes_with_info(tab_info, fallback_panes))
+end
+
 local function tab_palette(tab_info, hover)
 	local bar_bg = "#232733"
 	local tab_bg = "#313548"
 	local tab_fg = "#e2e9ff"
 	local badge_bg = "#9cafeb"
 	local badge_fg = "#1d2028"
+	local zoom_bg = "#f7768e"
+	local zoom_fg = "#1d2028"
 
 	if tab_info.is_active then
 		tab_fg = "#e2e9ff"
@@ -156,28 +209,69 @@ local function tab_palette(tab_info, hover)
 		tab_fg = tab_fg,
 		badge_bg = badge_bg,
 		badge_fg = badge_fg,
+		zoom_bg = zoom_bg,
+		zoom_fg = zoom_fg,
 	}
 end
 
-wezterm.on("format-tab-title", function(tab, tabs, _, _, hover, max_width)
+wezterm.on("format-tab-title", function(tab, tabs, panes, _, hover, max_width)
 	tabs = tabs or { tab }
 	local colors = tab_palette(tab, hover)
 
 	local index = tostring(tab.tab_index + 1)
 	local title = tab_title(tab)
+	local zoom_label = zoom_badge_text(tab, panes)
 	local reserved_width = 4 + #index
+	if zoom_label then
+		reserved_width = reserved_width + label_width(zoom_label) + 2
+	end
 	title = wezterm.truncate_right(title, math.max(4, max_width - reserved_width))
 
 	local cells = {
 		{ Background = { Color = colors.tab_bg } },
 		{ Foreground = { Color = colors.tab_fg } },
 		{ Text = " " .. title .. " " },
-		{ Background = { Color = colors.badge_bg } },
-		{ Foreground = { Color = colors.badge_fg } },
-		{ Text = " " .. index .. " " },
 	}
 
+	if zoom_label then
+		table.insert(cells, { Background = { Color = colors.zoom_bg } })
+		table.insert(cells, { Foreground = { Color = colors.zoom_fg } })
+		table.insert(cells, { Text = " " .. zoom_label .. " " })
+	end
+
+	table.insert(cells, { Background = { Color = colors.badge_bg } })
+	table.insert(cells, { Foreground = { Color = colors.badge_fg } })
+	table.insert(cells, { Text = " " .. index .. " " })
+
 	return cells
+end)
+
+wezterm.on("update-status", function(window, _)
+	local tab = window:active_tab()
+	if not tab or not tab.panes_with_info then
+		window:set_right_status("")
+		return
+	end
+
+	local ok, panes = pcall(function()
+		return tab:panes_with_info()
+	end)
+	if not ok then
+		window:set_right_status("")
+		return
+	end
+
+	local zoom_label = zoom_badge_from_panes(panes)
+	if not zoom_label then
+		window:set_right_status("")
+		return
+	end
+
+	window:set_right_status(wezterm.format({
+		{ Background = { Color = "#f7768e" } },
+		{ Foreground = { Color = "#1d2028" } },
+		{ Text = " " .. zoom_label .. " " },
+	}))
 end)
 
 local act = wezterm.action
