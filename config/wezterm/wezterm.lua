@@ -136,15 +136,15 @@ local function tab_palette(tab_info, hover)
 	local bar_bg = "#232733"
 	local tab_bg = "#313548"
 	local tab_fg = "#e2e9ff"
-	local badge_bg = "#edb07d"
+	local badge_bg = "#9cafeb"
 	local badge_fg = "#1d2028"
 
 	if tab_info.is_active then
 		tab_fg = "#e2e9ff"
-		badge_bg = "#9cafeb"
+		badge_bg = "#edb07d"
 		badge_fg = "#1d2028"
 	elseif hover then
-		badge_bg = "#f7bd8d"
+		badge_bg = "#9cafeb"
 		badge_fg = "#1d2028"
 	end
 
