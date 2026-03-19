@@ -101,6 +101,43 @@ CHECK_NVIM=1 ./scripts/check.sh
 
 ---
 
+## ⌨️ WezTerm Shortcuts
+
+> You can manage tabs and panes directly in WezTerm with this setup, no tmux required.  
+> **Leader:** `Ctrl-a`
+
+### 🪟 Tabs
+
+| Shortcut           | Action                               |
+| ------------------ | ------------------------------------ |
+| `Leader + c`       | New tab (prompts for an optional name) |
+| `Leader + r`       | Rename current tab                   |
+| `Alt-n` / `Alt-p`  | Next / previous tab                  |
+| `Leader + ←` / `Leader + →` | Move current tab left / right |
+
+### 📐 Panes / Splits
+
+| Shortcut                 | Action                         |
+| ------------------------ | ------------------------------ |
+| `Leader + -`             | Split vertically               |
+| `Leader + \|`            | Split horizontally             |
+| `Ctrl+Shift+h/j/k/l`     | Focus pane left/down/up/right  |
+| `Super+Shift+h/j/k/l`    | Resize pane left/down/up/right |
+| `Leader + x`             | Close current pane             |
+| `Shift+z`                | Toggle pane zoom               |
+
+### 🛠️ View / Utilities
+
+| Shortcut           | Action                          |
+| ------------------ | ------------------------------- |
+| `Ctrl+f`           | Toggle fullscreen               |
+| `Ctrl+Shift+t`     | Toggle transparency             |
+| `Ctrl+Shift+y`     | Cycle transparency levels       |
+| `Leader + p`       | Open keybinding picker          |
+| `Leader + Ctrl+a`  | Send literal `Ctrl+a` to a pane |
+
+---
+
 ## ⌨️ Tmux Shortcuts
 
 > **Prefix:** `Ctrl-a` (instead of tmux's default `Ctrl-b`)  
