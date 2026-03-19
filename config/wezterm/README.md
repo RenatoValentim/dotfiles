@@ -52,7 +52,7 @@ CHECK_NVIM=1 ./scripts/check.sh
 
 ## TODOs
 
-- [ ] Increase the tab name length to max 20 characters
+- [x] Increase the tab name length to max 20 characters
 - [ ] Add the option to rename the tab at a specific point
 - [ ] Add the option to open the tab at a specific path.
       After the new command `leader + t` to use zoxide for this.

@@ -7,7 +7,7 @@ function M.apply(config, wezterm)
   config.use_fancy_tab_bar = false
   config.show_new_tab_button_in_tab_bar = false
   config.show_tab_index_in_tab_bar = false
-  config.tab_max_width = 18
+  config.tab_max_width = 25
   config.status_update_interval = 1000
   config.warn_about_missing_glyphs = false
   config.window_background_opacity = 1.0
