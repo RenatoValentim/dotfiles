@@ -72,7 +72,7 @@ The WezTerm config is split into focused modules so behavior stays easier to cha
 
 Notable behavior:
 
-- `Ctrl-a` acts as the leader key to stay close to the tmux setup
+- `Ctrl-,` acts as the leader key
 - `Leader+p` opens the keybinding picker powered by `fzf`
 - `Ctrl+Shift+t` toggles transparency and `Ctrl+Shift+y` cycles opacity levels
 - tab labels prefer explicit names, then the foreground process, then the current directory
@@ -104,7 +104,7 @@ CHECK_NVIM=1 ./scripts/check.sh
 ## ⌨️ WezTerm Shortcuts
 
 > You can manage tabs and panes directly in WezTerm with this setup, no tmux required.  
-> **Leader:** `Ctrl-a`
+> **Leader:** `Ctrl-,`
 
 ### 🪟 Tabs
 

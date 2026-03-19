@@ -1,7 +1,7 @@
 local keys = require("config.keys")
 
 local leader = {
-  key = "a",
+  key = ",",
   mods = "CTRL",
 }
 
@@ -10,7 +10,7 @@ return {
     name = "formats shortcuts with leader and shift",
     run = function()
       assert(keys.binding_shortcut({ key = "z", mods = "SHIFT" }, leader) == "[Shift+Z]")
-      assert(keys.binding_shortcut({ key = "p", mods = "LEADER" }, leader) == "[Ctrl+a] [p]")
+      assert(keys.binding_shortcut({ key = "p", mods = "LEADER" }, leader) == "[Ctrl+,] [p]")
     end,
   },
   {

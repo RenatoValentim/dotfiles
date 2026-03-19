@@ -14,7 +14,7 @@
 
 ## Features
 
-- `Ctrl-a` is the leader key to keep the terminal close to the tmux setup
+- `Ctrl-,` is the leader key to keep the terminal close to the tmux setup
 - `Leader+p` opens a searchable keybinding picker powered by `fzf`
 - `Ctrl+Shift+t` toggles transparency and `Ctrl+Shift+y` cycles opacity levels
 - tab labels prefer an explicit tab name, then the foreground process, then the current directory
@@ -57,3 +57,4 @@ CHECK_NVIM=1 ./scripts/check.sh
 - [ ] Add the option to open the tab at a specific path.
       After the new command `leader + t` to use zoxide for this.
 - [x] Increase leader timeout to 3s
+- [x] Change the leader to `ctrl+,`

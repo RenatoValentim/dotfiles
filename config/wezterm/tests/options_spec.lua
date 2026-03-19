@@ -19,7 +19,7 @@ return {
       assert(config.color_scheme == "tokyonight_night")
       assert(config.enable_tab_bar == true)
       assert(config.tab_bar_at_bottom == true)
-      assert(config.leader.key == "a")
+      assert(config.leader.key == ",")
       assert(config.leader.mods == "CTRL")
       assert(config.font.name == "JetBrains Mono Nerd Font")
       assert(config.font.attrs.italic == true)
