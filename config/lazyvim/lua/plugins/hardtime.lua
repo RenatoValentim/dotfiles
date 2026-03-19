@@ -5,6 +5,12 @@ return {
     dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
     opts = {
       disable_mouse = false,
+      restricted_keys = {
+        ["h"] = false,
+        ["j"] = false,
+        ["k"] = false,
+        ["l"] = false,
+      },
       ui = {
         enter = true,
         focusable = true,

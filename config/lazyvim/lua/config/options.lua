@@ -4,3 +4,4 @@
 
 vim.opt.swapfile = false
 vim.g.autoformat = false
+vim.g.python3_host_prog = vim.fn.expand("~/.local/share/mise/installs/python/3.14.2/bin/python3")
