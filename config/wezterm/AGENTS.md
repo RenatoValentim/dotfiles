@@ -34,8 +34,8 @@ Primary local commands:
 
 - test suite: `lua tests/run.lua`
 - shell syntax: `bash -n wezterm-fzf-picker.sh`
-- format check: `stylua --check wezterm.lua config tests`
 - format fix: `stylua wezterm.lua config tests`
+- CI-compatible format fix from the dotfiles root: `stylua --config-path config/lazyvim/stylua.toml config/wezterm`
   The README also documents parent-repo wrapper commands:
 - `./scripts/check.sh`
 - `CHECK_NVIM=1 ./scripts/check.sh`
@@ -47,10 +47,10 @@ At the last verification:
 
 - `lua tests/run.lua` passes
 - `bash -n wezterm-fzf-picker.sh` passes
-- `stylua --check wezterm.lua config tests` reports formatting diffs
+- `stylua --config-path config/lazyvim/stylua.toml config/wezterm` is the CI-facing format fix command
 - logic and tests are green
 - formatting is not fully normalized to StyLua yet
-- if you touch Lua files, run `stylua wezterm.lua config tests` before finishing
+- always run `stylua wezterm.lua config tests` before finishing any adjustment in this repo; do not skip it, because CI can fail on formatting drift
 
 ## Running a Single Test
 
@@ -170,8 +170,8 @@ Before finishing:
 
 - run `lua tests/run.lua`
 - run `bash -n wezterm-fzf-picker.sh` if the shell helper changed
-- run `stylua wezterm.lua config tests` after Lua edits
-- run `stylua --check wezterm.lua config tests`
+- always run `stylua wezterm.lua config tests` before finishing, even for small Lua changes
+- run `stylua --config-path config/lazyvim/stylua.toml config/wezterm` from the dotfiles root
 - mention any remaining pre-existing formatting drift or unrelated issues
 
 ## Commit Conventions
@@ -189,4 +189,5 @@ When acting autonomously in this repo:
 - prefer minimal, focused edits
 - keep runtime logic testable
 - follow existing naming and formatting conventions
+- always run `stylua wezterm.lua config tests` before handing work back to the user
 - do not introduce new frameworks or tooling unless explicitly requested
