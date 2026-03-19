@@ -1,4 +1,8 @@
-package.path = "./?.lua;./?/init.lua;" .. package.path
+local source = debug.getinfo(1, "S").source:sub(2)
+local script_dir = source:match("^(.*[/\\])") or ""
+local root = script_dir:gsub("tests[/\\]$", "")
+
+package.path = root .. "?.lua;" .. root .. "?/init.lua;" .. package.path
 
 local specs = {
 	{ name = "options", module = "tests.options_spec" },

@@ -16,7 +16,7 @@
 | ---------------- | ------------------ | ------------------------------------------------------------------------ |
 | 🐟 **Fish Shell** | `config/fish/`     | Modern shell with smart completions ([docs](config/fish/FISH_README.md)) |
 | 🖥️ **Tmux**       | `config/tmux/`     | Terminal multiplexer (includes vendored plugins)                         |
-| 💻 **WezTerm**    | `config/wezterm/`  | GPU-accelerated terminal emulator                                        |
+| 💻 **WezTerm**    | `config/wezterm/`  | GPU-accelerated terminal emulator ([docs](config/wezterm/README.md))     |
 | 🌳 **Lazygit**    | `config/lazygit/`  | Terminal UI for git commands                                             |
 | ⚡ **LazyVim**    | `config/lazyvim/`  | Neovim config (primary)                                                  |
 | 🔧 **RootNvim**   | `config/RootNvim/` | Alternate Neovim config                                                  |
@@ -57,7 +57,33 @@ Prefer putting machine-specific values into local, untracked override files:
 | ------- | ---------------------------------- | ---------------- |
 | Fish    | `config/fish/conf.d/local.fish`    | 🚫 Ignored by Git |
 | Lazygit | `config/lazygit/config.local.yml`  | 🚫 Ignored by Git |
-| WezTerm | `config/wezterm/wezterm.local.lua` | 🚫 Ignored by Git |
+
+## 💻 WezTerm
+
+The WezTerm config is split into focused modules so behavior stays easier to change and test:
+
+- `config/wezterm/wezterm.lua`: thin bootstrap that loads the composed config
+- `config/wezterm/config/init.lua`: wires modules together
+- `config/wezterm/config/options.lua`: shared options, theme, font, and leader key
+- `config/wezterm/config/opacity.lua`: transparency toggles and opacity cycling
+- `config/wezterm/config/tabs.lua`: dynamic tab titles, zoom badge, and right status
+- `config/wezterm/config/keys.lua`: keymaps and the searchable keybinding picker
+- `config/wezterm/tests/`: Lua test runner and focused module specs
+
+Notable behavior:
+
+- `Ctrl-a` acts as the leader key to stay close to the tmux setup
+- `Leader+p` opens the keybinding picker powered by `fzf`
+- `Ctrl+Shift+t` toggles transparency and `Ctrl+Shift+y` cycles opacity levels
+- tab labels prefer explicit names, then the foreground process, then the current directory
+- zoomed split tabs show a badge in the tab bar and in the right status area
+
+Requirements and helpers:
+
+- `JetBrains Mono Nerd Font` is the configured font
+- `fzf` is required for the keybinding picker helper
+- `bash` is required for `config/wezterm/wezterm-fzf-picker.sh`
+- `lua` is required to run the WezTerm test suite locally
 
 ---
 
@@ -66,7 +92,7 @@ Prefer putting machine-specific values into local, untracked override files:
 Validate your changes before committing:
 
 ```bash
-# Standard checks
+# Standard checks (Fish, WezTerm helper shell syntax, Stylua, WezTerm Lua tests)
 ./scripts/check.sh
 
 # Include Neovim validation (slower)

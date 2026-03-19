@@ -13,20 +13,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install fish
+      - name: Install runtime dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y fish
+          sudo apt-get install -y fish lua5.4
 
-      - name: Fish syntax check
-        run: |
-          while IFS= read -r -d '' file; do
-            fish -n "$file"
-          done < <(find config/fish -type f -name '*.fish' -print0)
-
-      - name: Stylua format (LazyVim)
-        uses: JohnnyMorganz/stylua-action@v4
+      - name: Install Stylua
+        uses: taiki-e/install-action@v2
         with:
-          token: ${{ github.token }}
-          version: latest
-          args: config/lazyvim
+          tool: stylua
+
+      - name: Run validation script
+        run: ./scripts/check.sh
