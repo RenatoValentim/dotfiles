@@ -127,6 +127,73 @@ return {
     end,
   },
   {
+    name = "skips already renamed tabs when rebuilding choices",
+    run = function()
+      local choices = keys.build_tab_choices({
+        {
+          tab = fake_tab({
+            tab_id = 3,
+            tab_title = "",
+            pane = {
+              foreground_process_name = "/usr/bin/bash",
+              current_working_dir = { file_path = "/home/rvsj/projects/dotfiles/" },
+              title = "shell",
+            },
+          }),
+          index = 2,
+          is_active = true,
+        },
+        {
+          tab = fake_tab({
+            tab_id = 4,
+            tab_title = "notes",
+            pane = {
+              foreground_process_name = "/usr/bin/bash",
+              current_working_dir = "file:///home/rvsj/projects/wiki/",
+              title = "shell",
+            },
+          }),
+          index = 3,
+          is_active = false,
+        },
+      }, {
+        [3] = true,
+      })
+
+      assert(#choices == 1)
+      assert(choices[1].id == "4")
+      assert(choices[1].label == "[ ] 4  notes  wiki")
+    end,
+  },
+  {
+    name = "serializes and parses renamed tab ids",
+    run = function()
+      local serialized = keys.serialize_tab_ids({
+        [4] = true,
+        [3] = true,
+      })
+
+      assert(serialized == "3,4")
+
+      local parsed = keys.parse_tab_ids("4,3,invalid")
+      assert(parsed[3] == true)
+      assert(parsed[4] == true)
+      assert(parsed.invalid == nil)
+    end,
+  },
+  {
+    name = "parses tab rename payloads",
+    run = function()
+      local payload = keys.parse_tab_rename_payload("12|4|3,4|test1")
+
+      assert(payload.target_pane_id == 12)
+      assert(payload.tab_id == 4)
+      assert(payload.renamed_tab_ids[3] == true)
+      assert(payload.renamed_tab_ids[4] == true)
+      assert(payload.title == "test1")
+    end,
+  },
+  {
     name = "builds zoxide path choices",
     run = function()
       local choices = keys.build_path_choices(table.concat({

@@ -35,6 +35,7 @@ local picker_palette = {
 }
 
 local keybinding_picker_var = "WEZTERM_KEYBINDING_PICKER"
+local tab_rename_var = "WEZTERM_TAB_RENAME"
 
 local picker_sections = {
   { key = "suggested", label = "Suggested" },
@@ -224,12 +225,12 @@ function M.tab_choice_label(tab_info)
   return label
 end
 
-function M.build_tab_choices(tab_infos)
+function M.build_tab_choices(tab_infos, excluded_tab_ids)
   local choices = {}
 
   for _, tab_info in ipairs(tab_infos or {}) do
     local normalized = picker_tab_info(tab_info)
-    if normalized.tab_id then
+    if normalized.tab_id and not (excluded_tab_ids and excluded_tab_ids[normalized.tab_id]) then
       table.insert(choices, {
         id = tostring(normalized.tab_id),
         label = M.tab_choice_label(normalized),
@@ -238,6 +239,51 @@ function M.build_tab_choices(tab_infos)
   end
 
   return choices
+end
+
+function M.serialize_tab_ids(tab_ids)
+  local values = {}
+
+  for tab_id, included in pairs(tab_ids or {}) do
+    if included then
+      table.insert(values, tonumber(tab_id))
+    end
+  end
+
+  table.sort(values)
+
+  for index, tab_id in ipairs(values) do
+    values[index] = tostring(tab_id)
+  end
+
+  return table.concat(values, ",")
+end
+
+function M.parse_tab_ids(value)
+  local tab_ids = {}
+
+  for raw_tab_id in (value or ""):gmatch("[^,]+") do
+    local tab_id = tonumber(raw_tab_id)
+    if tab_id then
+      tab_ids[tab_id] = true
+    end
+  end
+
+  return tab_ids
+end
+
+function M.parse_tab_rename_payload(value)
+  local target_pane_id, tab_id, renamed_tab_ids, title = (value or ""):match("^(%d+)|(%d+)|([^|]*)|(.*)$")
+  if not target_pane_id or not tab_id then
+    return nil
+  end
+
+  return {
+    target_pane_id = tonumber(target_pane_id),
+    tab_id = tonumber(tab_id),
+    renamed_tab_ids = M.parse_tab_ids(renamed_tab_ids),
+    title = title,
+  }
 end
 
 local function find_tab_by_id(tab_infos, tab_id)
@@ -315,23 +361,29 @@ function M.build_fzf_rows(entries, leader)
   return rows
 end
 
-local function prompt_for_tab_name(wezterm, window, pane, tab)
+local function open_tab_rename_prompt(wezterm, window, pane, tab_id, current_title, renamed_tab_ids)
   window:perform_action(
-    wezterm.action.PromptInputLine({
-      description = "New tab name (Enter for automatic)",
-      action = wezterm.action_callback(function(_, _, line)
-        if line == nil then
-          return
-        end
-
-        tab:set_title(line)
-      end),
+    wezterm.action.SplitPane({
+      direction = "Down",
+      top_level = true,
+      size = { Percent = 36 },
+      command = {
+        args = {
+          "bash",
+          wezterm.config_dir .. "/wezterm-tab-rename.sh",
+          tostring(pane:pane_id()),
+          tostring(tab_id),
+          current_title or "",
+          M.serialize_tab_ids(renamed_tab_ids),
+        },
+        domain = "CurrentPaneDomain",
+      },
     }),
     pane
   )
 end
 
-local function rename_tab_at_position(wezterm, window, pane)
+local function rename_tabs_at_position(wezterm, window, pane, renamed_tab_ids)
   local mux_window = window:mux_window()
   if not mux_window or not mux_window.tabs_with_info then
     return
@@ -345,24 +397,37 @@ local function rename_tab_at_position(wezterm, window, pane)
     return
   end
 
-  local choices = M.build_tab_choices(tab_infos)
+  local choices = M.build_tab_choices(tab_infos, renamed_tab_ids)
   if #choices == 0 then
-    notify(window, "No tabs available to rename")
+    if renamed_tab_ids and next(renamed_tab_ids) then
+      notify(window, "Finished renaming selected tabs")
+    else
+      notify(window, "No tabs available to rename")
+    end
+
     return
   end
 
   window:perform_action(
     wezterm.action.InputSelector({
-      title = "Rename tab",
+      title = "Rename tabs",
       choices = choices,
       fuzzy = true,
       action = wezterm.action_callback(function(inner_window, inner_pane, tab_id, _)
-        local target_tab = find_tab_by_id(tab_infos, tonumber(tab_id))
+        local numeric_tab_id = tonumber(tab_id)
+        local target_tab = find_tab_by_id(tab_infos, numeric_tab_id)
         if not target_tab then
           return
         end
 
-        prompt_for_tab_name(wezterm, inner_window, inner_pane, target_tab)
+        open_tab_rename_prompt(
+          wezterm,
+          inner_window,
+          inner_pane,
+          numeric_tab_id,
+          call_method(target_tab, "get_title") or "",
+          renamed_tab_ids or {}
+        )
       end),
     }),
     pane
@@ -559,9 +624,9 @@ local function build_custom_keys(wezterm)
       key = "r",
       mods = "LEADER",
       action = wezterm.action_callback(function(window, pane)
-        rename_tab_at_position(wezterm, window, pane)
+        rename_tabs_at_position(wezterm, window, pane)
       end),
-      desc = "Rename a tab",
+      desc = "Rename tabs",
       category = "tab",
       suggested = true,
     },
@@ -635,23 +700,44 @@ local function register_picker_events(wezterm, bindings, leader)
   end)
 
   wezterm.on("user-var-changed", function(window, _, name, value)
-    if name ~= keybinding_picker_var then
+    if name == keybinding_picker_var then
+      local target_pane_id, action_id = value:match("^(%d+)|(.+)$")
+      if not target_pane_id or not action_id then
+        return
+      end
+
+      local target_pane = wezterm.mux.get_pane(tonumber(target_pane_id))
+      local action = keybinding_actions[action_id]
+      if not target_pane or not action then
+        return
+      end
+
+      target_pane:activate()
+      window:perform_action(action, target_pane)
       return
     end
 
-    local target_pane_id, action_id = value:match("^(%d+)|(.+)$")
-    if not target_pane_id or not action_id then
+    if name ~= tab_rename_var then
       return
     end
 
-    local target_pane = wezterm.mux.get_pane(tonumber(target_pane_id))
-    local action = keybinding_actions[action_id]
-    if not target_pane or not action then
+    local payload = M.parse_tab_rename_payload(value)
+    if not payload then
       return
+    end
+
+    local target_pane = wezterm.mux.get_pane(payload.target_pane_id)
+    if not target_pane then
+      return
+    end
+
+    local target_tab = wezterm.mux.get_tab(payload.tab_id)
+    if target_tab then
+      target_tab:set_title(payload.title)
     end
 
     target_pane:activate()
-    window:perform_action(action, target_pane)
+    rename_tabs_at_position(wezterm, window, target_pane, payload.renamed_tab_ids)
   end)
 end
 
