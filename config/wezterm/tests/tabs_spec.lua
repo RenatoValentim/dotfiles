@@ -1,13 +1,15 @@
 local tabs = require("config.tabs")
 
+local home_dir = "/tmp/test-home"
+
 return {
   {
     name = "extracts basenames and cwd names",
     run = function()
       assert(tabs.basename("/tmp/project/file.lua") == "file.lua")
-      assert(tabs.basename("C:\\Users\\rvsj\\wezterm.exe") == "wezterm.exe")
-      assert(tabs.cwd_name("file:///home/rvsj/projects/wezterm/") == "wezterm")
-      assert(tabs.cwd_name({ file_path = "/home/rvsj/projects/dotfiles/" }) == "dotfiles")
+      assert(tabs.basename("C:\\Users\\tester\\wezterm.exe") == "wezterm.exe")
+      assert(tabs.cwd_name("file://" .. home_dir .. "/projects/wezterm/") == "wezterm")
+      assert(tabs.cwd_name({ file_path = home_dir .. "/projects/dotfiles/" }) == "dotfiles")
     end,
   },
   {
@@ -22,7 +24,7 @@ return {
         tab_title = "",
         active_pane = {
           foreground_process_name = "/usr/bin/nvim",
-          current_working_dir = "file:///home/rvsj/projects/wezterm",
+          current_working_dir = "file://" .. home_dir .. "/projects/wezterm",
           title = "shell",
         },
       }) == "nvim")
@@ -35,7 +37,7 @@ return {
         tab_title = "",
         active_pane = {
           foreground_process_name = "/usr/bin/bash",
-          current_working_dir = "file:///home/rvsj/projects/dotfiles/",
+          current_working_dir = "file://" .. home_dir .. "/projects/dotfiles/",
           title = "shell",
         },
       }) == "dotfiles")

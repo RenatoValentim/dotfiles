@@ -5,6 +5,8 @@ local leader = {
   mods = "CTRL",
 }
 
+local home_dir = "/tmp/test-home"
+
 local function fake_pane(data)
   return {
     get_foreground_process_name = function()
@@ -97,7 +99,7 @@ return {
             tab_title = "",
             pane = {
               foreground_process_name = "/usr/bin/bash",
-              current_working_dir = { file_path = "/home/rvsj/projects/dotfiles/" },
+              current_working_dir = { file_path = home_dir .. "/projects/dotfiles/" },
               title = "shell",
             },
           }),
@@ -110,7 +112,7 @@ return {
             tab_title = "notes",
             pane = {
               foreground_process_name = "/usr/bin/bash",
-              current_working_dir = "file:///home/rvsj/projects/wiki/",
+              current_working_dir = "file://" .. home_dir .. "/projects/wiki/",
               title = "shell",
             },
           }),
@@ -136,7 +138,7 @@ return {
             tab_title = "",
             pane = {
               foreground_process_name = "/usr/bin/bash",
-              current_working_dir = { file_path = "/home/rvsj/projects/dotfiles/" },
+              current_working_dir = { file_path = home_dir .. "/projects/dotfiles/" },
               title = "shell",
             },
           }),
@@ -149,7 +151,7 @@ return {
             tab_title = "notes",
             pane = {
               foreground_process_name = "/usr/bin/bash",
-              current_working_dir = "file:///home/rvsj/projects/wiki/",
+              current_working_dir = "file://" .. home_dir .. "/projects/wiki/",
               title = "shell",
             },
           }),
@@ -196,18 +198,21 @@ return {
   {
     name = "builds zoxide path choices",
     run = function()
-      local choices = keys.build_path_choices(table.concat({
-        "/home/rvsj/projects/dotfiles",
-        "/home/rvsj/projects/wiki",
-        "/home/rvsj/projects/dotfiles",
-        "",
-      }, "\n"))
+      local choices = keys.build_path_choices(
+        table.concat({
+          home_dir .. "/projects/dotfiles",
+          home_dir .. "/projects/wiki",
+          home_dir .. "/projects/dotfiles",
+          "",
+        }, "\n"),
+        home_dir
+      )
 
       assert(#choices == 2)
-      assert(choices[1].id == "/home/rvsj/projects/dotfiles")
-      assert(choices[1].label == "dotfiles  /home/rvsj/projects/dotfiles")
-      assert(choices[2].id == "/home/rvsj/projects/wiki")
-      assert(choices[2].label == "wiki  /home/rvsj/projects/wiki")
+      assert(choices[1].id == home_dir .. "/projects/dotfiles")
+      assert(choices[1].label == "dotfiles  ~/projects/dotfiles")
+      assert(choices[2].id == home_dir .. "/projects/wiki")
+      assert(choices[2].label == "wiki  ~/projects/wiki")
     end,
   },
 }

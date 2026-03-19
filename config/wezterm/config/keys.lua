@@ -309,23 +309,52 @@ function M.parse_zoxide_output(output)
   return paths
 end
 
-function M.path_choice_label(path)
-  local name = tabs.basename(path)
+local function escape_lua_pattern(text)
+  return (text:gsub("([^%w])", "%%%1"))
+end
 
-  if name == "" or name == path then
+function M.display_path(path, home_dir)
+  if not path or path == "" then
+    return ""
+  end
+
+  if not home_dir or home_dir == "" then
     return path
   end
 
-  return string.format("%s  %s", name, path)
+  local normalized_path = path:gsub("[/\\]+$", "")
+  local normalized_home = home_dir:gsub("[/\\]+$", "")
+
+  if normalized_path == normalized_home then
+    return "~"
+  end
+
+  local suffix = normalized_path:match("^" .. escape_lua_pattern(normalized_home) .. "([/\\].*)$")
+  if suffix then
+    return "~" .. suffix
+  end
+
+  return path
 end
 
-function M.build_path_choices(output)
+function M.path_choice_label(path, home_dir)
+  local name = tabs.basename(path)
+  local display_path = M.display_path(path, home_dir)
+
+  if name == "" or name == path then
+    return display_path
+  end
+
+  return string.format("%s  %s", name, display_path)
+end
+
+function M.build_path_choices(output, home_dir)
   local choices = {}
 
   for _, path in ipairs(M.parse_zoxide_output(output)) do
     table.insert(choices, {
       id = path,
-      label = M.path_choice_label(path),
+      label = M.path_choice_label(path, home_dir),
     })
   end
 
@@ -441,7 +470,7 @@ local function open_tab_at_path(wezterm, window, pane)
     return
   end
 
-  local choices = M.build_path_choices(stdout)
+  local choices = M.build_path_choices(stdout, wezterm.home_dir or os.getenv("HOME"))
   if #choices == 0 then
     notify(window, "No zoxide paths found")
     return
