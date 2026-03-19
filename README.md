@@ -74,7 +74,7 @@ Notable behavior:
 
 - `Ctrl-,` acts as the leader key
 - `Leader+p` opens the keybinding picker powered by `fzf`
-- `Ctrl+Shift+t` toggles transparency and `Ctrl+Shift+y` cycles opacity levels
+- `Ctrl+Shift+t` toggles transparency
 - tab labels prefer explicit names, then the foreground process, then the current directory
 - zoomed split tabs show a badge in the tab bar and in the right status area
 
@@ -132,7 +132,6 @@ CHECK_NVIM=1 ./scripts/check.sh
 | ------------------ | ------------------------------- |
 | `Ctrl+f`           | Toggle fullscreen               |
 | `Ctrl+Shift+t`     | Toggle transparency             |
-| `Ctrl+Shift+y`     | Cycle transparency levels       |
 | `Leader + p`       | Open keybinding picker          |
 | `Leader + Ctrl+a`  | Send literal `Ctrl+a` to a pane |
 
