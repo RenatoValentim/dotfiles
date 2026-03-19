@@ -18,7 +18,7 @@ function M.apply(config, wezterm)
   config.window_decorations = "RESIZE"
   config.term = "wezterm"
   config.enable_wayland = true
-  config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 1000 }
+  config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 3000 }
   config.colors = {
     selection_bg = "#232733",
     selection_fg = "#e2e9ff",

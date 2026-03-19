@@ -49,3 +49,11 @@ For the slower Neovim smoke test as well:
 ```bash
 CHECK_NVIM=1 ./scripts/check.sh
 ```
+
+## TODOs
+
+- [ ] Increase the tab name length to max 20 characters
+- [ ] Add the option to rename the tab at a specific point
+- [ ] Add the option to open the tab at a specific path.
+      After the new command `leader + t` to use zoxide for this.
+- [x] Increase leader timeout to 3s
