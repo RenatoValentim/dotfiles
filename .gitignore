@@ -12,3 +12,7 @@ config/fish/conf.d/local.fish
 config/lazygit/config.local.yml
 config/wezterm/wezterm.local.lua
 config/lazyvim/.nvimlog
+fishd.*
+fish_history
+fish_variables
+config.local.fish
