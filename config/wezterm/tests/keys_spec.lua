@@ -60,8 +60,9 @@ return {
     end,
   },
   {
-    name = "adds workspace creation and switching bindings",
+    name = "adds workspace creation rename and switching bindings",
     run = function()
+      local renamed_workspace
       local wezterm = {
         action = setmetatable({}, {
           __index = function(_, name)
@@ -80,6 +81,14 @@ return {
           }
         end,
         config_dir = "/tmp/wezterm",
+        mux = {
+          rename_workspace = function(old_name, new_name)
+            renamed_workspace = {
+              old_name = old_name,
+              new_name = new_name,
+            }
+          end,
+        },
         on = function() end,
       }
       local config = { leader = leader }
@@ -87,20 +96,27 @@ return {
       keys.apply(config, wezterm)
 
       local create_workspace
+      local rename_workspace
       local switch_workspace
       for _, binding in ipairs(config.keys) do
         if binding.key == "s" and binding.mods == "LEADER" then
           create_workspace = binding
+        elseif binding.key == "s" and binding.mods == "LEADER|SHIFT" then
+          rename_workspace = binding
         elseif binding.key == "o" and binding.mods == "LEADER" then
           switch_workspace = binding
         end
       end
 
       assert(create_workspace ~= nil)
+      assert(rename_workspace ~= nil)
       assert(switch_workspace ~= nil)
 
       local performed
       local window = {
+        active_workspace = function()
+          return "default"
+        end,
         perform_action = function(_, action, pane)
           performed = {
             action = action,
@@ -118,6 +134,14 @@ return {
       assert(performed.action.action == "SwitchToWorkspace")
       assert(performed.action.args[1].name == "dev")
       assert(performed.pane == pane)
+
+      rename_workspace.action.callback(window, pane)
+      assert(performed.action.action == "PromptInputLine")
+      assert(performed.action.args[1].description == "Rename workspace 'default'")
+
+      performed.action.args[1].action.callback(window, pane, "  notes  ")
+      assert(renamed_workspace.old_name == "default")
+      assert(renamed_workspace.new_name == "notes")
 
       assert(switch_workspace.action.action == "ShowLauncherArgs")
       assert(switch_workspace.action.args[1].flags == "FUZZY|WORKSPACES")

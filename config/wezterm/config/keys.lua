@@ -191,6 +191,10 @@ local function call_method(object, method_name)
   return value
 end
 
+local function trim_text(text)
+  return (text or ""):match("^%s*(.-)%s*$")
+end
+
 function M.parse_pane_text_payload(value)
   local target_pane_id, text = (value or ""):match("^(%d+)|(.*)$")
   if not target_pane_id then
@@ -434,13 +438,69 @@ local function prompt_new_workspace(wezterm, window, pane)
           return
         end
 
-        local workspace_name = line:match("^%s*(.-)%s*$")
+        local workspace_name = trim_text(line)
         if workspace_name == "" then
           notify(inner_window, "Workspace name cannot be empty")
           return
         end
 
         inner_window:perform_action(act.SwitchToWorkspace({ name = workspace_name }), inner_pane)
+      end),
+    }),
+    pane
+  )
+end
+
+local function active_workspace_name(wezterm, window)
+  local workspace_name = call_method(window, "active_workspace")
+  if workspace_name and workspace_name ~= "" then
+    return workspace_name
+  end
+
+  if not wezterm.mux or not wezterm.mux.get_active_workspace then
+    return nil
+  end
+
+  local ok, active_workspace = pcall(wezterm.mux.get_active_workspace)
+  if ok then
+    return active_workspace
+  end
+
+  return nil
+end
+
+local function rename_current_workspace(wezterm, window, pane)
+  local current_workspace = active_workspace_name(wezterm, window)
+  if not current_workspace then
+    notify(window, "No active workspace to rename")
+    return
+  end
+
+  local act = wezterm.action
+  window:perform_action(
+    act.PromptInputLine({
+      description = string.format("Rename workspace '%s'", current_workspace),
+      action = wezterm.action_callback(function(inner_window, _, line)
+        if not line then
+          return
+        end
+
+        local workspace_name = trim_text(line)
+        if workspace_name == "" then
+          notify(inner_window, "Workspace name cannot be empty")
+          return
+        end
+
+        if workspace_name == current_workspace then
+          return
+        end
+
+        local ok = pcall(function()
+          wezterm.mux.rename_workspace(current_workspace, workspace_name)
+        end)
+        if not ok then
+          notify(inner_window, "Unable to rename workspace")
+        end
       end),
     }),
     pane
@@ -597,6 +657,16 @@ local function build_custom_keys(wezterm)
         prompt_new_workspace(wezterm, window, pane)
       end),
       desc = "Create a new workspace",
+      category = "ui",
+      suggested = true,
+    },
+    {
+      key = "s",
+      mods = "LEADER|SHIFT",
+      action = wezterm.action_callback(function(window, pane)
+        rename_current_workspace(wezterm, window, pane)
+      end),
+      desc = "Rename current workspace",
       category = "ui",
       suggested = true,
     },
