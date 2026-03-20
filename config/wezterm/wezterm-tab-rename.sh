@@ -10,6 +10,10 @@ renamed_tab_ids=${4-}
 restore_focus=1
 
 cleanup() {
+  if [[ -n "${WEZTERM_PANE:-}" ]]; then
+    wezterm cli zoom-pane --pane-id "${WEZTERM_PANE}" --unzoom >/dev/null 2>&1 || true
+  fi
+
   if [[ ${restore_focus} -eq 1 ]]; then
     wezterm cli activate-pane --pane-id "${target_pane_id}" >/dev/null 2>&1 || true
   fi
@@ -26,6 +30,12 @@ emit_rename() {
   printf '\033]1337;SetUserVar=%s=%s\007' 'WEZTERM_TAB_RENAME' "${encoded}"
 }
 
+zoom_self() {
+  if [[ -n "${WEZTERM_PANE:-}" ]]; then
+    wezterm cli zoom-pane --pane-id "${WEZTERM_PANE}" --zoom >/dev/null 2>&1 || true
+  fi
+}
+
 trap cleanup EXIT
 
 if ! command -v fzf >/dev/null 2>&1; then
@@ -33,6 +43,8 @@ if ! command -v fzf >/dev/null 2>&1; then
   read -r _
   exit 1
 fi
+
+zoom_self
 
 if ! result=$(
   printf '' | fzf \
