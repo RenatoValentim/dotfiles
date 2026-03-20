@@ -11,11 +11,15 @@
 - `tests/run.lua`: lightweight Lua test runner
 - `tests/*_spec.lua`: focused specs for the pure WezTerm modules
 - `wezterm-fzf-picker.sh`: Bash helper used by the keybinding picker
+- `wezterm-tab-create.sh`: Bash helper used by the named tab prompt
+- `wezterm-tab-rename.sh`: Bash helper used by the tab rename flow
+- `wezterm-zoxide-picker.sh`: Bash helper used by the zoxide path picker
 
 ## Features
 
 - `Ctrl-,` is the leader key to keep the terminal close to the tmux setup
 - `Leader+p` opens a searchable keybinding picker powered by `fzf`
+- `Leader+c` opens an `fzf` input prompt to create a named tab
 - `Leader+r` opens a picker to rename multiple tabs in sequence and `Leader+t` opens a new tab from a `zoxide` path
 - `Ctrl+Shift+t` toggles transparency
 - tab labels prefer an explicit tab name, then the foreground process, then the current directory

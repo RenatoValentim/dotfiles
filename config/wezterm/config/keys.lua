@@ -35,6 +35,7 @@ local picker_palette = {
 }
 
 local keybinding_picker_var = "WEZTERM_KEYBINDING_PICKER"
+local tab_open_path_var = "WEZTERM_TAB_OPEN_PATH"
 local tab_rename_var = "WEZTERM_TAB_RENAME"
 
 local picker_sections = {
@@ -272,6 +273,18 @@ function M.parse_tab_ids(value)
   return tab_ids
 end
 
+function M.parse_pane_text_payload(value)
+  local target_pane_id, text = (value or ""):match("^(%d+)|(.*)$")
+  if not target_pane_id then
+    return nil
+  end
+
+  return {
+    target_pane_id = tonumber(target_pane_id),
+    text = text,
+  }
+end
+
 function M.parse_tab_rename_payload(value)
   local target_pane_id, tab_id, renamed_tab_ids, title = (value or ""):match("^(%d+)|(%d+)|([^|]*)|(.*)$")
   if not target_pane_id or not tab_id then
@@ -348,17 +361,36 @@ function M.path_choice_label(path, home_dir)
   return string.format("%s  %s", name, display_path)
 end
 
-function M.build_path_choices(output, home_dir)
-  local choices = {}
+function M.build_path_rows(output, home_dir)
+  local rows = {}
+  local paths = M.parse_zoxide_output(output)
+  local max_name_width = 0
 
-  for _, path in ipairs(M.parse_zoxide_output(output)) do
-    table.insert(choices, {
-      id = path,
-      label = M.path_choice_label(path, home_dir),
-    })
+  for _, path in ipairs(paths) do
+    max_name_width = math.max(max_name_width, #tabs.basename(path))
   end
 
-  return choices
+  for _, path in ipairs(paths) do
+    local name = tabs.basename(path)
+    local display_path = M.display_path(path, home_dir)
+    local search = table.concat({ name, display_path, path }, " ")
+    local display
+
+    if name == "" or name == path then
+      display = colorize(picker_palette.desc, display_path, false)
+    else
+      local padded_name = string.format("%-" .. tostring(max_name_width) .. "s", name)
+      display = table.concat({
+        colorize(picker_palette.section, padded_name, true),
+        "  ",
+        colorize(picker_palette.desc, display_path, false),
+      })
+    end
+
+    table.insert(rows, table.concat({ path, search, display }, "\t"))
+  end
+
+  return rows
 end
 
 function M.build_fzf_rows(entries, leader)
@@ -404,6 +436,25 @@ local function open_tab_rename_prompt(wezterm, window, pane, tab_id, current_tit
           tostring(tab_id),
           current_title or "",
           M.serialize_tab_ids(renamed_tab_ids),
+        },
+        domain = "CurrentPaneDomain",
+      },
+    }),
+    pane
+  )
+end
+
+local function open_tab_create_prompt(wezterm, window, pane)
+  window:perform_action(
+    wezterm.action.SplitPane({
+      direction = "Down",
+      top_level = true,
+      size = { Percent = 36 },
+      command = {
+        args = {
+          "bash",
+          wezterm.config_dir .. "/wezterm-tab-create.sh",
+          tostring(pane:pane_id()),
         },
         domain = "CurrentPaneDomain",
       },
@@ -470,30 +521,31 @@ local function open_tab_at_path(wezterm, window, pane)
     return
   end
 
-  local choices = M.build_path_choices(stdout, wezterm.home_dir or os.getenv("HOME"))
-  if #choices == 0 then
+  local rows = M.build_path_rows(stdout, wezterm.home_dir or os.getenv("HOME"))
+  if #rows == 0 then
     notify(window, "No zoxide paths found")
     return
   end
 
-  window:perform_action(
-    wezterm.action.InputSelector({
-      title = "Open tab at path",
-      choices = choices,
-      fuzzy = true,
-      action = wezterm.action_callback(function(inner_window, inner_pane, path, _)
-        if not path or path == "" then
-          return
-        end
+  local args = {
+    "bash",
+    wezterm.config_dir .. "/wezterm-zoxide-picker.sh",
+    tostring(pane:pane_id()),
+  }
 
-        inner_window:perform_action(
-          wezterm.action.SpawnCommandInNewTab({
-            cwd = path,
-            domain = "CurrentPaneDomain",
-          }),
-          inner_pane
-        )
-      end),
+  for _, row in ipairs(rows) do
+    table.insert(args, row)
+  end
+
+  window:perform_action(
+    wezterm.action.SplitPane({
+      direction = "Down",
+      top_level = true,
+      size = { Percent = 84 },
+      command = {
+        args = args,
+        domain = "CurrentPaneDomain",
+      },
     }),
     pane
   )
@@ -625,26 +677,9 @@ local function build_custom_keys(wezterm)
     {
       key = "c",
       mods = "LEADER",
-      action = act.PromptInputLine({
-        description = "New tab name (Enter for automatic)",
-        action = wezterm.action_callback(function(window, _, line)
-          if line == nil then
-            return
-          end
-
-          local mux_window = window:mux_window()
-          if not mux_window then
-            return
-          end
-
-          local tab = mux_window:spawn_tab({})
-          tab:activate()
-
-          if line ~= "" then
-            tab:set_title(line)
-          end
-        end),
-      }),
+      action = wezterm.action_callback(function(window, pane)
+        open_tab_create_prompt(wezterm, window, pane)
+      end),
       desc = "Create a new named tab",
       category = "tab",
       suggested = true,
@@ -743,6 +778,28 @@ local function register_picker_events(wezterm, bindings, leader)
 
       target_pane:activate()
       window:perform_action(action, target_pane)
+      return
+    end
+
+    if name == tab_open_path_var then
+      local payload = M.parse_pane_text_payload(value)
+      if not payload or payload.text == "" then
+        return
+      end
+
+      local target_pane = wezterm.mux.get_pane(payload.target_pane_id)
+      if not target_pane then
+        return
+      end
+
+      target_pane:activate()
+      window:perform_action(
+        wezterm.action.SpawnCommandInNewTab({
+          cwd = payload.text,
+          domain = "CurrentPaneDomain",
+        }),
+        target_pane
+      )
       return
     end
 

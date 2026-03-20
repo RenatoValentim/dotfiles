@@ -184,6 +184,15 @@ return {
     end,
   },
   {
+    name = "parses pane text payloads",
+    run = function()
+      local payload = keys.parse_pane_text_payload("12|notes|draft")
+
+      assert(payload.target_pane_id == 12)
+      assert(payload.text == "notes|draft")
+    end,
+  },
+  {
     name = "parses tab rename payloads",
     run = function()
       local payload = keys.parse_tab_rename_payload("12|4|3,4|test1")
@@ -196,9 +205,17 @@ return {
     end,
   },
   {
-    name = "builds zoxide path choices",
+    name = "replaces the home prefix in displayed paths",
     run = function()
-      local choices = keys.build_path_choices(
+      assert(keys.display_path(home_dir .. "/projects/dotfiles", home_dir) == "~/projects/dotfiles")
+      assert(keys.display_path(home_dir, home_dir) == "~")
+      assert(keys.display_path("/tmp/workspace", home_dir) == "/tmp/workspace")
+    end,
+  },
+  {
+    name = "builds zoxide path rows",
+    run = function()
+      local rows = keys.build_path_rows(
         table.concat({
           home_dir .. "/projects/dotfiles",
           home_dir .. "/projects/wiki",
@@ -208,11 +225,14 @@ return {
         home_dir
       )
 
-      assert(#choices == 2)
-      assert(choices[1].id == home_dir .. "/projects/dotfiles")
-      assert(choices[1].label == "dotfiles  ~/projects/dotfiles")
-      assert(choices[2].id == home_dir .. "/projects/wiki")
-      assert(choices[2].label == "wiki  ~/projects/wiki")
+      assert(#rows == 2)
+
+      local id, search, display = rows[1]:match("^([^\t]+)\t([^\t]+)\t(.+)$")
+      assert(id == home_dir .. "/projects/dotfiles")
+      assert(search:find("dotfiles", 1, true) ~= nil)
+      assert(search:find("~/projects/dotfiles", 1, true) ~= nil)
+      assert(display:find("dotfiles", 1, true) ~= nil)
+      assert(display:find("~/projects/dotfiles", 1, true) ~= nil)
     end,
   },
 }
