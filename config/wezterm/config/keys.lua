@@ -665,7 +665,7 @@ local function build_custom_keys(wezterm)
       category = "tab",
     },
     {
-      key = "t",
+      key = "w",
       mods = "LEADER",
       action = wezterm.action_callback(function(window, pane)
         open_tab_at_path(wezterm, window, pane)
