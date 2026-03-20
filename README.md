@@ -18,7 +18,6 @@
 | 💻 **WezTerm**    | `config/wezterm/`  | GPU-accelerated terminal emulator ([docs](config/wezterm/README.md))     |
 | 🌳 **Lazygit**    | `config/lazygit/`  | Terminal UI for git commands                                             |
 | ⚡ **LazyVim**    | `config/lazyvim/`  | Neovim config (primary)                                                  |
-| 🔧 **RootNvim**   | `config/RootNvim/` | Alternate Neovim config                                                  |
 | ✅ **Validation** | `scripts/check.sh` | Local validation script (mirrors CI)                                     |
 
 ---

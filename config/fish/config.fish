@@ -92,7 +92,6 @@ alias ipy="ipython"
 
 # Neovim
 alias v="env NVIM_APPNAME=nvim nvim"
-alias rv="env NVIM_APPNAME=rootNvim nvim"
 
 # VsCode
 alias code="code-insiders"

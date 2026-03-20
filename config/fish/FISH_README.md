@@ -52,8 +52,6 @@
 
 ### Neovim
 - `v` → nvim with default config
-- `rv` → nvim with rootNvim config
-- `ns` → Interactive config selector
 
 ### DevContainer
 - `dc` → `devcontainer`

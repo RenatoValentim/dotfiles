@@ -7,7 +7,6 @@
   - `config/wezterm/`: WezTerm config (Lua; modular config under `config/wezterm/config/`, tests under `config/wezterm/tests/`).
   - `config/lazygit/`: Lazygit config (YAML).
   - `config/lazyvim/`: Neovim config (LazyVim; Lua, formatted with StyLua).
-  - `config/RootNvim/`: alternate Neovim config (Lua).
 - `scripts/`: repo tooling (currently `scripts/check.sh`).
 - `.github/workflows/ci.yml`: CI runs `./scripts/check.sh`.
 
