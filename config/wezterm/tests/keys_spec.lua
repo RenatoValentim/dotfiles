@@ -7,36 +7,6 @@ local leader = {
 
 local home_dir = "/tmp/test-home"
 
-local function fake_pane(data)
-  return {
-    get_foreground_process_name = function()
-      return data.foreground_process_name
-    end,
-    get_current_working_dir = function()
-      return data.current_working_dir
-    end,
-    get_title = function()
-      return data.title
-    end,
-  }
-end
-
-local function fake_tab(data)
-  local pane = fake_pane(data.pane)
-
-  return {
-    tab_id = function()
-      return data.tab_id
-    end,
-    get_title = function()
-      return data.tab_title
-    end,
-    active_pane = function()
-      return pane
-    end,
-  }
-end
-
 return {
   {
     name = "formats shortcuts with leader and shift",
@@ -90,100 +60,6 @@ return {
     end,
   },
   {
-    name = "builds tab choices for the rename picker",
-    run = function()
-      local choices = keys.build_tab_choices({
-        {
-          tab = fake_tab({
-            tab_id = 3,
-            tab_title = "",
-            pane = {
-              foreground_process_name = "/usr/bin/bash",
-              current_working_dir = { file_path = home_dir .. "/projects/dotfiles/" },
-              title = "shell",
-            },
-          }),
-          index = 2,
-          is_active = true,
-        },
-        {
-          tab = fake_tab({
-            tab_id = 4,
-            tab_title = "notes",
-            pane = {
-              foreground_process_name = "/usr/bin/bash",
-              current_working_dir = "file://" .. home_dir .. "/projects/wiki/",
-              title = "shell",
-            },
-          }),
-          index = 3,
-          is_active = false,
-        },
-      })
-
-      assert(#choices == 2)
-      assert(choices[1].id == "3")
-      assert(choices[1].label == "[*] 3  dotfiles")
-      assert(choices[2].id == "4")
-      assert(choices[2].label == "[ ] 4  notes  wiki")
-    end,
-  },
-  {
-    name = "skips already renamed tabs when rebuilding choices",
-    run = function()
-      local choices = keys.build_tab_choices({
-        {
-          tab = fake_tab({
-            tab_id = 3,
-            tab_title = "",
-            pane = {
-              foreground_process_name = "/usr/bin/bash",
-              current_working_dir = { file_path = home_dir .. "/projects/dotfiles/" },
-              title = "shell",
-            },
-          }),
-          index = 2,
-          is_active = true,
-        },
-        {
-          tab = fake_tab({
-            tab_id = 4,
-            tab_title = "notes",
-            pane = {
-              foreground_process_name = "/usr/bin/bash",
-              current_working_dir = "file://" .. home_dir .. "/projects/wiki/",
-              title = "shell",
-            },
-          }),
-          index = 3,
-          is_active = false,
-        },
-      }, {
-        [3] = true,
-      })
-
-      assert(#choices == 1)
-      assert(choices[1].id == "4")
-      assert(choices[1].label == "[ ] 4  notes  wiki")
-    end,
-  },
-  {
-    name = "serializes and parses renamed tab ids",
-    run = function()
-      local serialized = keys.serialize_tab_ids({
-        [4] = true,
-        [3] = true,
-      })
-
-      assert(serialized == "3,4")
-
-      local parsed = keys.parse_tab_ids("4,3,invalid")
-      assert(parsed[3] == true)
-      assert(parsed[4] == true)
-      assert(parsed.invalid == nil)
-    end,
-  },
-  {
     name = "parses pane text payloads",
     run = function()
       local payload = keys.parse_pane_text_payload("12|notes|draft")
@@ -195,12 +71,10 @@ return {
   {
     name = "parses tab rename payloads",
     run = function()
-      local payload = keys.parse_tab_rename_payload("12|4|3,4|test1")
+      local payload = keys.parse_tab_rename_payload("12|4|test1")
 
       assert(payload.target_pane_id == 12)
       assert(payload.tab_id == 4)
-      assert(payload.renamed_tab_ids[3] == true)
-      assert(payload.renamed_tab_ids[4] == true)
       assert(payload.title == "test1")
     end,
   },

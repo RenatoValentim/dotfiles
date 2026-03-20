@@ -20,7 +20,7 @@
 - `Ctrl-,` is the leader key for the shared terminal workflow
 - `Leader+p` opens a searchable keybinding picker powered by `fzf`
 - `Leader+c` opens an `fzf` input prompt to create a named tab
-- `Leader+r` opens a picker to rename multiple tabs in sequence and `Leader+w` opens a new tab from a `zoxide` path
+- `Leader+r` opens the inline prompt to rename the current tab and `Leader+w` opens a new tab from a `zoxide` path
 - `Ctrl+Shift+t` toggles transparency
 - tab labels prefer an explicit tab name, then the foreground process, then the current directory
 - zoomed split tabs show a badge in the tab bar and in the right status area
@@ -62,6 +62,6 @@ CHECK_NVIM=1 ./scripts/check.sh
 - [x] Add the option to rename the tab at a specific point
 - [x] Add the option to open the tab at a specific path.
       After the new command `leader + w` to use zoxide for this.
-- [x] Allow renaming multiple tabs in sequence from the rename picker
+- [x] Rename the current tab from the inline prompt
 - [x] Increase leader timeout to 3s
 - [x] Change the leader to `ctrl+,`

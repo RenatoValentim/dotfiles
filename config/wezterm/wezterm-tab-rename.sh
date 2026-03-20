@@ -5,7 +5,6 @@ set -euo pipefail
 target_pane_id=${1:?missing target pane id}
 tab_id=${2:?missing tab id}
 current_title=${3-}
-renamed_tab_ids=${4-}
 hint_row=$'hint\tClear text for automatic title'
 
 restore_focus=1
@@ -55,7 +54,7 @@ if ! result=$(
     --color='bg:#1f2330,bg+:#232733,fg:#e2e9ff,fg+:#e2e9ff,hl:#edb07d,hl+:#edb07d,border:#6b7089,header:#8b92ad,prompt:#8b92ad,pointer:#9cafeb,spinner:#9cafeb,info:#8b92ad,gutter:#1f2330' \
     --delimiter=$'\t' \
     --disabled \
-    --header='Edit tab name  Enter save  Esc finish  Clear text for automatic' \
+    --header='Edit tab name  Enter save  Esc cancel  Clear text for automatic' \
     --height='100%' \
     --info=hidden \
     --layout=reverse \
@@ -80,5 +79,5 @@ wezterm cli set-tab-title --tab-id "${tab_id}" "${new_title}" >/dev/null 2>&1 ||
 
 restore_focus=0
 wezterm cli activate-pane --pane-id "${target_pane_id}" >/dev/null 2>&1 || true
-emit_rename "${target_pane_id}|${tab_id}|${renamed_tab_ids:+${renamed_tab_ids},}${tab_id}|${new_title}"
+emit_rename "${target_pane_id}|${tab_id}|${new_title}"
 sleep 0.05
