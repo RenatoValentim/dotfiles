@@ -65,6 +65,12 @@ if test -n "$GOPATH" -a -d "$GOPATH/bin"
     set -gx PATH "$GOPATH/bin" $PATH
 end
 
+if test -d "$HOME/.opencode/bin"
+    if not contains -- "$HOME/.opencode/bin" $PATH
+        set -gx PATH "$HOME/.opencode/bin" $PATH
+    end
+end
+
 # ============================================================================
 # 7) Aliases
 # ============================================================================
@@ -81,6 +87,8 @@ alias ll="eza -lF --icons --header"
 alias cl="clear"
 alias fd="fdfind"
 alias cd="z"  # zoxide override
+alias oc="opencode"
+alias ipy="ipython"
 
 # Neovim
 alias v="env NVIM_APPNAME=nvim nvim"
@@ -91,6 +99,10 @@ alias code="code-insiders"
 
 # AI tools
 alias gemini="npx https://github.com/google-gemini/gemini-cli"
+
+# AI Sandbox
+alias ai-init="ai-jail --init --map /run/systemd/resolve"
+alias ai-open="ai-jail opencode"
 
 # Devcontainer
 alias dc="devcontainer"
