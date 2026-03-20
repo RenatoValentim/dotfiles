@@ -47,10 +47,10 @@ if ! result=$(
     --delimiter=$'\t' \
     --disabled \
     --header='Type a tab name  Enter create  Esc cancel' \
-    --height='100%' \
+    --height='16%' \
     --info=hidden \
     --layout=reverse \
-    --margin='4%,14%' \
+    --margin='30%,22%' \
     --no-sort \
     --padding='1,2' \
     --pointer='>' \

@@ -55,10 +55,10 @@ if ! result=$(
     --delimiter=$'\t' \
     --disabled \
     --header='Edit tab name  Enter save  Esc cancel  Clear text for automatic' \
-    --height='100%' \
+    --height='16%' \
     --info=hidden \
     --layout=reverse \
-    --margin='4%,14%' \
+    --margin='30%,22%' \
     --no-sort \
     --padding='1,2' \
     --pointer='>' \
