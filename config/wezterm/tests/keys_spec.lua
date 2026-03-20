@@ -60,9 +60,22 @@ return {
     end,
   },
   {
+    name = "builds workspace rows with current workspace first",
+    run = function()
+      local rows = keys.build_workspace_rows({ "docs", "default", "Docs", "default" }, "default")
+
+      assert(#rows == 3)
+
+      local id, search, display = rows[1]:match("^([^\t]+)\t([^\t]+)\t(.+)$")
+      assert(id == "default")
+      assert(search == "Current default")
+      assert(display:find("Current", 1, true) ~= nil)
+      assert(display:find("default", 1, true) ~= nil)
+    end,
+  },
+  {
     name = "adds workspace creation rename and switching bindings",
     run = function()
-      local renamed_workspace
       local wezterm = {
         action = setmetatable({}, {
           __index = function(_, name)
@@ -82,11 +95,8 @@ return {
         end,
         config_dir = "/tmp/wezterm",
         mux = {
-          rename_workspace = function(old_name, new_name)
-            renamed_workspace = {
-              old_name = old_name,
-              new_name = new_name,
-            }
+          get_workspace_names = function()
+            return { "docs", "default" }
           end,
         },
         on = function() end,
@@ -124,28 +134,44 @@ return {
           }
         end,
       }
-      local pane = {}
+      local pane = {
+        pane_id = function()
+          return 12
+        end,
+      }
 
       create_workspace.action.callback(window, pane)
-      assert(performed.action.action == "PromptInputLine")
-      assert(performed.action.args[1].description == "Enter name for new workspace")
-
-      performed.action.args[1].action.callback(window, pane, "  dev  ")
-      assert(performed.action.action == "SwitchToWorkspace")
-      assert(performed.action.args[1].name == "dev")
-      assert(performed.pane == pane)
+      assert(performed.action.action == "SplitPane")
+      assert(performed.action.args[1].command.args[2] == "/tmp/wezterm/wezterm-workspace-picker.sh")
+      assert(performed.action.args[1].command.args[3] == "12")
+      assert(performed.action.args[1].command.args[4] == "create")
 
       rename_workspace.action.callback(window, pane)
-      assert(performed.action.action == "PromptInputLine")
-      assert(performed.action.args[1].description == "Rename workspace 'default'")
+      assert(performed.action.action == "SplitPane")
+      assert(performed.action.args[1].command.args[4] == "rename")
+      assert(performed.action.args[1].command.args[5] == "default")
 
-      performed.action.args[1].action.callback(window, pane, "  notes  ")
-      assert(renamed_workspace.old_name == "default")
-      assert(renamed_workspace.new_name == "notes")
+      switch_workspace.action.callback(window, pane)
+      assert(performed.action.action == "SplitPane")
+      assert(performed.action.args[1].command.args[4] == "switch")
+      assert(performed.action.args[1].command.args[5] == "default")
+      assert(performed.action.args[1].command.args[6]:find("default", 1, true) ~= nil)
+      assert(performed.action.args[1].command.args[7]:find("docs", 1, true) ~= nil)
+    end,
+  },
+  {
+    name = "parses workspace action payloads",
+    run = function()
+      local create_payload = keys.parse_workspace_action_payload("12|create|dev")
+      assert(create_payload.target_pane_id == 12)
+      assert(create_payload.action == "create")
+      assert(create_payload.workspace_name == "dev")
 
-      assert(switch_workspace.action.action == "ShowLauncherArgs")
-      assert(switch_workspace.action.args[1].flags == "FUZZY|WORKSPACES")
-      assert(switch_workspace.action.args[1].title == "Workspaces")
+      local rename_payload = keys.parse_workspace_action_payload("12|rename|default|notes")
+      assert(rename_payload.target_pane_id == 12)
+      assert(rename_payload.action == "rename")
+      assert(rename_payload.current_workspace == "default")
+      assert(rename_payload.workspace_name == "notes")
     end,
   },
   {

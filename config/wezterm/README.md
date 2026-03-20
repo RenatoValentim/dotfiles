@@ -11,6 +11,7 @@
 - `tests/run.lua`: lightweight Lua test runner
 - `tests/*_spec.lua`: focused specs for the pure WezTerm modules
 - `wezterm-fzf-picker.sh`: Bash helper used by the keybinding picker
+- `wezterm-workspace-picker.sh`: Bash helper used by the workspace create, rename, and switch flows
 - `wezterm-tab-create.sh`: Bash helper used by the named tab prompt
 - `wezterm-tab-rename.sh`: Bash helper used by the tab rename flow
 - `wezterm-zoxide-picker.sh`: Bash helper used by the zoxide path picker
@@ -20,18 +21,36 @@
 - `Ctrl-,` is the leader key for the shared terminal workflow
 - `Leader+p` opens a searchable keybinding picker powered by `fzf`
 - `Leader+c` opens an `fzf` input prompt to create a named tab
-- `Leader+r` opens the inline prompt to rename the current tab, `Leader+w` opens a new tab from a `zoxide` path, `Leader+s` creates a named workspace, `Leader+Shift+s` renames the current workspace, and `Leader+o` switches workspaces
+- `Leader+r` opens an `fzf` input prompt to rename the current tab, `Leader+w` opens a new tab from a `zoxide` path, and the workspace shortcuts use `fzf` to create, rename, and switch workspaces with `Leader+s`, `Leader+Shift+s`, and `Leader+o`
 - `Ctrl+Shift+t` toggles transparency
 - tab labels prefer an explicit tab name, then the foreground process, then the current directory
 - zoomed split tabs show a badge in the tab bar and in the right status area
 - pane navigation, resizing, splitting, tab movement, and tab naming are tuned to match the surrounding shell workflow
+
+## Separate GUI windows
+
+When you use workspaces, `wezterm start` can reuse an existing GUI process.
+To open a separate WezTerm GUI process with a fresh window, run:
+
+```bash
+wezterm start --always-new-process
+```
+
+To start that separate window in a specific workspace, run:
+
+```bash
+wezterm start --always-new-process --workspace scratch
+```
+
+Use plain `wezterm start` when you want to reuse the current GUI, and use
+`--always-new-process` when you want an independent window.
 
 ## Requirements
 
 - `wezterm`
 - `bash`
 - `lua` for `lua config/wezterm/tests/run.lua`
-- `fzf` for the keybinding picker
+- `fzf` for the keybinding, tab, and workspace helpers
 - `zoxide` for opening tabs from indexed paths
 - `JetBrains Mono Nerd Font`
 
@@ -46,7 +65,7 @@ Run the shared repository checks:
 This covers:
 
 - Fish syntax checks
-- Bash syntax check for `wezterm-fzf-picker.sh`
+- Bash syntax checks for all WezTerm helper scripts
 - StyLua format checks for `config/lazyvim` and `config/wezterm`
 - `lua config/wezterm/tests/run.lua`
 

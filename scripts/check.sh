@@ -24,8 +24,10 @@ else
   say "==> fish: skipped (fish not installed)"
 fi
 
-say "==> bash: syntax check (WezTerm helper)"
-run bash -n config/wezterm/wezterm-fzf-picker.sh
+say "==> bash: syntax check (WezTerm helpers)"
+while IFS= read -r -d '' file; do
+  run bash -n "$file"
+done < <(find config/wezterm -maxdepth 1 -type f -name '*.sh' -print0)
 
 if command -v stylua >/dev/null 2>&1; then
   say "==> stylua: format check"

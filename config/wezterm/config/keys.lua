@@ -37,6 +37,7 @@ local picker_palette = {
 local keybinding_picker_var = "WEZTERM_KEYBINDING_PICKER"
 local tab_open_path_var = "WEZTERM_TAB_OPEN_PATH"
 local tab_rename_var = "WEZTERM_TAB_RENAME"
+local workspace_action_var = "WEZTERM_WORKSPACE_ACTION"
 
 local picker_sections = {
   { key = "suggested", label = "Suggested" },
@@ -220,6 +221,37 @@ function M.parse_tab_rename_payload(value)
   }
 end
 
+function M.parse_workspace_action_payload(value)
+  local target_pane_id, action, payload = (value or ""):match("^(%d+)|([^|]+)|(.*)$")
+  if not target_pane_id or not action then
+    return nil
+  end
+
+  if action == "rename" then
+    local current_workspace, workspace_name = payload:match("^([^|]+)|(.*)$")
+    if not current_workspace then
+      return nil
+    end
+
+    return {
+      target_pane_id = tonumber(target_pane_id),
+      action = action,
+      current_workspace = current_workspace,
+      workspace_name = workspace_name,
+    }
+  end
+
+  if action ~= "create" and action ~= "switch" then
+    return nil
+  end
+
+  return {
+    target_pane_id = tonumber(target_pane_id),
+    action = action,
+    workspace_name = payload,
+  }
+end
+
 function M.parse_zoxide_output(output)
   local paths = {}
   local seen = {}
@@ -300,6 +332,50 @@ function M.build_path_rows(output, home_dir)
     end
 
     table.insert(rows, table.concat({ path, search, display }, "\t"))
+  end
+
+  return rows
+end
+
+function M.build_workspace_rows(workspace_names, current_workspace)
+  local rows = {}
+  local names = {}
+  local seen = {}
+
+  for _, workspace_name in ipairs(workspace_names or {}) do
+    if workspace_name ~= "" and not seen[workspace_name] then
+      seen[workspace_name] = true
+      table.insert(names, workspace_name)
+    end
+  end
+
+  table.sort(names, function(left, right)
+    local left_is_current = left == current_workspace
+    local right_is_current = right == current_workspace
+
+    if left_is_current ~= right_is_current then
+      return left_is_current
+    end
+
+    return left:lower() < right:lower()
+  end)
+
+  for _, workspace_name in ipairs(names) do
+    local is_current = workspace_name == current_workspace
+    local search = is_current and table.concat({ "Current", workspace_name }, " ") or workspace_name
+    local display
+
+    if is_current then
+      display = table.concat({
+        colorize(picker_palette.section, "Current", true),
+        "  ",
+        colorize(picker_palette.desc, workspace_name, false),
+      })
+    else
+      display = colorize(picker_palette.desc, workspace_name, false)
+    end
+
+    table.insert(rows, table.concat({ workspace_name, search, display }, "\t"))
   end
 
   return rows
@@ -427,28 +503,33 @@ local function open_tab_at_path(wezterm, window, pane)
   )
 end
 
-local function prompt_new_workspace(wezterm, window, pane)
-  local act = wezterm.action
+local function open_workspace_picker(wezterm, window, pane, extra_args, size)
+  local args = {
+    "bash",
+    wezterm.config_dir .. "/wezterm-workspace-picker.sh",
+    tostring(pane:pane_id()),
+  }
+
+  for _, value in ipairs(extra_args or {}) do
+    table.insert(args, value)
+  end
 
   window:perform_action(
-    act.PromptInputLine({
-      description = "Enter name for new workspace",
-      action = wezterm.action_callback(function(inner_window, inner_pane, line)
-        if not line then
-          return
-        end
-
-        local workspace_name = trim_text(line)
-        if workspace_name == "" then
-          notify(inner_window, "Workspace name cannot be empty")
-          return
-        end
-
-        inner_window:perform_action(act.SwitchToWorkspace({ name = workspace_name }), inner_pane)
-      end),
+    wezterm.action.SplitPane({
+      direction = "Down",
+      top_level = true,
+      size = { Percent = size or 84 },
+      command = {
+        args = args,
+        domain = "CurrentPaneDomain",
+      },
     }),
     pane
   )
+end
+
+local function open_workspace_create_prompt(wezterm, window, pane)
+  open_workspace_picker(wezterm, window, pane, { "create" }, 16)
 end
 
 local function active_workspace_name(wezterm, window)
@@ -469,42 +550,41 @@ local function active_workspace_name(wezterm, window)
   return nil
 end
 
-local function rename_current_workspace(wezterm, window, pane)
+local function open_workspace_rename_prompt(wezterm, window, pane)
   local current_workspace = active_workspace_name(wezterm, window)
   if not current_workspace then
     notify(window, "No active workspace to rename")
     return
   end
 
-  local act = wezterm.action
-  window:perform_action(
-    act.PromptInputLine({
-      description = string.format("Rename workspace '%s'", current_workspace),
-      action = wezterm.action_callback(function(inner_window, _, line)
-        if not line then
-          return
-        end
+  open_workspace_picker(wezterm, window, pane, { "rename", current_workspace }, 16)
+end
 
-        local workspace_name = trim_text(line)
-        if workspace_name == "" then
-          notify(inner_window, "Workspace name cannot be empty")
-          return
-        end
+local function open_workspace_switch_picker(wezterm, window, pane)
+  if not wezterm.mux or not wezterm.mux.get_workspace_names then
+    notify(window, "Unable to list workspaces")
+    return
+  end
 
-        if workspace_name == current_workspace then
-          return
-        end
+  local ok, workspace_names = pcall(wezterm.mux.get_workspace_names)
+  if not ok or not workspace_names then
+    notify(window, "Unable to list workspaces")
+    return
+  end
 
-        local ok = pcall(function()
-          wezterm.mux.rename_workspace(current_workspace, workspace_name)
-        end)
-        if not ok then
-          notify(inner_window, "Unable to rename workspace")
-        end
-      end),
-    }),
-    pane
-  )
+  local current_workspace = active_workspace_name(wezterm, window)
+  local rows = M.build_workspace_rows(workspace_names, current_workspace)
+  if #rows == 0 then
+    notify(window, "No workspaces found")
+    return
+  end
+
+  local args = { "switch", current_workspace or "" }
+  for _, row in ipairs(rows) do
+    table.insert(args, row)
+  end
+
+  open_workspace_picker(wezterm, window, pane, args, 84)
 end
 
 local function build_custom_keys(wezterm)
@@ -654,7 +734,7 @@ local function build_custom_keys(wezterm)
       key = "s",
       mods = "LEADER",
       action = wezterm.action_callback(function(window, pane)
-        prompt_new_workspace(wezterm, window, pane)
+        open_workspace_create_prompt(wezterm, window, pane)
       end),
       desc = "Create a new workspace",
       category = "ui",
@@ -664,7 +744,7 @@ local function build_custom_keys(wezterm)
       key = "s",
       mods = "LEADER|SHIFT",
       action = wezterm.action_callback(function(window, pane)
-        rename_current_workspace(wezterm, window, pane)
+        open_workspace_rename_prompt(wezterm, window, pane)
       end),
       desc = "Rename current workspace",
       category = "ui",
@@ -673,10 +753,9 @@ local function build_custom_keys(wezterm)
     {
       key = "o",
       mods = "LEADER",
-      action = act.ShowLauncherArgs({
-        flags = "FUZZY|WORKSPACES",
-        title = "Workspaces",
-      }),
+      action = wezterm.action_callback(function(window, pane)
+        open_workspace_switch_picker(wezterm, window, pane)
+      end),
       desc = "Switch workspace",
       category = "ui",
       suggested = true,
@@ -765,6 +844,44 @@ local function register_picker_events(wezterm, bindings, leader)
 
       target_pane:activate()
       window:perform_action(action, target_pane)
+      return
+    end
+
+    if name == workspace_action_var then
+      local payload = M.parse_workspace_action_payload(value)
+      if not payload then
+        return
+      end
+
+      local target_pane = wezterm.mux.get_pane(payload.target_pane_id)
+      if not target_pane then
+        return
+      end
+
+      target_pane:activate()
+
+      local workspace_name = trim_text(payload.workspace_name)
+      if payload.action == "rename" then
+        local current_workspace = trim_text(payload.current_workspace)
+        if workspace_name == "" or current_workspace == "" or workspace_name == current_workspace then
+          return
+        end
+
+        local ok = pcall(function()
+          wezterm.mux.rename_workspace(current_workspace, workspace_name)
+        end)
+        if not ok then
+          notify(window, "Unable to rename workspace")
+        end
+
+        return
+      end
+
+      if workspace_name == "" then
+        return
+      end
+
+      window:perform_action(wezterm.action.SwitchToWorkspace({ name = workspace_name }), target_pane)
       return
     end
 

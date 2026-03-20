@@ -70,14 +70,15 @@ Notable behavior:
 - `Ctrl-,` acts as the leader key
 - `Leader+p` opens the keybinding picker powered by `fzf`
 - `Ctrl+Shift+t` toggles transparency
+- `wezterm start --always-new-process` opens a separate WezTerm GUI process when you want a window outside the current GUI flow
 - tab labels prefer explicit names, then the foreground process, then the current directory
 - zoomed split tabs show a badge in the tab bar and in the right status area
 
 Requirements and helpers:
 
 - `JetBrains Mono Nerd Font` is the configured font
-- `fzf` is required for the keybinding picker helper
-- `bash` is required for `config/wezterm/wezterm-fzf-picker.sh`
+- `fzf` is required for the keybinding, tab, and workspace helpers
+- `bash` is required for the helper scripts under `config/wezterm/`
 - `lua` is required to run the WezTerm test suite locally
 
 ---
