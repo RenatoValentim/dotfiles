@@ -423,6 +423,30 @@ local function open_tab_at_path(wezterm, window, pane)
   )
 end
 
+local function prompt_new_workspace(wezterm, window, pane)
+  local act = wezterm.action
+
+  window:perform_action(
+    act.PromptInputLine({
+      description = "Enter name for new workspace",
+      action = wezterm.action_callback(function(inner_window, inner_pane, line)
+        if not line then
+          return
+        end
+
+        local workspace_name = line:match("^%s*(.-)%s*$")
+        if workspace_name == "" then
+          notify(inner_window, "Workspace name cannot be empty")
+          return
+        end
+
+        inner_window:perform_action(act.SwitchToWorkspace({ name = workspace_name }), inner_pane)
+      end),
+    }),
+    pane
+  )
+end
+
 local function build_custom_keys(wezterm)
   local act = wezterm.action
 
@@ -564,6 +588,27 @@ local function build_custom_keys(wezterm)
       end),
       desc = "Rename current tab",
       category = "tab",
+      suggested = true,
+    },
+    {
+      key = "s",
+      mods = "LEADER",
+      action = wezterm.action_callback(function(window, pane)
+        prompt_new_workspace(wezterm, window, pane)
+      end),
+      desc = "Create a new workspace",
+      category = "ui",
+      suggested = true,
+    },
+    {
+      key = "o",
+      mods = "LEADER",
+      action = act.ShowLauncherArgs({
+        flags = "FUZZY|WORKSPACES",
+        title = "Workspaces",
+      }),
+      desc = "Switch workspace",
+      category = "ui",
       suggested = true,
     },
     {

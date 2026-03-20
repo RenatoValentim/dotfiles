@@ -60,6 +60,71 @@ return {
     end,
   },
   {
+    name = "adds workspace creation and switching bindings",
+    run = function()
+      local wezterm = {
+        action = setmetatable({}, {
+          __index = function(_, name)
+            return function(...)
+              return {
+                action = name,
+                args = { ... },
+              }
+            end
+          end,
+        }),
+        action_callback = function(callback)
+          return {
+            action = "callback",
+            callback = callback,
+          }
+        end,
+        config_dir = "/tmp/wezterm",
+        on = function() end,
+      }
+      local config = { leader = leader }
+
+      keys.apply(config, wezterm)
+
+      local create_workspace
+      local switch_workspace
+      for _, binding in ipairs(config.keys) do
+        if binding.key == "s" and binding.mods == "LEADER" then
+          create_workspace = binding
+        elseif binding.key == "o" and binding.mods == "LEADER" then
+          switch_workspace = binding
+        end
+      end
+
+      assert(create_workspace ~= nil)
+      assert(switch_workspace ~= nil)
+
+      local performed
+      local window = {
+        perform_action = function(_, action, pane)
+          performed = {
+            action = action,
+            pane = pane,
+          }
+        end,
+      }
+      local pane = {}
+
+      create_workspace.action.callback(window, pane)
+      assert(performed.action.action == "PromptInputLine")
+      assert(performed.action.args[1].description == "Enter name for new workspace")
+
+      performed.action.args[1].action.callback(window, pane, "  dev  ")
+      assert(performed.action.action == "SwitchToWorkspace")
+      assert(performed.action.args[1].name == "dev")
+      assert(performed.pane == pane)
+
+      assert(switch_workspace.action.action == "ShowLauncherArgs")
+      assert(switch_workspace.action.args[1].flags == "FUZZY|WORKSPACES")
+      assert(switch_workspace.action.args[1].title == "Workspaces")
+    end,
+  },
+  {
     name = "parses pane text payloads",
     run = function()
       local payload = keys.parse_pane_text_payload("12|notes|draft")

@@ -20,7 +20,7 @@
 - `Ctrl-,` is the leader key for the shared terminal workflow
 - `Leader+p` opens a searchable keybinding picker powered by `fzf`
 - `Leader+c` opens an `fzf` input prompt to create a named tab
-- `Leader+r` opens the inline prompt to rename the current tab and `Leader+w` opens a new tab from a `zoxide` path
+- `Leader+r` opens the inline prompt to rename the current tab, `Leader+w` opens a new tab from a `zoxide` path, `Leader+s` creates a named workspace, and `Leader+o` switches workspaces
 - `Ctrl+Shift+t` toggles transparency
 - tab labels prefer an explicit tab name, then the foreground process, then the current directory
 - zoomed split tabs show a badge in the tab bar and in the right status area
