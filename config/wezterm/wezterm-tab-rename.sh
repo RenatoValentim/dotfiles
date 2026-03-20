@@ -6,6 +6,7 @@ target_pane_id=${1:?missing target pane id}
 tab_id=${2:?missing tab id}
 current_title=${3-}
 renamed_tab_ids=${4-}
+hint_row=$'hint\tClear text for automatic title'
 
 restore_focus=1
 
@@ -47,25 +48,33 @@ fi
 zoom_self
 
 if ! result=$(
-  printf '' | fzf \
+  printf '%s\n' "${hint_row}" | fzf \
+    --ansi \
     --bind='enter:print-query+accept,esc:abort' \
     --border=rounded \
     --color='bg:#1f2330,bg+:#232733,fg:#e2e9ff,fg+:#e2e9ff,hl:#edb07d,hl+:#edb07d,border:#6b7089,header:#8b92ad,prompt:#8b92ad,pointer:#9cafeb,spinner:#9cafeb,info:#8b92ad,gutter:#1f2330' \
+    --delimiter=$'\t' \
+    --disabled \
     --header='Edit tab name  Enter save  Esc finish  Clear text for automatic' \
     --height='100%' \
     --info=hidden \
     --layout=reverse \
     --margin='4%,14%' \
+    --no-sort \
     --padding='1,2' \
-    --phony \
     --pointer='>' \
     --prompt='Rename > ' \
-    --query="${current_title}"
+    --query="${current_title}" \
+    --with-nth='2'
 ); then
   exit 0
 fi
 
 new_title=${result%%$'\n'*}
+
+if [[ "${result}" == "${hint_row}" || "${new_title}" == "${hint_row}" ]]; then
+  new_title=""
+fi
 
 wezterm cli set-tab-title --tab-id "${tab_id}" "${new_title}" >/dev/null 2>&1 || true
 
