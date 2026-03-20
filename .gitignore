@@ -1,5 +1,3 @@
-config/tmux/plugins
-config/tmux.mobile/plugins
 tt.*
 .tests
 doc/tags

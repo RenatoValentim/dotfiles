@@ -4,7 +4,6 @@
 
 - `config/`: primary dotfiles, intended to be linked into `~/.config` (XDG).
   - `config/fish/`: Fish shell config (`config.fish`, `conf.d/`, `functions/`, completions).
-  - `config/tmux/`: tmux config (includes vendored plugins under `config/tmux/plugins/`).
   - `config/wezterm/`: WezTerm config (Lua; modular config under `config/wezterm/config/`, tests under `config/wezterm/tests/`).
   - `config/lazygit/`: Lazygit config (YAML).
   - `config/lazyvim/`: Neovim config (LazyVim; Lua, formatted with StyLua).
@@ -37,6 +36,6 @@ Treat `./scripts/check.sh` and CI as the quality gate. WezTerm has lightweight L
 
 ## Commit & Pull Request Guidelines
 
-- Commit history may be sparse; prefer Conventional Commits going forward (e.g., `feat(fish): …`, `fix(tmux): …`, `chore(ci): …`).
+- Commit history may be sparse; prefer Conventional Commits going forward (e.g., `feat(fish): …`, `fix(wezterm): …`, `chore(ci): …`).
 - PRs should include: what changed, which config(s) it affects, and how you validated (e.g., `./scripts/check.sh`, manual app reload steps).
 - Don’t commit secrets; keep sensitive values in local override files or external secret stores.

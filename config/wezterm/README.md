@@ -17,14 +17,14 @@
 
 ## Features
 
-- `Ctrl-,` is the leader key to keep the terminal close to the tmux setup
+- `Ctrl-,` is the leader key for the shared terminal workflow
 - `Leader+p` opens a searchable keybinding picker powered by `fzf`
 - `Leader+c` opens an `fzf` input prompt to create a named tab
 - `Leader+r` opens a picker to rename multiple tabs in sequence and `Leader+w` opens a new tab from a `zoxide` path
 - `Ctrl+Shift+t` toggles transparency
 - tab labels prefer an explicit tab name, then the foreground process, then the current directory
 - zoomed split tabs show a badge in the tab bar and in the right status area
-- pane navigation, resizing, splitting, tab movement, and tab naming are tuned to match the surrounding shell and tmux workflow
+- pane navigation, resizing, splitting, tab movement, and tab naming are tuned to match the surrounding shell workflow
 
 ## Requirements
 
