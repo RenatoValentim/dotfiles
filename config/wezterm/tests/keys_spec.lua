@@ -221,19 +221,19 @@ return {
       assert(performed.action.action == "SplitPane")
       assert(performed.action.args[1].command.args[2] == "/tmp/wezterm/wezterm-tab-create.sh")
       assert(performed.action.args[1].command.args[3] == "12")
-      assert(performed.action.args[1].command.args[4] == nil)
+      assert(performed.action.args[1].command.args[4] == "/tmp/workspace")
 
       create_named_tab_here.action.callback(window, pane)
       assert(performed.action.action == "SplitPane")
       assert(performed.action.args[1].command.args[2] == "/tmp/wezterm/wezterm-tab-create.sh")
       assert(performed.action.args[1].command.args[3] == "12")
-      assert(performed.action.args[1].command.args[4] == "/tmp/workspace")
+      assert(performed.action.args[1].command.args[4] == nil)
 
       pane.get_current_working_dir = function()
         return "ssh://remote/tmp/workspace"
       end
 
-      create_named_tab_here.action.callback(window, pane)
+      create_named_tab.action.callback(window, pane)
       assert(performed.action.args[1].command.args[4] == nil)
     end,
   },

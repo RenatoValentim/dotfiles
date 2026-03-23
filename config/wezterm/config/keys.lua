@@ -765,9 +765,9 @@ local function build_custom_keys(wezterm)
       key = "c",
       mods = "LEADER",
       action = wezterm.action_callback(function(window, pane)
-        open_tab_create_prompt(wezterm, window, pane)
+        open_tab_create_prompt(wezterm, window, pane, current_pane_cwd(pane))
       end),
-      desc = "Create a new named tab",
+      desc = "Create a new named tab here",
       category = "tab",
       suggested = true,
     },
@@ -775,9 +775,9 @@ local function build_custom_keys(wezterm)
       key = "t",
       mods = "LEADER",
       action = wezterm.action_callback(function(window, pane)
-        open_tab_create_prompt(wezterm, window, pane, current_pane_cwd(pane))
+        open_tab_create_prompt(wezterm, window, pane)
       end),
-      desc = "Create a new named tab here",
+      desc = "Create a new named tab",
       category = "tab",
       suggested = true,
     },
