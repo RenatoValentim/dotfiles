@@ -1,10 +1,14 @@
 # Repository Guidelines
 
+## Subproject Guidance
+
+- When working inside `config/wezterm`, follow `config/wezterm/AGENTS.md` for WezTerm-specific structure, commands, style, and validation.
+
 ## Project Structure & Module Organization
 
 - `config/`: primary dotfiles, intended to be linked into `~/.config` (XDG).
   - `config/fish/`: Fish shell config (`config.fish`, `conf.d/`, `functions/`, completions).
-  - `config/wezterm/`: WezTerm config (Lua; modular config under `config/wezterm/config/`, tests under `config/wezterm/tests/`).
+  - `config/wezterm/`: WezTerm config; see `config/wezterm/AGENTS.md` for local workflows and validation.
   - `config/lazygit/`: Lazygit config (YAML).
   - `config/lazyvim/`: Neovim config (LazyVim; Lua, formatted with StyLua).
 - `scripts/`: repo tooling (currently `scripts/check.sh`).
@@ -12,7 +16,7 @@
 
 ## Build, Test, and Development Commands
 
-- `./scripts/check.sh`: runs local checks (Fish syntax, WezTerm helper Bash syntax, StyLua on LazyVim and WezTerm, and WezTerm Lua tests).
+- `./scripts/check.sh`: runs the repo-wide checks across Fish, WezTerm, and LazyVim.
 - `CHECK_NVIM=1 ./scripts/check.sh`: additionally smoke-tests Neovim headlessly (requires `nvim`).
 
 Quick install (symlink what you use):
@@ -31,7 +35,7 @@ Quick install (symlink what you use):
 
 ## Testing Guidelines
 
-Treat `./scripts/check.sh` and CI as the quality gate. WezTerm has lightweight Lua tests in `config/wezterm/tests/`. Add new checks to `scripts/check.sh` when introducing new languages/tools.
+Treat `./scripts/check.sh` and CI as the repo quality gate. Use subproject `AGENTS.md` files for tool-specific validation details, such as `config/wezterm/AGENTS.md`. Add new checks to `scripts/check.sh` when introducing new languages/tools.
 
 ## Commit & Pull Request Guidelines
 
