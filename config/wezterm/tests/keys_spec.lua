@@ -160,6 +160,84 @@ return {
     end,
   },
   {
+    name = "adds named tab creation bindings",
+    run = function()
+      local wezterm = {
+        action = setmetatable({}, {
+          __index = function(_, name)
+            return function(...)
+              return {
+                action = name,
+                args = { ... },
+              }
+            end
+          end,
+        }),
+        action_callback = function(callback)
+          return {
+            action = "callback",
+            callback = callback,
+          }
+        end,
+        config_dir = "/tmp/wezterm",
+        on = function() end,
+      }
+      local config = { leader = leader }
+
+      keys.apply(config, wezterm)
+
+      local create_named_tab
+      local create_named_tab_here
+      for _, binding in ipairs(config.keys) do
+        if binding.key == "c" and binding.mods == "LEADER" then
+          create_named_tab = binding
+        elseif binding.key == "t" and binding.mods == "LEADER" then
+          create_named_tab_here = binding
+        end
+      end
+
+      assert(create_named_tab ~= nil)
+      assert(create_named_tab_here ~= nil)
+
+      local performed
+      local window = {
+        perform_action = function(_, action, pane)
+          performed = {
+            action = action,
+            pane = pane,
+          }
+        end,
+      }
+      local pane = {
+        pane_id = function()
+          return 12
+        end,
+        get_current_working_dir = function()
+          return "file:///tmp/workspace"
+        end,
+      }
+
+      create_named_tab.action.callback(window, pane)
+      assert(performed.action.action == "SplitPane")
+      assert(performed.action.args[1].command.args[2] == "/tmp/wezterm/wezterm-tab-create.sh")
+      assert(performed.action.args[1].command.args[3] == "12")
+      assert(performed.action.args[1].command.args[4] == nil)
+
+      create_named_tab_here.action.callback(window, pane)
+      assert(performed.action.action == "SplitPane")
+      assert(performed.action.args[1].command.args[2] == "/tmp/wezterm/wezterm-tab-create.sh")
+      assert(performed.action.args[1].command.args[3] == "12")
+      assert(performed.action.args[1].command.args[4] == "/tmp/workspace")
+
+      pane.get_current_working_dir = function()
+        return "ssh://remote/tmp/workspace"
+      end
+
+      create_named_tab_here.action.callback(window, pane)
+      assert(performed.action.args[1].command.args[4] == nil)
+    end,
+  },
+  {
     name = "parses workspace action payloads",
     run = function()
       local create_payload = keys.parse_workspace_action_payload("12|create|dev")

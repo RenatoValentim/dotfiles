@@ -196,6 +196,51 @@ local function trim_text(text)
   return (text or ""):match("^%s*(.-)%s*$")
 end
 
+local function path_value(path)
+  if path == nil then
+    return nil
+  end
+
+  local ok, file_path = pcall(function()
+    return path.file_path
+  end)
+  if ok and file_path and file_path ~= "" then
+    return file_path
+  end
+
+  if type(path) == "string" then
+    return path
+  end
+
+  local value = tostring(path)
+  if value == "" or value:match("^table: ") or value:match("^userdata: ") then
+    return nil
+  end
+
+  return value
+end
+
+local function cwd_path(cwd)
+  local value = path_value(cwd)
+  if not value or value == "" then
+    return nil
+  end
+
+  if value:match("^[%a][%w+.-]*://") then
+    if not value:find("file://", 1, true) then
+      return nil
+    end
+
+    value = value:gsub("^file://", "")
+  end
+
+  return value ~= "" and value or nil
+end
+
+local function current_pane_cwd(pane)
+  return cwd_path(call_method(pane, "get_current_working_dir"))
+end
+
 function M.parse_pane_text_payload(value)
   local target_pane_id, text = (value or ""):match("^(%d+)|(.*)$")
   if not target_pane_id then
@@ -431,18 +476,24 @@ local function open_tab_rename_prompt(wezterm, window, pane, tab_id, current_tit
   )
 end
 
-local function open_tab_create_prompt(wezterm, window, pane)
+local function open_tab_create_prompt(wezterm, window, pane, cwd)
+  local args = {
+    "bash",
+    wezterm.config_dir .. "/wezterm-tab-create.sh",
+    tostring(pane:pane_id()),
+  }
+
+  if cwd and cwd ~= "" then
+    table.insert(args, cwd)
+  end
+
   window:perform_action(
     wezterm.action.SplitPane({
       direction = "Down",
       top_level = true,
       size = { Percent = 36 },
       command = {
-        args = {
-          "bash",
-          wezterm.config_dir .. "/wezterm-tab-create.sh",
-          tostring(pane:pane_id()),
-        },
+        args = args,
         domain = "CurrentPaneDomain",
       },
     }),
@@ -717,6 +768,16 @@ local function build_custom_keys(wezterm)
         open_tab_create_prompt(wezterm, window, pane)
       end),
       desc = "Create a new named tab",
+      category = "tab",
+      suggested = true,
+    },
+    {
+      key = "t",
+      mods = "LEADER",
+      action = wezterm.action_callback(function(window, pane)
+        open_tab_create_prompt(wezterm, window, pane, current_pane_cwd(pane))
+      end),
+      desc = "Create a new named tab here",
       category = "tab",
       suggested = true,
     },
