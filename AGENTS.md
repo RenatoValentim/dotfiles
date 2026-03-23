@@ -3,6 +3,7 @@
 ## Subproject Guidance
 
 - When working inside `config/wezterm`, follow `config/wezterm/AGENTS.md` for WezTerm-specific structure, commands, style, and validation.
+- When working inside `config/lazyvim`, follow `config/lazyvim/AGENTS.md` for LazyVim-specific structure, commands, style, and validation.
 
 ## Project Structure & Module Organization
 
@@ -10,7 +11,7 @@
   - `config/fish/`: Fish shell config (`config.fish`, `conf.d/`, `functions/`, completions).
   - `config/wezterm/`: WezTerm config; see `config/wezterm/AGENTS.md` for local workflows and validation.
   - `config/lazygit/`: Lazygit config (YAML).
-  - `config/lazyvim/`: Neovim config (LazyVim; Lua, formatted with StyLua).
+  - `config/lazyvim/`: Neovim config; see `config/lazyvim/AGENTS.md` for local workflows and validation.
 - `scripts/`: repo tooling (currently `scripts/check.sh`).
 - `.github/workflows/ci.yml`: CI runs `./scripts/check.sh`.
 
@@ -35,7 +36,7 @@ Quick install (symlink what you use):
 
 ## Testing Guidelines
 
-Treat `./scripts/check.sh` and CI as the repo quality gate. Use subproject `AGENTS.md` files for tool-specific validation details, such as `config/wezterm/AGENTS.md`. Add new checks to `scripts/check.sh` when introducing new languages/tools.
+Treat `./scripts/check.sh` and CI as the repo quality gate. Use subproject `AGENTS.md` files for tool-specific validation details, such as `config/wezterm/AGENTS.md` and `config/lazyvim/AGENTS.md`. Add new checks to `scripts/check.sh` when introducing new languages/tools.
 
 ## Commit & Pull Request Guidelines
 
