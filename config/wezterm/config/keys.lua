@@ -459,7 +459,6 @@ local function open_tab_rename_prompt(wezterm, window, pane, tab_id, current_tit
   window:perform_action(
     wezterm.action.SplitPane({
       direction = "Down",
-      top_level = true,
       size = { Percent = 36 },
       command = {
         args = {
@@ -481,6 +480,7 @@ local function open_tab_create_prompt(wezterm, window, pane, cwd)
     "bash",
     wezterm.config_dir .. "/wezterm-tab-create.sh",
     tostring(pane:pane_id()),
+    tostring(window:window_id()),
   }
 
   if cwd and cwd ~= "" then
@@ -490,7 +490,6 @@ local function open_tab_create_prompt(wezterm, window, pane, cwd)
   window:perform_action(
     wezterm.action.SplitPane({
       direction = "Down",
-      top_level = true,
       size = { Percent = 36 },
       command = {
         args = args,
@@ -543,7 +542,6 @@ local function open_tab_at_path(wezterm, window, pane)
   window:perform_action(
     wezterm.action.SplitPane({
       direction = "Down",
-      top_level = true,
       size = { Percent = 84 },
       command = {
         args = args,
@@ -568,7 +566,6 @@ local function open_workspace_picker(wezterm, window, pane, extra_args, size)
   window:perform_action(
     wezterm.action.SplitPane({
       direction = "Down",
-      top_level = true,
       size = { Percent = size or 84 },
       command = {
         args = args,

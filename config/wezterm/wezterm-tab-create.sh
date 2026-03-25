@@ -3,7 +3,8 @@
 set -euo pipefail
 
 target_pane_id=${1:?missing target pane id}
-cwd=${2-}
+window_id=${2:?missing window id}
+cwd=${3-}
 hint_row=$'hint\tLeave empty for the automatic title'
 
 restore_focus=1
@@ -70,9 +71,9 @@ fi
 restore_focus=0
 
 if [[ -n "${cwd}" ]]; then
-  new_pane_id=$(wezterm cli spawn --pane-id "${target_pane_id}" --cwd "${cwd}")
+  new_pane_id=$(wezterm cli spawn --window-id "${window_id}" --cwd "${cwd}")
 else
-  new_pane_id=$(wezterm cli spawn --pane-id "${target_pane_id}")
+  new_pane_id=$(wezterm cli spawn --window-id "${window_id}")
 fi
 
 if [[ -n "${tab_title}" ]]; then
