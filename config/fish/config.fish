@@ -101,7 +101,8 @@ alias gemini="npx https://github.com/google-gemini/gemini-cli"
 
 # AI Sandbox
 alias ai-init="ai-jail --init --map /run/systemd/resolve"
-alias ai-open="ai-jail opencode"
+alias ai-open-opencode="ai-jail opencode"
+alias ai-open-claudecode="ai-jail claude"
 
 # Devcontainer
 alias dc="devcontainer"
