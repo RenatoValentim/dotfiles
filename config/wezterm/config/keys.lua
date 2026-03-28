@@ -457,19 +457,15 @@ end
 
 local function open_tab_rename_prompt(wezterm, window, pane, tab_id, current_title)
   window:perform_action(
-    wezterm.action.SplitPane({
-      direction = "Down",
-      size = { Percent = 36 },
-      command = {
-        args = {
-          "bash",
-          wezterm.config_dir .. "/wezterm-tab-rename.sh",
-          tostring(pane:pane_id()),
-          tostring(tab_id),
-          current_title or "",
-        },
-        domain = "CurrentPaneDomain",
+    wezterm.action.SpawnCommandInNewTab({
+      args = {
+        "bash",
+        wezterm.config_dir .. "/wezterm-tab-rename.sh",
+        tostring(pane:pane_id()),
+        tostring(tab_id),
+        current_title or "",
       },
+      domain = "CurrentPaneDomain",
     }),
     pane
   )
@@ -488,13 +484,9 @@ local function open_tab_create_prompt(wezterm, window, pane, cwd)
   end
 
   window:perform_action(
-    wezterm.action.SplitPane({
-      direction = "Down",
-      size = { Percent = 36 },
-      command = {
-        args = args,
-        domain = "CurrentPaneDomain",
-      },
+    wezterm.action.SpawnCommandInNewTab({
+      args = args,
+      domain = "CurrentPaneDomain",
     }),
     pane
   )
@@ -540,19 +532,15 @@ local function open_tab_at_path(wezterm, window, pane)
   end
 
   window:perform_action(
-    wezterm.action.SplitPane({
-      direction = "Down",
-      size = { Percent = 84 },
-      command = {
-        args = args,
-        domain = "CurrentPaneDomain",
-      },
+    wezterm.action.SpawnCommandInNewTab({
+      args = args,
+      domain = "CurrentPaneDomain",
     }),
     pane
   )
 end
 
-local function open_workspace_picker(wezterm, window, pane, extra_args, size)
+local function open_workspace_picker(wezterm, window, pane, extra_args)
   local args = {
     "bash",
     wezterm.config_dir .. "/wezterm-workspace-picker.sh",
@@ -564,20 +552,16 @@ local function open_workspace_picker(wezterm, window, pane, extra_args, size)
   end
 
   window:perform_action(
-    wezterm.action.SplitPane({
-      direction = "Down",
-      size = { Percent = size or 84 },
-      command = {
-        args = args,
-        domain = "CurrentPaneDomain",
-      },
+    wezterm.action.SpawnCommandInNewTab({
+      args = args,
+      domain = "CurrentPaneDomain",
     }),
     pane
   )
 end
 
 local function open_workspace_create_prompt(wezterm, window, pane)
-  open_workspace_picker(wezterm, window, pane, { "create" }, 16)
+  open_workspace_picker(wezterm, window, pane, { "create" })
 end
 
 local function active_workspace_name(wezterm, window)
@@ -605,7 +589,7 @@ local function open_workspace_rename_prompt(wezterm, window, pane)
     return
   end
 
-  open_workspace_picker(wezterm, window, pane, { "rename", current_workspace }, 16)
+  open_workspace_picker(wezterm, window, pane, { "rename", current_workspace })
 end
 
 local function open_workspace_switch_picker(wezterm, window, pane)
@@ -632,7 +616,7 @@ local function open_workspace_switch_picker(wezterm, window, pane)
     table.insert(args, row)
   end
 
-  open_workspace_picker(wezterm, window, pane, args, 84)
+  open_workspace_picker(wezterm, window, pane, args)
 end
 
 local function build_custom_keys(wezterm)
@@ -874,14 +858,9 @@ local function register_picker_events(wezterm, bindings, leader)
     end
 
     window:perform_action(
-      act.SplitPane({
-        direction = "Down",
-        top_level = true,
-        size = { Percent = 84 },
-        command = {
-          args = args,
-          domain = "CurrentPaneDomain",
-        },
+      act.SpawnCommandInNewTab({
+        args = args,
+        domain = "CurrentPaneDomain",
       }),
       pane
     )

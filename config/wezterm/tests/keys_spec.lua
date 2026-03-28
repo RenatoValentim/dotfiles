@@ -141,22 +141,22 @@ return {
       }
 
       create_workspace.action.callback(window, pane)
-      assert(performed.action.action == "SplitPane")
-      assert(performed.action.args[1].command.args[2] == "/tmp/wezterm/wezterm-workspace-picker.sh")
-      assert(performed.action.args[1].command.args[3] == "12")
-      assert(performed.action.args[1].command.args[4] == "create")
+      assert(performed.action.action == "SpawnCommandInNewTab")
+      assert(performed.action.args[1].args[2] == "/tmp/wezterm/wezterm-workspace-picker.sh")
+      assert(performed.action.args[1].args[3] == "12")
+      assert(performed.action.args[1].args[4] == "create")
 
       rename_workspace.action.callback(window, pane)
-      assert(performed.action.action == "SplitPane")
-      assert(performed.action.args[1].command.args[4] == "rename")
-      assert(performed.action.args[1].command.args[5] == "default")
+      assert(performed.action.action == "SpawnCommandInNewTab")
+      assert(performed.action.args[1].args[4] == "rename")
+      assert(performed.action.args[1].args[5] == "default")
 
       switch_workspace.action.callback(window, pane)
-      assert(performed.action.action == "SplitPane")
-      assert(performed.action.args[1].command.args[4] == "switch")
-      assert(performed.action.args[1].command.args[5] == "default")
-      assert(performed.action.args[1].command.args[6]:find("default", 1, true) ~= nil)
-      assert(performed.action.args[1].command.args[7]:find("docs", 1, true) ~= nil)
+      assert(performed.action.action == "SpawnCommandInNewTab")
+      assert(performed.action.args[1].args[4] == "switch")
+      assert(performed.action.args[1].args[5] == "default")
+      assert(performed.action.args[1].args[6]:find("default", 1, true) ~= nil)
+      assert(performed.action.args[1].args[7]:find("docs", 1, true) ~= nil)
     end,
   },
   {
@@ -207,6 +207,9 @@ return {
             pane = pane,
           }
         end,
+        window_id = function()
+          return 42
+        end,
       }
       local pane = {
         pane_id = function()
@@ -218,23 +221,25 @@ return {
       }
 
       create_named_tab.action.callback(window, pane)
-      assert(performed.action.action == "SplitPane")
-      assert(performed.action.args[1].command.args[2] == "/tmp/wezterm/wezterm-tab-create.sh")
-      assert(performed.action.args[1].command.args[3] == "12")
-      assert(performed.action.args[1].command.args[4] == "/tmp/workspace")
+      assert(performed.action.action == "SpawnCommandInNewTab")
+      assert(performed.action.args[1].args[2] == "/tmp/wezterm/wezterm-tab-create.sh")
+      assert(performed.action.args[1].args[3] == "12")
+      assert(performed.action.args[1].args[4] == "42")
+      assert(performed.action.args[1].args[5] == "/tmp/workspace")
 
       create_named_tab_here.action.callback(window, pane)
-      assert(performed.action.action == "SplitPane")
-      assert(performed.action.args[1].command.args[2] == "/tmp/wezterm/wezterm-tab-create.sh")
-      assert(performed.action.args[1].command.args[3] == "12")
-      assert(performed.action.args[1].command.args[4] == nil)
+      assert(performed.action.action == "SpawnCommandInNewTab")
+      assert(performed.action.args[1].args[2] == "/tmp/wezterm/wezterm-tab-create.sh")
+      assert(performed.action.args[1].args[3] == "12")
+      assert(performed.action.args[1].args[4] == "42")
+      assert(performed.action.args[1].args[5] == nil)
 
       pane.get_current_working_dir = function()
         return "ssh://remote/tmp/workspace"
       end
 
       create_named_tab.action.callback(window, pane)
-      assert(performed.action.args[1].command.args[4] == nil)
+      assert(performed.action.args[1].args[5] == nil)
     end,
   },
   {
