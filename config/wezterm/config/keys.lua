@@ -640,6 +640,13 @@ local function build_custom_keys(wezterm)
       suggested = true,
     },
     {
+      key = "F",
+      mods = "CTRL|SHIFT",
+      action = act.EmitEvent("search-scrollback-fzf"),
+      desc = "Search scrollback",
+      category = "view",
+    },
+    {
       key = "t",
       mods = "CTRL|SHIFT",
       action = act.EmitEvent("toggle-transparency"),
@@ -848,6 +855,7 @@ end
 local function register_picker_events(wezterm, bindings, leader)
   local act = wezterm.action
   local keybinding_picker_script = wezterm.config_dir .. "/wezterm-fzf-picker.sh"
+  local scrollback_search_script = wezterm.config_dir .. "/wezterm-scrollback-search.sh"
   local keybinding_actions = build_keybinding_actions(bindings)
 
   wezterm.on("show-keybindings-fzf", function(window, pane)
@@ -860,6 +868,27 @@ local function register_picker_events(wezterm, bindings, leader)
     window:perform_action(
       act.SpawnCommandInNewTab({
         args = args,
+        domain = "CurrentPaneDomain",
+      }),
+      pane
+    )
+  end)
+
+  wezterm.on("search-scrollback-fzf", function(window, pane)
+    local lines = pane:get_lines_as_text(2000)
+    local tmpfile = wezterm.home_dir .. "/.cache/wezterm-scrollback-" .. tostring(pane:pane_id()) .. ".txt"
+
+    local f = io.open(tmpfile, "w")
+    if not f then
+      notify(window, "Unable to write scrollback")
+      return
+    end
+    f:write(lines)
+    f:close()
+
+    window:perform_action(
+      act.SpawnCommandInNewTab({
+        args = { "bash", scrollback_search_script, tostring(pane:pane_id()), tmpfile },
         domain = "CurrentPaneDomain",
       }),
       pane
