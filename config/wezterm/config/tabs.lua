@@ -9,6 +9,8 @@ local shells = {
   nushell = true,
 }
 
+local workspace_max_width = 50
+
 local function path_value(path)
   if path == nil then
     return nil
@@ -99,6 +101,57 @@ function M.zoom_badge_from_panes(panes)
   return string.format("⛶ +%d", pane_count - 1)
 end
 
+local function active_workspace_name(wezterm, window)
+  if window and window.active_workspace then
+    local ok_workspace, workspace_name = pcall(function()
+      return window:active_workspace()
+    end)
+    if ok_workspace and workspace_name and workspace_name ~= "" then
+      return workspace_name
+    end
+  end
+
+  if not wezterm.mux or not wezterm.mux.get_active_workspace then
+    return nil
+  end
+
+  local ok, workspace_name = pcall(wezterm.mux.get_active_workspace)
+  if ok and workspace_name and workspace_name ~= "" then
+    return workspace_name
+  end
+
+  return nil
+end
+
+local function truncate_label(text, max_width)
+  if not text or text == "" or #text <= max_width then
+    return text
+  end
+
+  if max_width <= 3 then
+    return text:sub(1, max_width)
+  end
+
+  return text:sub(1, max_width - 3) .. "..."
+end
+
+function M.right_status_cells(workspace_name, zoom_label)
+  local cells = {}
+
+  if zoom_label and zoom_label ~= "" then
+    table.insert(cells, { Background = { Color = "#f7768e" } })
+    table.insert(cells, { Foreground = { Color = "#1d2028" } })
+    table.insert(cells, { Text = " " .. zoom_label .. " " })
+  end
+
+  local label = truncate_label(workspace_name or "", workspace_max_width)
+  table.insert(cells, { Background = { Color = "#9cafeb" } })
+  table.insert(cells, { Foreground = { Color = "#1d2028" } })
+  table.insert(cells, { Text = " " .. label .. " " })
+
+  return cells
+end
+
 local function tab_panes_with_info(wezterm, tab_info, fallback_panes)
   if tab_info.panes and #tab_info.panes > 0 then
     return tab_info.panes
@@ -187,30 +240,19 @@ function M.register(wezterm)
 
   wezterm.on("update-status", function(window, _)
     local tab = window:active_tab()
-    if not tab or not tab.panes_with_info then
-      window:set_right_status("")
-      return
+    local panes = {}
+    if tab and tab.panes_with_info then
+      local ok, tab_panes = pcall(function()
+        return tab:panes_with_info()
+      end)
+      if ok and tab_panes then
+        panes = tab_panes
+      end
     end
 
-    local ok, panes = pcall(function()
-      return tab:panes_with_info()
-    end)
-    if not ok then
-      window:set_right_status("")
-      return
-    end
-
+    local workspace_name = active_workspace_name(wezterm, window)
     local zoom_label = M.zoom_badge_from_panes(panes)
-    if not zoom_label then
-      window:set_right_status("")
-      return
-    end
-
-    window:set_right_status(wezterm.format({
-      { Background = { Color = "#f7768e" } },
-      { Foreground = { Color = "#1d2028" } },
-      { Text = " " .. zoom_label .. " " },
-    }))
+    window:set_right_status(wezterm.format(M.right_status_cells(workspace_name, zoom_label)))
   end)
 end
 

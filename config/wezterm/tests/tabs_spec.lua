@@ -60,4 +60,36 @@ return {
       assert(tabs.zoom_badge_from_panes({ { is_zoomed = false }, { is_zoomed = false } }) == nil)
     end,
   },
+  {
+    name = "builds right status cells with workspace only",
+    run = function()
+      local cells = tabs.right_status_cells("default", nil)
+
+      assert(#cells == 3)
+      assert(cells[1].Background.Color == "#9cafeb")
+      assert(cells[2].Foreground.Color == "#1d2028")
+      assert(cells[3].Text == " default ")
+    end,
+  },
+  {
+    name = "orders zoom before workspace in right status",
+    run = function()
+      local cells = tabs.right_status_cells("notes", "⛶ +1")
+
+      assert(#cells == 6)
+      assert(cells[1].Background.Color == "#f7768e")
+      assert(cells[3].Text == " ⛶ +1 ")
+      assert(cells[4].Background.Color == "#9cafeb")
+      assert(cells[6].Text == " notes ")
+    end,
+  },
+  {
+    name = "truncates long workspace names in right status",
+    run = function()
+      local workspace_name = string.rep("a", 51)
+      local cells = tabs.right_status_cells(workspace_name, nil)
+
+      assert(cells[3].Text == " " .. string.rep("a", 47) .. "... ")
+    end,
+  },
 }
