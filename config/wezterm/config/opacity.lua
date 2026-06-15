@@ -14,7 +14,8 @@ local function apply_level(wezterm, window)
 end
 
 function M.register(wezterm)
-  wezterm.GLOBAL = wezterm.GLOBAL or { opacity_step = 1 }
+  wezterm.GLOBAL = wezterm.GLOBAL or {}
+  wezterm.GLOBAL.opacity_step = wezterm.GLOBAL.opacity_step or 1
 
   wezterm.on("cycle-transparency", function(window, _)
     wezterm.GLOBAL.opacity_step = (wezterm.GLOBAL.opacity_step % #levels) + 1
@@ -22,18 +23,11 @@ function M.register(wezterm)
   end)
 
   wezterm.on("toggle-transparency", function(window, _)
-    local overrides = window:get_config_overrides() or {}
-    local is_transparent = overrides.window_background_opacity and overrides.window_background_opacity < 1.0
-
-    if is_transparent then
-      overrides.window_background_opacity = 1.0
-      overrides.text_background_opacity = 1.0
-    else
-      overrides.window_background_opacity = 0.8
-      overrides.text_background_opacity = 0.8
-    end
-
-    window:set_config_overrides(overrides)
+    -- Step 1 is opaque; any other step is transparent. Toggle between opaque and
+    -- the first transparent level, keeping opacity_step in sync so a following
+    -- cycle continues from the visible state.
+    wezterm.GLOBAL.opacity_step = wezterm.GLOBAL.opacity_step == 1 and 2 or 1
+    apply_level(wezterm, window)
   end)
 end
 

@@ -3,5 +3,4 @@
 # Edit freely. Regenerate with: ai-jail --clean --init
 
 command = ["opencode"]
-rw_maps = []
 ro_maps = ["/run/systemd/resolve"]

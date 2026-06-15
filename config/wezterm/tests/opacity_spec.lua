@@ -5,6 +5,8 @@ local function fake_wezterm()
 
   return {
     wezterm = {
+      -- Real wezterm.GLOBAL is always a persistent table, never nil.
+      GLOBAL = {},
       on = function(name, handler)
         handlers[name] = handler
       end,
@@ -58,10 +60,12 @@ return {
 
       local window = fake_window()
       fake.handlers["toggle-transparency"](window, nil)
-      assert(window.overrides.window_background_opacity == 0.8)
-      assert(window.overrides.text_background_opacity == 0.8)
+      assert(fake.wezterm.GLOBAL.opacity_step == 2)
+      assert(window.overrides.window_background_opacity == 0.6)
+      assert(window.overrides.text_background_opacity == 0.9)
 
       fake.handlers["toggle-transparency"](window, nil)
+      assert(fake.wezterm.GLOBAL.opacity_step == 1)
       assert(window.overrides.window_background_opacity == 1.0)
       assert(window.overrides.text_background_opacity == 1.0)
     end,

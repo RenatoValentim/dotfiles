@@ -23,11 +23,16 @@ cleanup() {
   fi
 }
 
-emit_rename() {
-  local payload encoded
-  payload=$1
-  encoded=$(printf '%s' "${payload}" | base64 | tr -d '\n')
-  printf '\033]1337;SetUserVar=%s=%s\007' 'WEZTERM_TAB_RENAME' "${encoded}"
+cli_with_retry() {
+  local i=1
+  while [[ ${i} -le 3 ]]; do
+    if "$@" >/dev/null 2>&1; then
+      return 0
+    fi
+    i=$((i + 1))
+    sleep 0.1
+  done
+  return 1
 }
 
 zoom_self() {
@@ -75,9 +80,7 @@ if [[ "${result}" == "${hint_row}" || "${new_title}" == "${hint_row}" ]]; then
   new_title=""
 fi
 
-wezterm cli set-tab-title --tab-id "${tab_id}" "${new_title}" >/dev/null 2>&1 || true
+cli_with_retry wezterm cli set-tab-title --tab-id "${tab_id}" "${new_title}" || true
 
 restore_focus=0
 wezterm cli activate-pane --pane-id "${target_pane_id}" >/dev/null 2>&1 || true
-emit_rename "${target_pane_id}|${tab_id}|${new_title}"
-sleep 0.05

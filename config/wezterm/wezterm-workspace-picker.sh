@@ -29,6 +29,18 @@ emit_workspace_action() {
   printf '\033]1337;SetUserVar=%s=%s\007' 'WEZTERM_WORKSPACE_ACTION' "${encoded}"
 }
 
+cli_with_retry() {
+  local i=1
+  while [[ ${i} -le 3 ]]; do
+    if "$@" >/dev/null 2>&1; then
+      return 0
+    fi
+    i=$((i + 1))
+    sleep 0.1
+  done
+  return 1
+}
+
 zoom_self() {
   if [[ -n "${WEZTERM_PANE:-}" ]]; then
     wezterm cli zoom-pane --pane-id "${WEZTERM_PANE}" --zoom >/dev/null 2>&1 || true
@@ -91,7 +103,7 @@ case "${mode}" in
     fi
 
     workspace_name=$(trim_query "${result%%$'\n'*}")
-    if [[ -z "${workspace_name}" ]]; then
+    if [[ -z "${workspace_name}" || "${result%%$'\n'*}" == "${hint_row}" ]]; then
       exit 0
     fi
 
@@ -127,11 +139,13 @@ case "${mode}" in
     fi
 
     workspace_name=$(trim_query "${result%%$'\n'*}")
-    if [[ -z "${workspace_name}" ]]; then
+    if [[ -z "${workspace_name}" || "${result%%$'\n'*}" == "${hint_row}" ]]; then
       exit 0
     fi
 
-    activate_target_and_emit "${target_pane_id}|rename|${current_workspace}|${workspace_name}"
+    cli_with_retry wezterm cli rename-workspace --workspace "${current_workspace}" "${workspace_name}" || true
+    restore_focus=0
+    wezterm cli activate-pane --pane-id "${target_pane_id}" >/dev/null 2>&1 || true
     ;;
 
   switch)

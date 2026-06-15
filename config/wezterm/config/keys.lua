@@ -36,7 +36,6 @@ local picker_palette = {
 
 local keybinding_picker_var = "WEZTERM_KEYBINDING_PICKER"
 local tab_open_path_var = "WEZTERM_TAB_OPEN_PATH"
-local tab_rename_var = "WEZTERM_TAB_RENAME"
 local workspace_action_var = "WEZTERM_WORKSPACE_ACTION"
 
 local picker_sections = {
@@ -253,37 +252,10 @@ function M.parse_pane_text_payload(value)
   }
 end
 
-function M.parse_tab_rename_payload(value)
-  local target_pane_id, tab_id, title = (value or ""):match("^(%d+)|(%d+)|(.*)$")
-  if not target_pane_id or not tab_id then
-    return nil
-  end
-
-  return {
-    target_pane_id = tonumber(target_pane_id),
-    tab_id = tonumber(tab_id),
-    title = title,
-  }
-end
-
 function M.parse_workspace_action_payload(value)
   local target_pane_id, action, payload = (value or ""):match("^(%d+)|([^|]+)|(.*)$")
   if not target_pane_id or not action then
     return nil
-  end
-
-  if action == "rename" then
-    local current_workspace, workspace_name = payload:match("^([^|]+)|(.*)$")
-    if not current_workspace then
-      return nil
-    end
-
-    return {
-      target_pane_id = tonumber(target_pane_id),
-      action = action,
-      current_workspace = current_workspace,
-      workspace_name = workspace_name,
-    }
   end
 
   if action ~= "create" and action ~= "switch" then
@@ -625,7 +597,7 @@ local function build_custom_keys(wezterm)
   return {
     {
       key = "z",
-      mods = "SHIFT",
+      mods = "LEADER",
       action = act.TogglePaneZoomState,
       desc = "Toggle pane zoom",
       category = "pane",
@@ -725,6 +697,16 @@ local function build_custom_keys(wezterm)
     },
     { key = "n", mods = "ALT", action = act.ActivateTabRelative(1), desc = "Next tab", category = "tab" },
     { key = "p", mods = "ALT", action = act.ActivateTabRelative(-1), desc = "Previous tab", category = "tab" },
+    { key = "1", mods = "ALT", action = act.ActivateTab(0), desc = "Go to tab 1", category = "tab" },
+    { key = "2", mods = "ALT", action = act.ActivateTab(1), desc = "Go to tab 2", category = "tab" },
+    { key = "3", mods = "ALT", action = act.ActivateTab(2), desc = "Go to tab 3", category = "tab" },
+    { key = "4", mods = "ALT", action = act.ActivateTab(3), desc = "Go to tab 4", category = "tab" },
+    { key = "5", mods = "ALT", action = act.ActivateTab(4), desc = "Go to tab 5", category = "tab" },
+    { key = "6", mods = "ALT", action = act.ActivateTab(5), desc = "Go to tab 6", category = "tab" },
+    { key = "7", mods = "ALT", action = act.ActivateTab(6), desc = "Go to tab 7", category = "tab" },
+    { key = "8", mods = "ALT", action = act.ActivateTab(7), desc = "Go to tab 8", category = "tab" },
+    { key = "9", mods = "ALT", action = act.ActivateTab(8), desc = "Go to tab 9", category = "tab" },
+    { key = "0", mods = "ALT", action = act.ActivateLastTab, desc = "Go to last tab", category = "tab" },
     {
       key = "LeftArrow",
       mods = "LEADER",
@@ -876,9 +858,14 @@ local function register_picker_events(wezterm, bindings, leader)
 
   wezterm.on("search-scrollback-fzf", function(window, pane)
     local lines = pane:get_lines_as_text(2000)
-    local tmpfile = wezterm.home_dir .. "/.cache/wezterm-scrollback-" .. tostring(pane:pane_id()) .. ".txt"
+    local cache_dir = wezterm.home_dir .. "/.cache"
+    local tmpfile = cache_dir .. "/wezterm-scrollback-" .. tostring(pane:pane_id()) .. ".txt"
 
     local f = io.open(tmpfile, "w")
+    if not f then
+      os.execute('mkdir -p "' .. cache_dir .. '"')
+      f = io.open(tmpfile, "w")
+    end
     if not f then
       notify(window, "Unable to write scrollback")
       return
@@ -927,22 +914,6 @@ local function register_picker_events(wezterm, bindings, leader)
       target_pane:activate()
 
       local workspace_name = trim_text(payload.workspace_name)
-      if payload.action == "rename" then
-        local current_workspace = trim_text(payload.current_workspace)
-        if workspace_name == "" or current_workspace == "" or workspace_name == current_workspace then
-          return
-        end
-
-        local ok = pcall(function()
-          wezterm.mux.rename_workspace(current_workspace, workspace_name)
-        end)
-        if not ok then
-          notify(window, "Unable to rename workspace")
-        end
-
-        return
-      end
-
       if workspace_name == "" then
         return
       end
@@ -972,27 +943,6 @@ local function register_picker_events(wezterm, bindings, leader)
       )
       return
     end
-
-    if name ~= tab_rename_var then
-      return
-    end
-
-    local payload = M.parse_tab_rename_payload(value)
-    if not payload then
-      return
-    end
-
-    local target_pane = wezterm.mux.get_pane(payload.target_pane_id)
-    if not target_pane then
-      return
-    end
-
-    local target_tab = wezterm.mux.get_tab(payload.tab_id)
-    if target_tab then
-      target_tab:set_title(payload.title)
-    end
-
-    target_pane:activate()
   end)
 end
 

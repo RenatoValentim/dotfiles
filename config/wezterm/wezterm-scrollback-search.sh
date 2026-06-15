@@ -29,6 +29,49 @@ zoom_self() {
   fi
 }
 
+copy_to_clipboard() {
+  local text
+  text=$1
+
+  if [[ -n "${WAYLAND_DISPLAY:-}" ]] && command -v wl-copy >/dev/null 2>&1; then
+    if printf '%s' "${text}" | wl-copy >/dev/null 2>&1; then
+      return 0
+    fi
+  fi
+
+  if [[ -n "${DISPLAY:-}" ]] && command -v xclip >/dev/null 2>&1; then
+    if printf '%s' "${text}" | xclip -selection clipboard >/dev/null 2>&1; then
+      return 0
+    fi
+  fi
+
+  if [[ -n "${DISPLAY:-}" ]] && command -v xsel >/dev/null 2>&1; then
+    if printf '%s' "${text}" | xsel --clipboard --input >/dev/null 2>&1; then
+      return 0
+    fi
+  fi
+
+  if command -v wl-copy >/dev/null 2>&1; then
+    if printf '%s' "${text}" | wl-copy >/dev/null 2>&1; then
+      return 0
+    fi
+  fi
+
+  if command -v xclip >/dev/null 2>&1; then
+    if printf '%s' "${text}" | xclip -selection clipboard >/dev/null 2>&1; then
+      return 0
+    fi
+  fi
+
+  if command -v xsel >/dev/null 2>&1; then
+    if printf '%s' "${text}" | xsel --clipboard --input >/dev/null 2>&1; then
+      return 0
+    fi
+  fi
+
+  return 1
+}
+
 trap cleanup EXIT
 
 if ! command -v fzf >/dev/null 2>&1; then
@@ -55,9 +98,9 @@ selected=$(
     --height='100%' \
     --info=hidden \
     --layout=reverse \
-    --margin='4%,14%' \
+    --margin='2%,4%' \
     --no-sort \
-    --padding='1,2' \
+    --padding='0,1' \
     --pointer='>' \
     --prompt='Scrollback > '
 ) || true
@@ -66,12 +109,10 @@ if [[ -z "${selected}" ]]; then
   exit 0
 fi
 
-if command -v wl-copy >/dev/null 2>&1; then
-  printf '%s' "${selected}" | wl-copy
-elif command -v xclip >/dev/null 2>&1; then
-  printf '%s' "${selected}" | xclip -selection clipboard
-elif command -v xsel >/dev/null 2>&1; then
-  printf '%s' "${selected}" | xsel --clipboard --input
+if ! copy_to_clipboard "${selected}"; then
+  printf 'Unable to copy the selected line. Press Enter to close.'
+  read -r _
+  exit 1
 fi
 
 restore_focus=0

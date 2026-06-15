@@ -249,12 +249,19 @@ return {
       assert(create_payload.target_pane_id == 12)
       assert(create_payload.action == "create")
       assert(create_payload.workspace_name == "dev")
+    end,
+  },
+  {
+    name = "rejects malformed or empty workspace action payloads",
+    run = function()
+      assert(keys.parse_workspace_action_payload(nil) == nil)
+      assert(keys.parse_workspace_action_payload("") == nil)
+      assert(keys.parse_workspace_action_payload("12|unknown|foo") == nil)
+      assert(keys.parse_workspace_action_payload("12|rename|") == nil)
 
-      local rename_payload = keys.parse_workspace_action_payload("12|rename|default|notes")
-      assert(rename_payload.target_pane_id == 12)
-      assert(rename_payload.action == "rename")
-      assert(rename_payload.current_workspace == "default")
-      assert(rename_payload.workspace_name == "notes")
+      local empty_name = keys.parse_workspace_action_payload("12|create|")
+      assert(empty_name ~= nil)
+      assert(empty_name.workspace_name == "")
     end,
   },
   {
@@ -264,16 +271,6 @@ return {
 
       assert(payload.target_pane_id == 12)
       assert(payload.text == "notes|draft")
-    end,
-  },
-  {
-    name = "parses tab rename payloads",
-    run = function()
-      local payload = keys.parse_tab_rename_payload("12|4|test1")
-
-      assert(payload.target_pane_id == 12)
-      assert(payload.tab_id == 4)
-      assert(payload.title == "test1")
     end,
   },
   {
