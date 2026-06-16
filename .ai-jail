@@ -2,7 +2,6 @@
 # https://github.com/akitaonrails/ai-jail
 # Edit freely. Regenerate with: ai-jail --clean --init
 
-command = ["opencode"]
-rw_maps = []
+command = ["claude"]
 ro_maps = ["/run/systemd/resolve"]
 no_mise = true

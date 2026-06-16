@@ -18,7 +18,7 @@ end
 if test -f ~/.config/fish/.secrets.fish
     source ~/.config/fish/.secrets.fish
 else if test -f ~/.secrets.fish
-    source ~/.secrets.fish
+    source ~/.secrets/.secrets.fish
 end
 
 # ============================================================================
@@ -81,6 +81,7 @@ export EDITOR=nvim
 alias p3="python3"
 alias pt="ptpython"
 alias vd="deactivate"
+alias ur="uv run --active"
 
 # Git/TUI/ls
 alias lg="lazygit"
@@ -96,15 +97,10 @@ alias ipy="ipython"
 alias v="env NVIM_APPNAME=nvim nvim"
 
 # VsCode
-alias code="code-insiders"
-
-# AI tools
-alias gemini="npx https://github.com/google-gemini/gemini-cli"
+alias c="code-insiders ."
 
 # AI Sandbox
 alias ai-init="ai-jail --init --map /run/systemd/resolve"
-alias ai-open-opencode="ai-jail opencode"
-alias ai-open-claudecode="ai-jail claude"
 
 # Devcontainer
 alias dc="devcontainer"
@@ -119,3 +115,11 @@ alias lfish="exec fish"
 # 8) Carregando funções personalizadas
 # ============================================================================
 # Functions live in `~/.config/fish/functions/`
+
+# bun
+set --export BUN_INSTALL "$HOME/.bun"
+set --export PATH $BUN_INSTALL/bin $PATH
+
+
+# Added by Antigravity CLI installer
+set -gx PATH "$HOME/.local/bin" $PATH

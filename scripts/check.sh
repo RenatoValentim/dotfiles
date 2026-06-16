@@ -36,6 +36,9 @@ else
   say "==> stylua: skipped (stylua not installed)"
 fi
 
+say "==> bash: hint guard tests (WezTerm)"
+run bash config/wezterm/tests/hint_guard_spec.sh
+
 if command -v lua >/dev/null 2>&1; then
   say "==> wezterm: Lua tests"
   run lua config/wezterm/tests/run.lua
