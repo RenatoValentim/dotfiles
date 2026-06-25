@@ -1,0 +1,61 @@
+{
+  "model": "sonnet",
+  "hooks": {
+    "Notification": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "foc=$(cat \"${XDG_RUNTIME_DIR:-/tmp}/wezterm-focused-pane\" 2>/dev/null); [ -n \"$WEZTERM_PANE\" ] && [ \"$foc\" = \"$WEZTERM_PANE\" ] && exit 0; data=$(cat); title=$(echo \"$data\" | jq -r '.title // \"Claude Code\"'); msg=$(echo \"$data\" | jq -r '.message // \"Needs attention\"'); project=$(basename \"$PWD\" | tr '[:lower:]' '[:upper:]'); notify-send -u critical \"${title} (${project})\" \"$msg\" 2>/dev/null || printf '\\a'",
+            "async": true
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "rtk hook claude"
+          }
+        ]
+      }
+    ]
+  },
+  "worktree": {
+    "baseRef": "fresh"
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash $HOME/.claude/statusline-command.sh"
+  },
+  "enabledPlugins": {
+    "zscaler@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true,
+    "caveman@caveman": true,
+    "gopls-lsp@claude-plugins-official": true,
+    "context7@claude-plugins-official": true,
+    "superpowers@superpowers-marketplace": true
+  },
+  "extraKnownMarketplaces": {
+    "caveman": {
+      "source": {
+        "source": "github",
+        "repo": "JuliusBrussee/caveman"
+      }
+    },
+    "superpowers-marketplace": {
+      "source": {
+        "source": "github",
+        "repo": "obra/superpowers-marketplace"
+      }
+    }
+  },
+  "effortLevel": "xhigh",
+  "theme": "dark-daltonized",
+  "preferredNotifChannel": "auto",
+  "inputNeededNotifEnabled": true,
+  "agentPushNotifEnabled": false
+}
