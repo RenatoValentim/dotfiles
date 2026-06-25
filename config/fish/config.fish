@@ -72,6 +72,7 @@ if test -d "$HOME/.opencode/bin"
 end
 
 export EDITOR=nvim
+export PATH="$HOME/.devcontainers/bin:$PATH"
 
 # ============================================================================
 # 7) Aliases

@@ -15,7 +15,14 @@ return {
       },
     },
   },
-
+  -- lua/plugins/rose-pine.lua
+  -- {
+  --   "rose-pine/neovim",
+  --   name = "rose-pine",
+  --   config = function()
+  --     vim.cmd("colorscheme rose-pine-dawn") -- rose-pine, rose-pine-moon, and rose-pine-dawn
+  --   end,
+  -- },
   {
     "LazyVim/LazyVim",
     opts = {
