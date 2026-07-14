@@ -207,3 +207,6 @@ symbol = " "
 
 [zig]
 symbol = " "
+
+[container]
+symbol = "󰣇 "
